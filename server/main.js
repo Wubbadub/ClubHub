@@ -4,29 +4,38 @@
 // #      CONSTANTS      #
 // #######################
 
-const PORT = require('./constants.js').PORT
+const PORT = require('./constants.js').PORT;
 
 // #######################
 // #  SERVER INITIATION  #
 // #######################
 
-const express = require('express')
-const app = express()
-const server = require('http').Server(app)
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const bodyParser = require('body-parser');
 
 // #######################
 // #       ROUTING       #
 // #######################
 
-// ToDo: Fix below (returns error every time)
-app.get('/', function(req, res, err) {
-	if (err) console.log(`data get error: ${err}`)
-	else {
-		res.send('<h1>Im Running!!</h1>')
-	}
-})
+// MIDDLEWARE FUNCTIONS -- app.use()
+// parses request body and places it into 'req.body'; supports URL-encoded bodies
+app.use(bodyParser.urlencoded({ 
+    extended: true
+})); 
+
+app.get('/', function(req, res) {
+    res.send('<h1>Welcome to clubhub!</h1>');
+});
+
+app.post('/newclub', function(req, res){
+    console.log(`${req.body.clubName} just signed up!`);
+    // ToDo: send back new hubsite page with club data injected!
+    res.send(`Welcome, ${req.body.clubName}! It is lovely to have you.`);
+});
 
 // Server listens to requests on PORT
 app.listen(PORT, function reportRunning() {
 	console.log(`Running on port ${PORT}`)
-})
+});
