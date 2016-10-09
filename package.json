@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "platform to create club hubsites",
   "main": "server/main.js",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "1.15.2",
+    "express": "4.14.0"
+  },
   "devDependencies": {
     "nodemon": "1.11.0"
   },
