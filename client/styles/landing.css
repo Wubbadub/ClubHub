@@ -1,0 +1,125 @@
+/*
+Landing Styles
+October 11 2016
+*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    margin: 0;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    color: #fff;
+    letter-spacing: 0.4px;
+}
+
+a {
+    color: #fff;
+}
+
+button {
+    letter-spacing: 0.5px;
+}
+
+button,
+input {
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.landing {
+    /* The height of the viewport minus twice the margin */
+    height: calc(100vh - 6vh);
+    min-height: 400px;
+    margin: 3vh;
+    display: flex;
+    background-color: #999;
+    justify-content: center;
+    background-image: url('../img/landing-bg.png');
+}
+
+.landing-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-width: 510px;
+}
+
+.landing-container p {
+    font-size: 20px;
+    font-weight: 300;
+    text-align: center;
+    line-height: 38px;
+    margin: 40px 0 50px 0;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.landing-signup-form {
+    width: 100%;
+}
+
+.landing-signup-form input {
+    border: none;
+    height: 54px;
+    width: 68%;
+    display: inline-block;
+    vertical-align: bottom;
+    padding: 0 20px;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.landing-signup-form input::-webkit-input-placeholder {
+   color: #fff;
+}
+
+.landing-signup-form input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.landing-signup-form button {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 16px 44px;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    white-space: nowrap;
+}
+
+/* Flexbox */
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* For screens under 600px */
+@media (max-width: 600px) {
+    .landing {
+        padding: 0 15px;
+        height: 100vh;
+        margin: 0;
+    }
+
+    a,
+    p,
+    input,
+    button,
+    .landing-container p {
+        font-size: 16px;
+    }
+    .landing-signup-form input {
+        height: 51px;
+    }
+}
