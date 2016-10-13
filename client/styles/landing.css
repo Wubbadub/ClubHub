@@ -42,6 +42,8 @@ input {
     display: flex;
     background-color: #999;
     justify-content: center;
+    background-position: center;
+    background-size: cover;
     background-image: url('../img/landing-bg.png');
 }
 
