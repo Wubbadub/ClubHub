@@ -33,7 +33,10 @@ app.get('/', function(req, res) {
 app.get('/sample', function(req, res) {
   res.sendFile(path.join(__dirname + '/../client/template/hubsite/hubsite.html'));
 });
-// ToDo: Add /join page
+app.get('/create', function(req, res) {
+  res.sendFile(path.join(__dirname + '/../client/form/create.html'));
+});
+
 app.post('/newclub', function(req, res){
   // ToDo: send back new hubsite page with club data injected!
   res.send(`Welcome, ${req.body.clubName}! It is lovely to have you.`);
