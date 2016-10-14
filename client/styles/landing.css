@@ -83,6 +83,7 @@ input {
     background-color: rgba(255, 255, 255, 0.4);
 }
 
+.landing-content button,
 .landing-signup-form button {
     cursor: pointer;
     color: rgba(255, 255, 255, 0.8);
@@ -92,6 +93,14 @@ input {
     display: inline-block;
     border: none;
     white-space: nowrap;
+}
+
+.landing-content button {
+    width: 80%;
+}
+
+.landing-content button:hover {
+    opacity: 0.8;
 }
 
 /* Flexbox */
@@ -118,5 +127,8 @@ input {
     }
     .landing-signup-form input {
         height: 51px;
+    }
+    .landing-content button {
+        width: 100%;
     }
 }
