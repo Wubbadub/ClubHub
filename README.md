@@ -1,2 +1,14 @@
 # ClubHub
-Platform allowing university clubs to create a club page and students to easily find info about any club.
+ClubHub streamlines the setup and maintenance of engaging club websites.
+
+### Link to Landing Page
+http://hubsite.club:8000/
+
+### Link to Application
+http://hubsite.club:8000/create
+
+### Feature List
+https://github.com/Wubbadub/ClubHub/wiki/Feature-List
+
+### Problem Definition
+https://github.com/Wubbadub/ClubHub/wiki/Problem-Definition
