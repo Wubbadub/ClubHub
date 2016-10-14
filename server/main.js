@@ -25,30 +25,33 @@ const fs = require('fs');
 // MIDDLEWARE FUNCTIONS -- app.use()
 // provide resources in client path
 app.use(express.static(path.join(__dirname + '/../client')));
+
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+// Splash page
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/../client/template/landing/landing.html'));
 });
+
+// Template page
 app.get('/sample', function(req, res) {
   res.sendFile(path.join(__dirname + '/../client/template/sample/sample.html'));
 });
 
-// ToDo: Add /join page
+// Create form page
 app.get('/create', function(req, res) {
   res.sendFile(path.join(__dirname + '/../client/form/create.html'));
 });
 
+// Create form endpoint
 app.post('/newclub', function(req, res){
-  // ToDo: send back new hubsite page with club data injected!
-  console.log(`Welcome, ${req.body.clubName}! It is lovely to have you.`);
   const data = {
     "clubName" : req.body.clubName,
     "clubDescr" : req.body.clubDescr
   }
-
+  
   fs.readFile(path.join(__dirname + '/../client/template/hubsite/hubsite.html'), 'utf-8', function(err, source){
     var template = handlebars.compile(source);
     var html = template(data);
