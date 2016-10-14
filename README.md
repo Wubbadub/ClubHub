@@ -1,12 +1,12 @@
 # ClubHub
 ClubHub streamlines the setup and maintenance of engaging club websites.
 
-## Link to Landing Page
+### Link to Landing Page
 
-## Link to Application
+### Link to Application
 
-## Feature List
+### Feature List
 https://github.com/Wubbadub/ClubHub/wiki/Feature-List
 
-## Problem Definition
+### Problem Definition
 https://github.com/Wubbadub/ClubHub/wiki/Problem-Definition
