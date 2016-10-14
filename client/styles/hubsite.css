@@ -64,7 +64,7 @@ strong {
     display: flex;
     flex-direction: row;
     margin: 50px;
-    min-height: 640px;
+    min-height: 680px;
 }
 
 header {
@@ -91,7 +91,7 @@ header ul li img {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 90px 50px;
+    padding: 90px;
 }
 
 .hero-content h1 {
@@ -119,7 +119,7 @@ header ul li img {
 }
 
 .hero-image {
-    width: 140%;
+    width: 130%;
     background-position: center;
     background-size: cover;
 }
@@ -215,7 +215,8 @@ footer {
 }
 
 
-footer div div img {
+.footer-logo {
+    width: 150px;
     margin-top: 18px;
     margin-right: 80px;
 }
@@ -263,10 +264,7 @@ footer .icon.envelope {
 }
 
 @media (max-width: 1000px) {
-    header {
-        left: 30px;
-    }
-    footer.responsive-column,
+    .main-container .responsive-column,
     footer .responsive-column {
         flex-direction: column;
     }
@@ -289,6 +287,9 @@ footer .icon.envelope {
     .main-container-text {
         padding-right: 0;
     }
+    .more {
+        display: none;
+    }
 }
 
 @media (max-width: 980px) {
@@ -309,10 +310,50 @@ footer .icon.envelope {
     .hero-content {
         padding: 0;
     }
+    header {
+        left: 30px;
+    }
+    footer {
+        padding: 130px 60px 30px;
+    }
+    .footer-logo {
+        width: 100px;
+        margin-top: 25px;
+    }
 }
 
 @media (max-width: 680px) {
     .person {
         width: 100%;
+    }
+    h1 {
+        font-size: 30px;
+    }
+    .hero-content h1,
+    .main-container section h1 {
+        margin-top: 50px;
+        font-size: 30px;
+    }
+    p,
+    a,
+    span,
+    button {
+        font-size: 18px;
+    }
+    .footer-made-by {
+        display: none;
+    }
+    footer {
+        margin: -180px 20px 20px;
+        padding: 130px 30px 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    p,
+    a,
+    span,
+    button {
+        font-size: 14px;
     }
 }
