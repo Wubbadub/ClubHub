@@ -31,7 +31,7 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/../client/template/landing/landing.html'));
 });
 app.get('/sample', function(req, res) {
-  res.sendFile(path.join(__dirname + '/../client/template/hubsite/hubsite.html'));
+  res.sendFile(path.join(__dirname + '/../client/template/sample/sample.html'));
 });
 // ToDo: Add /join page
 app.post('/newclub', function(req, res){
