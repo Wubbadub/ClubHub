@@ -37,6 +37,10 @@ app.get('/sample', function(req, res) {
 });
 
 // ToDo: Add /join page
+app.get('/create', function(req, res) {
+  res.sendFile(path.join(__dirname + '/../client/form/create.html'));
+});
+
 app.post('/newclub', function(req, res){
   // ToDo: send back new hubsite page with club data injected!
   console.log(`Welcome, ${req.body.clubName}! It is lovely to have you.`);
