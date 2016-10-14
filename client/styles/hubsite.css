@@ -106,6 +106,7 @@ header ul li img {
 
 .hero-content p {
     margin: 40px 0 30px;
+    min-width: 380px;
 }
 
 .hero-content button {
