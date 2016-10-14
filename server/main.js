@@ -23,6 +23,9 @@ const path = require ('path');
 // MIDDLEWARE FUNCTIONS -- app.use()
 // provide resources in client path
 app.use(express.static(path.join(__dirname + '/../client')));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/../client/template/landing/landing.html'));
@@ -32,8 +35,8 @@ app.get('/sample', function(req, res) {
 });
 // ToDo: Add /join page
 app.post('/newclub', function(req, res){
-// ToDo: send back new hubsite page with club data injected!
-res.send(`Welcome, ${req.body.clubName}! It is lovely to have you.`);
+  // ToDo: send back new hubsite page with club data injected!
+  res.send(`Welcome, ${req.body.clubName}! It is lovely to have you.`);
 });
 
 // Server listens to requests on PORT
