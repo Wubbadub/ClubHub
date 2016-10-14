@@ -14,23 +14,26 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const bodyParser = require('body-parser');
+const path = require ('path');
 
 // #######################
 // #       ROUTING       #
 // #######################
 
 // MIDDLEWARE FUNCTIONS -- app.use()
-// parses request body and places it into 'req.body'; supports URL-encoded bodies
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+// provide resources in client path
+app.use(express.static(path.join(__dirname + '/../client')));
 
 app.get('/', function(req, res) {
-  res.send('<h1>Welcome to clubhub!</h1>');
+  res.sendFile(path.join(__dirname + '/../client/template/landing/landing.html'));
 });
-  app.post('/newclub', function(req, res){
-  // ToDo: send back new hubsite page with club data injected!
-  res.send(`Welcome, ${req.body.clubName}! It is lovely to have you.`);
+app.get('/sample', function(req, res) {
+  res.sendFile(path.join(__dirname + '/../client/template/hubsite/hubsite.html'));
+});
+// ToDo: Add /join page
+app.post('/newclub', function(req, res){
+// ToDo: send back new hubsite page with club data injected!
+res.send(`Welcome, ${req.body.clubName}! It is lovely to have you.`);
 });
 
 // Server listens to requests on PORT
