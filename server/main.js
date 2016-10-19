@@ -18,6 +18,33 @@ const path = require ('path');
 const handlebars = require('handlebars');
 const fs = require('fs');
 
+/*  #######################
+*  #       WEBPACK       #
+*  #######################
+*/
+const webpack = require('webpack');
+const webpackConfig = require('../webpack.config.js');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+
+const compiler = webpack(webpackConfig);
+const webpackMiddleware = webpackDevMiddleware(compiler, {
+  pnoInfo: true,
+  publicPath: webpackConfig.output.publicPath,
+  stats: {
+    colors: true,
+    hash: false,
+    timings: true,
+    chunks: false,
+    chunkModules: false,
+    modules: false
+  }
+});
+
+// Use webpack to build files in memory (to be served) ToDo: build to /dist for production
+app.use(webpackMiddleware);
+app.use(webpackHotMiddleware(compiler));
+
 // #######################
 // #       ROUTING       #
 // #######################
@@ -51,7 +78,7 @@ app.post('/newclub', function(req, res){
     "clubName" : req.body.clubName,
     "clubDescr" : req.body.clubDescr
   }
-  
+
   fs.readFile(path.join(__dirname + '/../client/template/hubsite/hubsite.html'), 'utf-8', function(err, source){
     var template = handlebars.compile(source);
     var html = template(data);
