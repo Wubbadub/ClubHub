@@ -1,7 +1,8 @@
 import React from 'react'
 import {render} from 'react-dom'
+import ClubHub from 'ClubHub'
 
 render (
-  <h1>Hello!!</h1>,
+  <ClubHub />,
   document.getElementById('app')
 )
