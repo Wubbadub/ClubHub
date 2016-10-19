@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react'
 const SimpleSample = (props) => {
   const {colours, shape} = props
 
-  return(
+  return (
     <div>
       <h4>{colours}</h4>
       <p>{props.shape}</p>    {/*either props method can be used*/}
@@ -14,7 +14,7 @@ const SimpleSample = (props) => {
 
 SimpleSample.propTypes = {
   colours: PropTypes.array.isRequired,
-  body: PropTypes.string
+  shape: PropTypes.string
 }
 
 SimpleSample.defaultProps = {

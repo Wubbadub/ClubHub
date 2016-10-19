@@ -30,14 +30,14 @@ export default class Sample extends PureComponent {
   handleH1MouseOut = () => {
     console.log('hover out h1')
     this.setState({
-      h1hover:false
+      h1hover: false
     })
   }
 
   render() {
     const {title, body} = this.props
 
-    return(
+    return (
       <div>
         <h1
           style={{color: `${this.state.h1hover ? 'red' : 'black'}`}}
