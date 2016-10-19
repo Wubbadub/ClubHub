@@ -20,6 +20,10 @@
     "webpack": "1.13.2"
   },
   "devDependencies": {
+    "babel-eslint": "7.0.0",
+    "eslint": "3.8.1",
+    "eslint-loader": "1.6.0",
+    "eslint-plugin-react": "6.4.1",
     "nodemon": "1.11.0",
     "webpack-dev-middleware": "1.8.4",
     "webpack-hot-middleware": "2.13.0"
