@@ -2,6 +2,7 @@
 
 var path = require('path')
 var webpack = require('webpack')
+var failPlugin = require('webpack-fail-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -21,6 +22,7 @@ module.exports = {
       inject: 'body',
       filename: 'index.html'
     }),
+    failPlugin,
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),

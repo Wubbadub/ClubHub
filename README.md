@@ -1,4 +1,7 @@
 # ClubHub
+
+[![Build Status](https://travis-ci.org/Wubbadub/ClubHub.svg?branch=develop)](https://travis-ci.org/Wubbadub/ClubHub)
+
 ClubHub streamlines the setup and maintenance of engaging club websites.
 
 ### Landing Page
