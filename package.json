@@ -30,6 +30,7 @@
     "eslint": "3.8.1",
     "eslint-loader": "1.6.0",
     "eslint-plugin-react": "6.4.1",
+    "image-webpack-loader": "^3.0.0",
     "nodemon": "1.11.0",
     "webpack-dev-middleware": "1.8.4",
     "webpack-hot-middleware": "2.13.0"
