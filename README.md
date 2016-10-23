@@ -1,18 +1,12 @@
 # ClubHub
 
-[![Build Status](https://travis-ci.org/Wubbadub/ClubHub.svg?branch=develop)](https://travis-ci.org/Wubbadub/ClubHub)
+[![Build Status](https://img.shields.io/travis/Wubbadub/ClubHub.svg?branch=develop)](https://travis-ci.org/Wubbadub/ClubHub)
+[![Website Status](https://img.shields.io/website-up-down-green-red/http/hubsite.club.svg)](http://www.hubsite.club/)
 
 ClubHub streamlines the setup and maintenance of engaging club websites.
 
 ### Landing Page
-[Landing Page](http://www.hubsite.club:8000/)
 ![](./assets/img/splash-page.png)
-
-### Link to Application
-[Create Hubsite](http://www.hubsite.club:8000/create)  
-![](./assets/img/hubsite-form.png)  
-[Sample](http://www.hubsite.club:8000/sample)
-![](./assets/img/sample-hubsite.png)
 
 ### Feature List
 https://github.com/Wubbadub/ClubHub/wiki/Feature-List
