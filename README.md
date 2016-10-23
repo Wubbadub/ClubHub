@@ -1,15 +1,19 @@
-# ClubHub
+[![ClubHub](assets/clubhub.svg)](https://travis-ci.org/Wubbadub/ClubHub)
 
 [![Build Status](https://img.shields.io/travis/Wubbadub/ClubHub.svg?branch=develop)](https://travis-ci.org/Wubbadub/ClubHub)
 [![Website Status](https://img.shields.io/website-up-down-green-red/http/hubsite.club.svg)](http://www.hubsite.club/)
 
+---
+
 ClubHub streamlines the setup and maintenance of engaging club websites.
 
-### Landing Page
-![](./assets/img/splash-page.png)
+![ClubHub Landing Page](assets/splash-page.png)
 
-### Feature List
-https://github.com/Wubbadub/ClubHub/wiki/Feature-List
+### Repository Directory
 
-### Problem Definition
-https://github.com/Wubbadub/ClubHub/wiki/Problem-Definition
+* [Issues Tracking](https://github.com/Wubbadub/ClubHub/issues)
+* [Milestone Progress](https://github.com/Wubbadub/ClubHub/milestones)
+* [Feature List](https://github.com/Wubbadub/ClubHub/wiki/Feature-List)
+* [Problem Definition](https://github.com/Wubbadub/ClubHub/wiki/Problem-Definition)
+* [Our Team](https://github.com/orgs/Wubbadub/people)
+
