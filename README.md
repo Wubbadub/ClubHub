@@ -1,6 +1,6 @@
 <div align="center">
     <br>
-    <a href="http://www.hubsite.club/"><img src ="https://rawgit.com/Wubbadub/ClubHub/feat/40/polish-readme/assets/clubhub.svg" alt="ClubHub"/></a>
+    <a href="http://www.hubsite.club/"><img src ="https://rawgit.com/Wubbadub/ClubHub/develop/assets/clubhub.svg" alt="ClubHub"/></a>
     <br><br>
     <a href="https://travis-ci.org/Wubbadub/ClubHub"><img src ="https://img.shields.io/travis/Wubbadub/ClubHub.svg?branch=develop" alt="Build Status"/></a>
     <a href="http://www.hubsite.club/"><img src ="https://img.shields.io/website-up-down-green-red/http/hubsite.club.svg" alt="Website Status"/></a>
