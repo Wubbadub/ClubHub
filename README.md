@@ -1,4 +1,4 @@
-[![ClubHub](assets/clubhub.svg)](https://travis-ci.org/Wubbadub/ClubHub)
+[![ClubHub](https://rawgit.com/Wubbadub/ClubHub/feat/40/polish-readme/assets/clubhub.svg)](http://hubsite.club/)
 
 [![Build Status](https://img.shields.io/travis/Wubbadub/ClubHub.svg?branch=develop)](https://travis-ci.org/Wubbadub/ClubHub)
 [![Website Status](https://img.shields.io/website-up-down-green-red/http/hubsite.club.svg)](http://www.hubsite.club/)
