@@ -1,12 +1,9 @@
-import React/*, {PropTypes}*/ from 'react'
+import React from 'react'
 import Brand from '../parts/Brand'
 
 const bg = require('../../img/splash-bg.jpg')
 
-// use when state and lifecycle functions are not needed
-const Splash = (/*props*/) => {
-  // const {} = props
-
+const Splash = () => {
   return (
     <main className="splash">
       <section className="hero" style={{backgroundImage: `url(${bg})`}}>
@@ -25,11 +22,5 @@ const Splash = (/*props*/) => {
     </main>
   )
 }
-
-// Splash.propTypes = {
-// }
-
-// Splash.defaultProps = {
-// }
 
 export default Splash
