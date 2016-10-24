@@ -1,6 +1,6 @@
 import React/*, {PropTypes}*/ from 'react'
 
-const bg = require('../../img/landing-bg.png')
+const bg = require('../../img/splash-bg.jpg')
 
 // use when state and lifecycle functions are not needed
 const Splash = (/*props*/) => {
