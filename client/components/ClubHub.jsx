@@ -1,8 +1,6 @@
 import React from 'react'
 
 import Splash from 'pages/Splash'
-import Sample from 'Sample'
-import SimpleSample from 'SimpleSample'
 
 const ClubHub = () => {
   return (
