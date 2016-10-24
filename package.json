@@ -32,6 +32,7 @@
     "eslint-plugin-react": "6.4.1",
     "image-webpack-loader": "^3.0.0",
     "nodemon": "1.11.0",
+    "react-svg-inline": "1.2.0",
     "webpack-dev-middleware": "1.8.4",
     "webpack-fail-plugin": "1.0.5",
     "webpack-hot-middleware": "2.13.0"

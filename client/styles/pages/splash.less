@@ -1,4 +1,6 @@
 .splash {
+    @blurb-width: 48rem;
+
     font-family: @brand-font-family;
 
     section.hero {
@@ -17,17 +19,33 @@
         &, a {
             color: @core-light-color;
         }
+
+        
     }        
     .blurb {
-            .centered;
-            align-self: center;
-            max-width: 48rem;
-            
-            p {
-                text-align: justify;
-                padding: 0 2*@layout-gutter;
-                margin: 0 0 2*@layout-gutter;
-                font-size: 1.2*@body-font-size;
-            }
+        .centered;
+        align-self: center;
+        max-width: @blurb-width;
+        
+        h1 {
+            margin: 0 0 3*@layout-gutter;
         }
+
+        .brand {
+            .centered;
+            .img-responsive;
+            max-width: 0.5*@blurb-width;
+        }
+
+        path.logotype {
+            fill: @core-light-color;
+        }
+
+        p {
+            text-align: justify;
+            padding: 0 2*@layout-gutter;
+            margin: 0 0 2*@layout-gutter;
+            font-size: 1.2*@body-font-size;
+        }
+    }
 }
