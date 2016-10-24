@@ -1,18 +1,18 @@
-# ClubHub
-ClubHub streamlines the setup and maintenance of engaging club websites.
+<div align="center">
+    <br>
+    <a href="http://www.hubsite.club/"><img src ="https://rawgit.com/Wubbadub/ClubHub/develop/assets/clubhub.svg" alt="ClubHub"/></a>
+    <br><br>
+    <a href="https://travis-ci.org/Wubbadub/ClubHub"><img src ="https://img.shields.io/travis/Wubbadub/ClubHub.svg?branch=develop" alt="Build Status"/></a>
+    <a href="http://www.isup.me/hubsite.club"><img src ="https://img.shields.io/website-up-down-green-red/http/hubsite.club.svg" alt="Website Status"/></a>
+    <br><br>
+    <p>ClubHub streamlines the setup and maintenance of engaging club websites.</p>
+    <img src ="assets/splash-page.png" alt="Build Status"/>
+</div>
 
-### Landing Page
-[Landing Page](http://www.hubsite.club:8000/)
-![](./assets/img/splash-page.png)
+### Repository Directory
 
-### Link to Application
-[Create Hubsite](http://www.hubsite.club:8000/create)  
-![](./assets/img/hubsite-form.png)  
-[Sample](http://www.hubsite.club:8000/sample)
-![](./assets/img/sample-hubsite.png)
-
-### Feature List
-https://github.com/Wubbadub/ClubHub/wiki/Feature-List
-
-### Problem Definition
-https://github.com/Wubbadub/ClubHub/wiki/Problem-Definition
+* [Issues Tracking](https://github.com/Wubbadub/ClubHub/issues)
+* [Milestone Progress](https://github.com/Wubbadub/ClubHub/milestones)
+* [Feature List](https://github.com/Wubbadub/ClubHub/wiki/Feature-List)
+* [Problem Definition](https://github.com/Wubbadub/ClubHub/wiki/Problem-Definition)
+* [Our Team](https://github.com/orgs/Wubbadub/people)
