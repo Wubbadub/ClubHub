@@ -1,0 +1,18 @@
+.splash {
+    section.hero {
+        margin: @splash-gutter;
+        /* The height of the viewport minus twice the margin */
+        height: 100vh - 2*@splash-gutter;
+
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        color: @core-light-color;
+        
+        .blurb {
+            .centered;
+            max-width: 24em;
+        }
+    }
+}
