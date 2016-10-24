@@ -1,19 +1,12 @@
 import React from 'react'
 
-import Sample from 'Sample'
-import SimpleSample from 'SimpleSample'
+import Splash from 'pages/Splash'
 
 const ClubHub = () => {
   return (
     <div>
       {/* React components (i.e. page layout) goes here */}
-      <Sample
-        title={'clubhub'}
-      />
-      <SimpleSample
-        colours={['red', 'blue', 'green']}
-        shape={'square'}
-      />
+      <Splash />
     </div>
   )
 }

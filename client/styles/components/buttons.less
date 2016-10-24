@@ -3,7 +3,7 @@
   -webkit-appearance: none;
   background: #fff;
   border: .1rem solid @core-color;
-  border-radius: .3rem;
+  border-radius: @border-base;
   color: @core-link-color;
   cursor: pointer;
   display: inline-block;
@@ -81,7 +81,7 @@
 
   // Button Small
   &.btn-sm {
-    border-radius: .2rem;
+    border-radius: 0.8*@border-base;
     font-size: 1.2rem;
     height: 2.4rem;
     line-height: 1.4rem;
@@ -90,7 +90,7 @@
 
   // Button Large
   &.btn-lg {
-    border-radius: .4rem;
+    border-radius: 1.1*@border-base;
     font-size: 1.8rem;
     height: 4.2rem;
     line-height: 2rem;
