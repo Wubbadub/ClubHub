@@ -27,7 +27,7 @@ const Splash = (/*props*/) => {
             We offer a simple Q&A interface for university clubs to create beautiful, minimal websites.
             Shoot us an <a href="mailto:contact@hubsite.club" target="_blank">email</a> if you have any questions, or want to learn more about what we do.
           </p>
-          <a className="btn btn-lrg btn-block btn-primary" href="/create">Create a Website</a>
+          <a className="btn btn-lg btn-block btn-primary" href="/create">Create a Website</a>
         </div>
       </section>
     </main>

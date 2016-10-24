@@ -1,6 +1,12 @@
 .splash {
+    font-family: @brand-font-family;
+
     section.hero {
+        .flex;
+
         margin: @splash-gutter;
+        padding: @layout-gutter;
+
         /* The height of the viewport minus twice the margin */
         height: 100vh - 2*@splash-gutter;
 
@@ -8,11 +14,20 @@
         background-repeat: no-repeat;
         background-size: cover;
 
-        color: @core-light-color;
-        
-        .blurb {
-            .centered;
-            max-width: 24em;
+        &, a {
+            color: @core-light-color;
         }
-    }
+    }        
+    .blurb {
+            .centered;
+            align-self: center;
+            max-width: 48rem;
+            
+            p {
+                text-align: justify;
+                padding: 0 2*@layout-gutter;
+                margin: 0 0 2*@layout-gutter;
+                font-size: 1.2*@body-font-size;
+            }
+        }
 }
