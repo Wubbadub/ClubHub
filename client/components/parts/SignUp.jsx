@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react'
+import { Link } from 'react-router'
 
 // use when state and lifecycle functions are needed
 export default class SignUp extends PureComponent {
@@ -35,7 +36,7 @@ export default class SignUp extends PureComponent {
               </div>
             </div>
             <div className="modal-footer">
-              <button className="btn btn-primary">Create Site</button>
+              <Link className="btn btn-primary" to="/editor">Create Site</Link>
             </div>
           </div>
         </div>
