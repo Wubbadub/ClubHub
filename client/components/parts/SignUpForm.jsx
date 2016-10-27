@@ -83,7 +83,7 @@ export default class SignUpForm extends PureComponent {
       <form>
         <div className="form-group">
           <label className="form-label" htmlFor="club-name-input">Club Name</label>
-          <input className="form-input input-lg"
+          <input className="form-input"
                  type="text"
                  maxLength="128"
                  id="club-name-input"
@@ -93,12 +93,12 @@ export default class SignUpForm extends PureComponent {
           <label className="form-label" htmlFor="club-site-input">Club Address</label>
           <div className="input-group">
               <input type="text"
-                     className="form-input input-lg"
+                     className="form-input"
                      maxLength="24"
                      placeholder="kidz"
                      id="club-site-input"
                      onChange={this.siteChange}/>
-              <span className="input-group-addon addon-lg">.{this.props.hostUrl}</span>
+              <span className="input-group-addon">.{this.props.hostUrl}</span>
           </div>
           <span className="form-input-hint">{this.siteInputHint()}</span>
         </div>
