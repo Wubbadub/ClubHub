@@ -1,18 +1,18 @@
 import React, {PureComponent} from 'react'
 import { Link } from 'react-router'
 
+import SignUpForm from './SignUpForm'
+
 // use when state and lifecycle functions are needed
 export default class SignUp extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {
-      valid: false
-    }
+    this.state = {}
   }
 
   static propTypes = {
     active: React.PropTypes.bool,
-    close: React.PropTypes.function
+    close: React.PropTypes.func
   }
 
   static defaultProps = {
@@ -22,7 +22,7 @@ export default class SignUp extends PureComponent {
   render() {
 
     return (
-      <section>
+      <section className="signup">
         <div className={`modal modal-sm ${this.props.active ? ' active' : ''}`}>
           <div className="modal-overlay"></div>
           <div className="modal-container">
@@ -31,9 +31,7 @@ export default class SignUp extends PureComponent {
               <h3 className="modal-title">Sign Up for ClubHub</h3>
             </div>
             <div className="modal-body">
-              <div className="content">
-                <p>Hello!</p>
-              </div>
+              <SignUpForm />
             </div>
             <div className="modal-footer">
               <Link className="btn btn-primary" to="/editor">Create Site</Link>
