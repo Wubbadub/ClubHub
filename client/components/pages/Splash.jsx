@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 
-import SignUp from '../parts/SignUp'
-import Brand from '../parts/Brand'
+import SignUp from 'parts/SignUp'
+import Brand from 'parts/Brand'
 
 const bg = require('../../img/splash-bg.jpg')
 
