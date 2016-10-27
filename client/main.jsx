@@ -1,7 +1,7 @@
 import React from 'react'
 import {render} from 'react-dom'
-import ClubHub from './components/ClubHub'
-import Editor from './components/pages/Editor'
+import ClubHub from 'ClubHub'
+import Editor from 'pages/Editor'
 import {Router, Route, hashHistory} from 'react-router'
 
 // Import Styles
