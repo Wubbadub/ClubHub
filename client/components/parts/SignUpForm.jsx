@@ -20,7 +20,7 @@ export default class SignUpForm extends PureComponent {
       valid: false
     }
 
-    this.timer
+    this.timer // TODO: REMOVE once connect to server
   }
 
 
@@ -42,14 +42,14 @@ export default class SignUpForm extends PureComponent {
   }
 
   validateSite = (site, callback) => {
-    clearTimeout(this.timer) // remove
+    clearTimeout(this.timer) // TODO: REMOVE once connect to server
     if (site === '') return callback('empty')
     else if (!/^[a-zA-Z0-9-]+$/.test(site)) return callback('invalid')
 
     // TODO: Test with the DB, This simulates a server call
     this.timer = setTimeout(function() {
       callback(site === 'taken' ? 'unavailable' : 'okay')
-    }, 200) // remove
+    }, 200) // TODO: REMOVE once connect to server
   }
 
   siteInputHint = () => {
