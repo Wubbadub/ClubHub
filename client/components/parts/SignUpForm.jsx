@@ -63,7 +63,10 @@ export default class SignUpForm extends PureComponent {
         return (<span><b className="siteName">{siteInput}.{this.props.hostUrl}</b> is invalid.</span>)
       case 'testing':
         return (<span>Checking <b className="siteName">{siteInput}.{this.props.hostUrl}</b>.</span>)
+      case 'empty':
+        return (<span>&nbsp;</span>)
       default:
+        console.error('Unexpected input state: %s', this.state.siteInputState)
         return (<span>&nbsp;</span>)
     }
   }
