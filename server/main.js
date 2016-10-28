@@ -57,21 +57,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// Splash page
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname + '/../client/template/landing/landing.html'));
-});
-
-// Template page
-app.get('/sample', function(req, res) {
-  res.sendFile(path.join(__dirname + '/../client/template/sample/sample.html'));
-});
-
-// Create form page
-app.get('/create', function(req, res) {
-  res.sendFile(path.join(__dirname + '/../client/form/create.html'));
-});
-
 // Create form endpoint
 app.post('/newclub', function(req, res){
   const data = {
