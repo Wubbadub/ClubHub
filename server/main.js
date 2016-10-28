@@ -12,9 +12,9 @@ const PORT = require('./constants.js').PORT
 
 const express = require('express')
 const app = express()
-const server = require('http').Server(app)
+// const server = require('http').Server(app)
 const bodyParser = require('body-parser')
-const path = require ('path')
+const path = require('path')
 const handlebars = require('handlebars')
 const fs = require('fs')
 
@@ -58,18 +58,18 @@ app.use(bodyParser.urlencoded({
 }))
 
 // Create form endpoint
-app.post('/newclub', function(req, res){
-  const data = {
-    'clubName': req.body.clubName,
-    'clubDescr': req.body.clubDescr
-  }
+// app.post('/newclub', function(req, res){
+//   const data = {
+//     'clubName': req.body.clubName,
+//     'clubDescr': req.body.clubDescr
+//   }
 
-  fs.readFile(path.join(__dirname + '/../client/template/hubsite/hubsite.html'), 'utf-8', function(err, source){
-    var template = handlebars.compile(source)
-    var html = template(data)
-    res.send(html)
-  })
-})
+//   fs.readFile(path.join(__dirname + '/../client/template/hubsite/hubsite.html'), 'utf-8', function(err, source){
+//     var template = handlebars.compile(source)
+//     var html = template(data)
+//     res.send(html)
+//   })
+// })
 
 // Server listens to requests on PORT
 app.listen(PORT, function reportRunning () {
