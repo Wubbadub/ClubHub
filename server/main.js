@@ -15,8 +15,6 @@ const app = express()
 // const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const path = require('path')
-const handlebars = require('handlebars')
-const fs = require('fs')
 
 /*  #######################
 *  #       WEBPACK       #
