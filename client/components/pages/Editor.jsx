@@ -5,7 +5,7 @@ export default class Editor extends PureComponent{
   constructor(props){
     super(props)
   }
-  
+
   render() {
     return (
       <div>
