@@ -1,13 +1,16 @@
-import React from 'react'
-import {render} from 'react-dom'
+import React, {PureComponent} from 'react'
 import {Link} from 'react-router'
 
-const Editor = () => {
-  return (
-    <div>
-      <Link to='/'>Go back, I am full of regret!</Link>
-    </div>
-  )
+export default class Editor extends PureComponent{
+  constructor(props){
+    super(props)
+  }
+  
+  render() {
+    return (
+      <div>
+        <Link to="/">Go back, I am full of regret!</Link>
+      </div>
+    )
+  }
 }
-
-export default Editor
