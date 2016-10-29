@@ -1,10 +1,10 @@
 import React, {PureComponent} from 'react'
 
-const twitter = require('../../img/twitter.svg')
-const facebook = require('../../img/facebook.svg')
-const instagram = require('../../img/instagram.png')
+const twitter = require('img/twitter.svg')
+const facebook = require('img/facebook.svg')
+const instagram = require('img/instagram.png')
 
-export default class ClassicHero extends PureComponent{
+export default class Hero extends PureComponent{
   constructor(props){
     super(props)
   }

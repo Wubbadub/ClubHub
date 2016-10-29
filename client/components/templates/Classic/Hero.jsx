@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react'
 
-const bg = require('../../img/canoe.png')
+const bg = require('img/canoe.png')
 
-export default class ClassicHero extends PureComponent{
+export default class Hero extends PureComponent{
   constructor(props){
     super(props)
   }
