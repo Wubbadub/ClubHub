@@ -1,3 +1,367 @@
 .theme-classic {
-  background-color: red;
+  // Variables
+  @theme-font-family: @brand-font-family;
+  @theme-core-color: #787878;
+  @theme-secondary-color: #595959;
+  @theme-body-font-size: 20px;
+  // Styles
+  font-family: @theme-font-family;
+  color: @theme-core-color;
+
+  h1 {
+    color: @theme-secondary-color;
+    font-weight: 500;
+  }
+
+  p {
+    letter-spacing: 0.4px;
+    line-height: 32px;
+    font-weight: 300;
+  }
+
+  a {
+    color: @theme-core-color;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    opacity: 0.8;
+  }
+
+  button {
+    font-family: 'Lato', sans-serif;
+    cursor: pointer;
+    color: @theme-secondary-color;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
+
+  p,
+  a,
+  span,
+  button {
+    font-size: @theme-body-font-size;
+  }
+
+  strong {
+    color: @theme-secondary-color;
+  }
+
+  .outer-container {
+    display: -webkit-flex; /* Safari Support */
+    display: flex;
+    flex-direction: column;
+    flex-direction: -webkit-column;
+    max-width: 1440px;
+    width: 100%;
+    margin: auto;
+    position: relative;
+  }
+
+  .hero-container {
+    display: flex;
+    flex-direction: row;
+    margin: 50px;
+    min-height: 680px;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  header {
+    position: absolute;
+    top: 80px;
+    right: 80px;
+    ul li {
+      padding: 0 10px;
+      display: inline-block;
+    }
+    ul li img {
+      width: 25px;
+      opacity: 0.8;
+    }
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    -webkit-justify-content: center;
+    padding: 90px;
+    h1 {
+      font-size: 42px;
+    }
+    p {
+      line-height: 37px;
+      margin: 40px 0 30px;
+      min-width: 380px;
+    }
+  }
+
+  .hero-content h1 {
+    text-align: left;
+  }
+
+  .hero-content button {
+    border: none;
+    background-color: #E1E1E1;
+    margin: 20px 0 0;
+    padding: 10px;
+  }
+
+  .hero-content button:nth-child(2n) {
+    background-color: #F5F5F5;
+  }
+
+  .hero-image {
+    width: 130%;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .hero-image img {
+    width: 100%;
+    border: none;
+  }
+
+  .main-container {
+    padding: 90px 50px;
+    position: relative;
+    z-index: 1;
+    top: -100px;
+    border: 1px solid #EEE;
+    background-color: #FFF;
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  .main-container section {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 150px;
+  }
+
+  .main-container section:last-child {
+    margin-bottom: 50px;
+  }
+
+  .main-container-img {
+    width: 500px;
+    height: 300px;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .main-container-text {
+    width: 60%;
+    padding-right: 50px;
+  }
+
+  .main-container section h1 {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+
+  .main-container section .main-container-text p {
+    margin-bottom: 20px;
+  }
+
+  .main-container section p.stats {
+    margin-top: 5px;
+  }
+
+  .main-container section p img.icon {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 3px;
+    margin-right: 10px;
+  }
+  .people {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .person {
+    width: 33.33%;
+    margin-bottom: 50px;
+  }
+
+  .person:nth-of-type(3n - 1) {
+    padding: 0 10px;
+  }
+
+  .person:nth-child(3n+1) {
+    padding-left: 0;
+  }
+
+  .person span {
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: block;
+  }
+
+  footer {
+    margin: 0 50px 50px;
+    padding: 150px 100px 70px;
+    margin-top: -180px;
+    background-color: #F5F5F5;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    -webkit-justify-content: space-between;
+  }
+
+
+  .footer-logo {
+    width: 150px;
+    margin-top: 18px;
+    margin-right: 80px;
+  }
+
+  footer ul li {
+    text-align: left;
+    margin-bottom: 30px;
+    white-space: nowrap;
+  }
+
+  footer a,
+  footer span {
+    font-size: 16px;
+  }
+
+  .more li {
+    text-align: right;
+  }
+
+  .more .icon {
+    padding: 0 0 0 20px;
+  }
+
+  footer .icon {
+    width: 34px;
+    padding: 0 8px;
+    position: relative;
+    top: 2px;
+    opacity: 0.5;
+  }
+
+  footer .icon.envelope {
+    width: 32px;
+  }
+
+  .footer-made-by {
+    margin-top: 31px;
+  }
+
+  /* Flexbox */
+  .flex-direction_row {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+  }
+
+  .flex-direction_column {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 1000px) {
+    .main-container .responsive-column,
+    footer .responsive-column {
+      flex-direction: column;
+    }
+    .main-container-text {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+    .main-container-img {
+      width: 100%;
+    }
+    .main-container,
+    .hero-container {
+      padding: 90px 30px;
+      width: 100%;
+      border: none;
+    }
+    .hero-container {
+      margin: 0;
+    }
+    .main-container-text {
+      padding-right: 0;
+    }
+    .more {
+      display: none;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .person:nth-of-type(3n - 1) {
+      padding: inherit;
+    }
+    .person {
+      width: 50%;
+      margin-bottom: 40px;
+    }
+  }
+
+
+  @media (max-width: 800px) {
+    .hero-image {
+      display: none
+    }
+    .hero-content {
+      padding: 0;
+    }
+    header {
+      left: 30px;
+    }
+    footer {
+      padding: 130px 60px 30px;
+    }
+    .footer-logo {
+      width: 100px;
+      margin-top: 25px;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .person {
+      width: 100%;
+    }
+    h1 {
+      font-size: 30px;
+    }
+    .hero-content h1,
+    .main-container section h1 {
+      margin-top: 50px;
+      font-size: 30px;
+    }
+    p,
+    a,
+    span,
+    button {
+      font-size: 18px;
+    }
+    .footer-made-by {
+      display: none;
+    }
+    footer {
+      margin: -180px 20px 20px;
+      padding: 130px 30px 20px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    p,
+    a,
+    span,
+    button {
+      font-size: 14px;
+    }
+  }
 }

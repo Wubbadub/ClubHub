@@ -1,12 +1,12 @@
 import React from 'react'
 
-import Splash from 'pages/Splash'
+import Classic from 'templates/Classic'
 
 const ClubHub = () => {
   return (
     <div>
       {/* React components (i.e. page layout) goes here */}
-      <Splash />
+      <Classic />
     </div>
   )
 }
