@@ -17,6 +17,10 @@ body {
   font-size: @body-font-size;
   overflow-x: hidden;
 }
+// For mobile support
+@-ms-viewport{
+  width: device-width;
+}
 a {
   color: @core-link-color;
   text-decoration: underline;
