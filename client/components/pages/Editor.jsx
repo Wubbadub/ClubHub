@@ -9,8 +9,9 @@ export default class Editor extends PureComponent{
   render() {
     return (
       <div>
-        <Link to="/">Go back, I am full of regret!</Link>
+        <Link to="/" className="btn btn-back float-right">Back</Link>
       </div>
+
     )
   }
 }
