@@ -8,12 +8,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   entry: [
     'babel-polyfill',
-    'webpack-hot-middleware/client?reload=true',
     `${__dirname}/client/main.jsx`
   ],
   output: {
-    path: `${__dirname}/dist/`,
-    filename: 'client/bundle.js',
+    path: `${__dirname}/dist`,
+    filename: 'assets/bundle.js',
     publicPath: '/'
   },
   plugins: [
@@ -24,7 +23,6 @@ module.exports = {
     }),
     failPlugin,
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
   ],
   module: {
@@ -60,7 +58,7 @@ module.exports = {
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
-            'file?hash=sha512&digest=hex&name=[hash].[ext]',
+            'file?hash=sha512&digest=hex&name=assets/[hash].[ext]',
             'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
         ]
       }
