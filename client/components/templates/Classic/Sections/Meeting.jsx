@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react'
 
-const map = require('../../img/map.png')
+const map = require('img/map.png')
 
-export default class ClassicContentMeeting extends PureComponent{
+export default class Meeting extends PureComponent{
   constructor(props){
     super(props)
   }

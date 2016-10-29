@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react'
 
-const twitter = require('../../img/twitter.svg')
-const envelope = require('../../img/envelope.svg')
-const logo = require('../../img/logo.svg')
-const arrow = require('../../img/arrow.svg')
+const twitter = require('img/twitter.svg')
+const envelope = require('img/envelope.svg')
+const logo = require('img/logo.svg')
+const arrow = require('img/arrow.svg')
 
-export default class ClassicFooter extends PureComponent{
+export default class Footer extends PureComponent{
   constructor(props){
     super(props)
   }
