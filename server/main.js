@@ -20,42 +20,66 @@ const path = require('path')
 // #       WEBPACK       #
 // #######################
 
+let webpackValid = false
+
 const webpack = require('webpack')
 const webpackConfig = require('../webpack.config.js')
-const webpackDevMiddleware = require('webpack-dev-middleware')
-const webpackHotMiddleware = require('webpack-hot-middleware')
-
 const compiler = webpack(webpackConfig)
-const webpackMiddleware = webpackDevMiddleware(compiler, {
-  pnoInfo: true,
-  publicPath: webpackConfig.output.publicPath,
-  stats: {
-    colors: true,
-    hash: false,
-    timings: true,
-    chunks: false,
-    chunkModules: false,
-    modules: false
-  }
-})
 
-// Use webpack to build files in memory (to be served) ToDo: build to /dist for production
-app.use(webpackMiddleware)
-app.use(webpackHotMiddleware(compiler))
+compiler.run(function (err, stats) {
+  if (err) { throw err }
+
+  console.log(stats.toString({
+    chunks: false, // Makes the build much quieter
+    colors: true
+  }))
+
+  webpackValid = true
+})
 
 // #######################
 // #       ROUTING       #
 // #######################
 
 // MIDDLEWARE FUNCTIONS -- app.use()
+
+app.use(function (req, res, next) {
+  console.log(`[app] ${req.method} ${req.url}`)
+  next()
+})
+
 // provide resources in client path
-app.use(express.static(path.join(__dirname, '/../client')))
+app.use('/assets', express.static(path.join(__dirname, '/../dist/assets')))
+
+app.get('/api/site/*', function (req, res) {
+  res.json({
+    'title': 'Sample Club',
+    'sections': [
+      {
+        'type': 'hero',
+        'title': 'Sample Club',
+        'button-a': {
+          'type': 'email',
+          'content': 'sample@uvic.ca'
+        }
+      }
+    ]
+  })
+})
+
+app.get('/api/*', function (req, res) {
+  res.status(404).json({'error': 'PC Load Letter'})
+})
+
+app.get('/*', function (req, res) {
+  if (webpackValid) res.sendFile(path.join(__dirname, '/../dist/index.html'))
+  else console.log('[app] waiting for valid webpack')
+})
 
 app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-// Server listens to requests on PORT
 app.listen(PORT, function reportRunning () {
-  console.log(`Running on port ${PORT}`)
+  console.log(`[app] running on port ${PORT}`)
 })
