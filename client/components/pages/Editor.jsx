@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import {Link} from 'react-router'
+import EditorSection from 'parts/EditorSection'
 
 export default class Editor extends PureComponent{
   constructor(props){
@@ -9,7 +10,14 @@ export default class Editor extends PureComponent{
   render() {
     return (
       <div>
-        <Link to="/" className="btn btn-back float-right">Back</Link>
+        <div>
+          <Link to="/" className="btn btn-back float-right">Back</Link>
+        </div>
+
+        <div id="editor-container" className="col-3" >
+          <EditorSection section="General" />
+        </div>
+
       </div>
 
     )
