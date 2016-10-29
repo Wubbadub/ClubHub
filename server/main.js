@@ -49,7 +49,7 @@ app.use(webpackHotMiddleware(compiler))
 
 // MIDDLEWARE FUNCTIONS -- app.use()
 // provide resources in client path
-app.use(express.static(path.join(path.join(__dirname, '/../client'))))
+app.use(express.static(path.join(__dirname, '/../client')))
 
 app.use(bodyParser.urlencoded({
   extended: true
