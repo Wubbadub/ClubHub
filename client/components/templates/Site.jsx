@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
 
 import Hero from './Classic/Hero'
 import Header from './Classic/Header'
@@ -8,7 +8,10 @@ import Footer from './Classic/Footer'
 export default class Site extends PureComponent{
   constructor(props){
     super(props)
-    let site = this.props.route.site;
+  }
+
+  static propTypes = {
+    route: PropTypes.object
   }
 
   render() {
