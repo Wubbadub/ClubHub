@@ -16,10 +16,10 @@ const app = express()
 const bodyParser = require('body-parser')
 const path = require('path')
 
-/*  #######################
-*  #       WEBPACK       #
-*  #######################
-*/
+// #######################
+// #       WEBPACK       #
+// #######################
+
 const webpack = require('webpack')
 const webpackConfig = require('../webpack.config.js')
 const webpackDevMiddleware = require('webpack-dev-middleware')
@@ -49,25 +49,11 @@ app.use(webpackHotMiddleware(compiler))
 
 // MIDDLEWARE FUNCTIONS -- app.use()
 // provide resources in client path
-app.use(express.static(path.join(path.join(__dirname, '/../client'))))
+app.use(express.static(path.join(__dirname, '/../client')))
 
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-
-// Create form endpoint
-// app.post('/newclub', function(req, res){
-//   const data = {
-//     'clubName': req.body.clubName,
-//     'clubDescr': req.body.clubDescr
-//   }
-
-//   fs.readFile(path.join(__dirname + '/../client/template/hubsite/hubsite.html'), 'utf-8', function(err, source){
-//     var template = handlebars.compile(source)
-//     var html = template(data)
-//     res.send(html)
-//   })
-// })
 
 // Server listens to requests on PORT
 app.listen(PORT, function reportRunning () {
