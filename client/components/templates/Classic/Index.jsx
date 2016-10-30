@@ -11,16 +11,16 @@ export default class Classic extends PureComponent{
   }
 
   static propTypes = {
-    route: PropTypes.object
+    site: PropTypes.object
   }
 
   render() {
     return (
     <div className="theme-classic outer-container">
-      <Header/>
-      <Hero/>
-      <Content/>
-      <Footer/>
+      <Header site={this.props.site}/>
+      <Hero site={this.props.site}/>
+      <Content site={this.props.site}/>
+      <Footer site={this.props.site}/>
     </div>
     )
   }

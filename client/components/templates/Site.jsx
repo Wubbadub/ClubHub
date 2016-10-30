@@ -15,7 +15,7 @@ export default class Site extends PureComponent{
     const Theme = Themes[this.props.route.site.theme]
     return (
     <div className="site">
-      <Theme />
+      <Theme site={this.props.route.site}/>
     </div>
     )
   }

@@ -15,16 +15,16 @@ export default class App extends PureComponent{
     return {
       'title': 'UVic Canoe Club',
       'theme': 'Classic',
-      'sections': [
-        {
-          'type': 'hero',
-          'title': 'UVic Canoe Club',
+      'sections': {
+        'hero': {
+          'component': 'Hero',
+          'title': 'Our Lcub',
           'button-a': {
             'type': 'email',
             'content': 'Hi'
           }
         }
-      ]
+      }
     }
   }
 
