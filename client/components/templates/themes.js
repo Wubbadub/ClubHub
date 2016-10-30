@@ -1,4 +1,4 @@
-import ClassicTheme from './Classic'
+import ClassicTheme from './Classic/Index'
 
 export {
   ClassicTheme as Classic
