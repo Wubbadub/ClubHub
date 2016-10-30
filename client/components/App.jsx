@@ -32,8 +32,8 @@ export default class App extends PureComponent{
     return (
       <Router history={browserHistory}>
         <Route path="/" component={Splash}/>
-        <Route path="/editor" component={Editor}/>
-        <Route path="/site" site={this.getSite()} component={Site}/>
+        <Route path="/editor/:site" component={Editor}/>
+        <Route path="/site/:site" site={this.getSite()} component={Site}/>
       </Router>
     )
   }

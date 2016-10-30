@@ -1,9 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react'
 
-import Hero from './Classic/Hero'
-import Header from './Classic/Header'
-import Content from './Classic/Content'
-import Footer from './Classic/Footer'
+import * as Themes from './themes'
 
 export default class Site extends PureComponent{
   constructor(props){
@@ -15,12 +12,10 @@ export default class Site extends PureComponent{
   }
 
   render() {
+    const Theme = Themes[this.props.route.site.theme]
     return (
-    <div className="site theme-classic outer-container">
-      <Header/>
-      <Hero/>
-      <Content/>
-      <Footer/>
+    <div className="site">
+      <Theme />
     </div>
     )
   }
