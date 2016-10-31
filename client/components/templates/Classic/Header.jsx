@@ -11,13 +11,13 @@ export default class Hero extends PureComponent{
       <header>
           <ul>
               <li>
-                  <a href="#" target="_blank" ><Icon icon="twitter_circle" size="1.5"/></a>
+                  <a href="#" target="_blank" ><Icon icon="twitter_circle" size={1.5} /></a>
               </li>
               <li>
-                  <a href="#" target="_blank" ><Icon icon="facebook_circle" size="1.5"/></a>
+                  <a href="#" target="_blank" ><Icon icon="facebook_circle" size={1.5}/></a>
               </li>
               <li>
-                  <a href="#" target="_blank" ><Icon icon="instagram_circle" size="1.5"/></a>
+                  <a href="#" target="_blank" ><Icon icon="instagram_circle" size={1.5}/></a>
               </li>
           </ul>
       </header>
