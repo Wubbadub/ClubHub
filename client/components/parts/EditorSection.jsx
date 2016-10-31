@@ -10,18 +10,24 @@ export default class EditorSection extends PureComponent{
   static propTypes = {
     section: PropTypes.string,
     active: PropTypes.bool,
-    toggleShowSection: PropTypes.func
+    setActive: PropTypes.func
+  }
+
+  toggleActive = () => {
+    this.props.setActive(this.props.section)
   }
 
   render(){
     return (
-      <form className="form-group" >
-        <label onClick={this.props.toggleShowSection} htmlFor={this.props.section}><b>{this.props.section}</b></label>
-        <div className={`${this.props.active? '' : 'hide'} menu`} >
-          <ShortTextInput className="menu-item" name="Name" />
-          <LongTextInput className="menu-item" name="Description" />
-        </div>
-      </form>
+      <div className="accordion-section">
+        <button type="button" className="btn btn-link btn-block" onClick={this.toggleActive}>{this.props.section}</button>
+        <form className="form-group" >
+          <div className={`${this.props.active? '' : 'hide'} menu`} >
+            <ShortTextInput className="menu-item" name="Name" />
+            <LongTextInput className="menu-item" name="Description" />
+          </div>
+        </form>
+      </div>
     )
   }
 }

@@ -5,7 +5,7 @@ export default class Editor extends PureComponent{
   constructor(props){
     super(props)
     this.state = {
-      isSectionActive: this.activateAllSections(this.props.route.site.sections)
+      sectionStates: this.makeSiteSections()
     }
   }
 
@@ -13,38 +13,31 @@ export default class Editor extends PureComponent{
     route: PropTypes.object
   }
 
-  getSiteSections = () => {
-    const sections = []
+  makeSiteSections = () => {
+    const sections = {}
     for (const sectionTitle in this.props.route.site.sections){
-      sections.push(sectionTitle)
+      sections[sectionTitle] = false
     }
     return sections
   }
 
-  toggleShow = (section) => {
-    return (() => {
-      this.setState({isSectionActive: {section: !this.state.isSectionActive[section]} })
-    })
-  }
-
-  activateAllSections = (sections) => {
-    const isSectionActive = {}
-    for (const section in sections){
-      if (sections.hasOwnProperty(section)){
-        isSectionActive[section] = true
-      }
-    }
-    return isSectionActive
+  toggleSection = (s) => {
+    const sections = this.state.sectionStates
+    sections[s] = !sections[s]
+    this.setState({sectionStates: sections})
+    this.forceUpdate()
   }
 
   render() {
     return (
       <div id="editor-container" className="col-3" >
-        {
-          (this.getSiteSections()).map((section) => {
-            return (<EditorSection section={section} active={this.state.isSectionActive[section]} toggleShowSection={this.toggleShow(section)} />)
-          })
-        }
+        <div className="accordion">
+          {Object.keys(this.state.sectionStates).map((s) => {
+            return (
+              <EditorSection section={s} active={this.state.sectionStates[s]} setActive={this.toggleSection} />
+              )
+          })}
+        </div>
       </div>
     )
   }
