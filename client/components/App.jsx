@@ -3,8 +3,8 @@ import {Router, Route, browserHistory} from 'react-router'
 
 // Our Pages
 import Splash from 'pages/Splash'
-import Editor from 'pages/Editor'
-import Site from 'templates/Site'
+import Editor from 'pages/editor/Editor'
+import Site from 'pages/site/Site'
 
 
 class EditorContainer extends PureComponent {

@@ -1,7 +1,7 @@
 import React, {PureComponent, PropTypes} from 'react'
 
-import Site from 'templates/Site'
-import EditorSection from 'parts/EditorSection'
+import Site from 'pages/site/Site'
+import EditorSection from 'pages/editor/EditorSection'
 
 export default class Editor extends PureComponent {
   constructor(props) {
