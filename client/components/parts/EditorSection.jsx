@@ -5,25 +5,19 @@ import LongTextInput from 'parts/LongTextInput'
 export default class EditorSection extends PureComponent{
   constructor(props){
     super(props)
-    this.state = {
-      showSection: true
-    }
   }
 
   static propTypes = {
     section: PropTypes.string,
-    close: PropTypes.func
-  }
-
-  toggleShowSection = () => {
-    this.setState({showSection: !this.state.showSection})
+    active: PropTypes.bool,
+    toggleShowSection: PropTypes.func
   }
 
   render(){
     return (
       <form className="form-group" >
-        <label onClick={this.toggleShowSection} htmlFor={this.props.section}><b>{this.props.section}</b></label>
-        <div className={`${this.state.showSection? '' : 'hide'} menu`} >
+        <label onClick={this.props.toggleShowSection} htmlFor={this.props.section}><b>{this.props.section}</b></label>
+        <div className={`${this.props.active? '' : 'hide'} menu`} >
           <ShortTextInput className="menu-item" name="Name" />
           <LongTextInput className="menu-item" name="Description" />
         </div>

@@ -11,6 +11,8 @@ export default class App extends PureComponent{
     super(props)
   }
 
+  // TODO: implement data object retrieval from DB
+  // TODO: handle case where user does not yet have a site (supply default data)
   getSite = () => {
     return {
       'title': 'UVic Canoe Club',
@@ -18,11 +20,17 @@ export default class App extends PureComponent{
       'sections': {
         'hero': {
           'component': 'Hero',
-          'title': 'Our Lcub',
+          'title': 'Our Club',
           'button-a': {
             'type': 'email',
             'content': 'Hi'
           }
+        },
+        'headers': {
+          'nonsense': 'nonsense'
+        },
+        'footer': {
+          'nonsense': 'nonsense'
         }
       }
     }
@@ -32,10 +40,9 @@ export default class App extends PureComponent{
     return (
       <Router history={browserHistory}>
         <Route path="/" component={Splash}/>
-        <Route path="/editor/:site" component={Editor}/>
+        <Route path="/editor/:site" site={this.getSite()} component={Editor}/>
         <Route path="/site/:site" site={this.getSite()} component={Site}/>
       </Router>
     )
   }
 }
-
