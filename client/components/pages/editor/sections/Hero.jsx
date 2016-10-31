@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 // import classNames from 'classnames'
 
-import ShortTextInput from 'parts/ShortTextInput'
-import LongTextInput from 'parts/LongTextInput'
+import ShortTextField from 'parts/ShortTextField'
+import LongTextField from 'parts/LongTextField'
 
 export default class Hero extends Component{
   constructor(props){
@@ -25,8 +25,8 @@ export default class Hero extends Component{
   render(){
     return (
       <form>
-        <ShortTextInput label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
-        <LongTextInput label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
+        <ShortTextField label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
+        <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
       </form>
     )
   }

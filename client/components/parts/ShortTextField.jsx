@@ -1,6 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react'
 
-export default class LongTextInput extends PureComponent{
+export default class ShortTextField extends PureComponent{
   constructor(props){
     super(props)
   }
@@ -25,7 +25,7 @@ export default class LongTextInput extends PureComponent{
     return (
       <div className="form-group">
         <label className="form-label">{this.props.label}</label>
-        <textarea className="form-input" type="text" onChange={this.handleChange} placeholder={this.props.placeholder} value={this.props.value}/>
+        <input className="form-input" type="text" onChange={this.handleChange} placeholder={this.props.placeholder} value={this.props.value}/>
       </div>
     )
   }
