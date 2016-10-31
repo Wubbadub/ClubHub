@@ -10,7 +10,6 @@ export default class EditorSection extends Component{
 
   static propTypes = {
     section: PropTypes.string,
-    title: PropTypes.string,
     data: PropTypes.object,
     setData: PropTypes.func,
     active: PropTypes.bool,
@@ -26,7 +25,7 @@ export default class EditorSection extends Component{
     const Section = Sections[this.props.section]
     return (
       <div className={classNames('accordion-section', {'active': this.props.active})}>
-        <h5 className="accordion-header" onClick={this.toggleActive}>{this.props.title}</h5>
+        <h5 className="accordion-header" onClick={this.toggleActive}>{Section.Title}</h5>
         <div className="accordion-content">
           <div>
             <Section data={this.props.data} setData={this.props.setData}/>

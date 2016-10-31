@@ -44,11 +44,9 @@ export default class Editor extends Component {
             <div className="accordion">
               {Object.keys(this.state.site.sections).map((s) => {
                 const section = this.state.site.sections[s]
-                if (!section.editor) return null
                 return (
                   <EditorSection key={s}
                                  section={s}
-                                 title={section.editor}
                                  active={this.state.sectionStates[s]}
                                  setActive={this.toggleSection}
                                  data={section}

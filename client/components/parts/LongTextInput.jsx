@@ -6,14 +6,26 @@ export default class LongTextInput extends PureComponent{
   }
 
   static propTypes = {
-    label: PropTypes.string
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
+  }
+
+  handleChange = (e) => {
+    const val = e.target.value
+    this.props.onChange(this.props.name, val)
+  }
+
+  static defaultProps = {
   }
 
   render(){
     return (
       <div className="form-group">
         <label className="form-label">{this.props.label}</label>
-        <textarea className="form-input" type="text" placeholder={this.props.label}></textarea>
+        <textarea className="form-input" type="text" onChange={this.handleChange} placeholder={this.props.placeholder} value={this.props.value}/>
       </div>
     )
   }

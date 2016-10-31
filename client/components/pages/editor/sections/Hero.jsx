@@ -9,6 +9,8 @@ export default class Hero extends Component{
     super(props)
   }
 
+  static Title = 'Landing'
+
   static propTypes = {
     data: PropTypes.object,
     setData: PropTypes.func
@@ -24,7 +26,7 @@ export default class Hero extends Component{
     return (
       <form>
         <ShortTextInput label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
-        <LongTextInput label="Description"/>
+        <LongTextInput label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
       </form>
     )
   }

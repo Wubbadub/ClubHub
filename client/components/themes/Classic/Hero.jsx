@@ -18,11 +18,7 @@ export default class Hero extends Component{
           </div>
           <div className="hero-content center">
               <h1>{this.props.site.sections.hero.title}</h1>
-              <p>
-                  A commmunity of canoe and water lovers to share and experiences
-                  of canoeing and help each other rivers and lakes and stuff
-                  haha we even like to knowledge.
-              </p>
+              <p>{this.props.site.sections.hero.description}</p>
               <button type="button" name="button">Join</button>
               <button type="button" name="button">Contact</button>
           </div>

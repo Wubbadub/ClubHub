@@ -27,10 +27,9 @@ export default class App extends PureComponent{
       'theme': 'Classic',
       'sections': {
         'hero': {
-          'editor': 'Landing',
           'component': 'Hero',
           'title': 'Our Club',
-          'desciption': 'A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.',
+          'description': 'A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.',
           'buttons': [
             {
               'type': 'email',
@@ -45,7 +44,6 @@ export default class App extends PureComponent{
           ]
         },
         'header': {
-          'editor': 'Social Links',
           'nonsense': 'nonsense'
         },
         'footer': {
