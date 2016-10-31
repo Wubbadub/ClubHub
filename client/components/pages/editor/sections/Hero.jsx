@@ -1,10 +1,10 @@
-import React, {PureComponent, PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react'
 // import classNames from 'classnames'
 
 import ShortTextInput from 'parts/ShortTextInput'
 import LongTextInput from 'parts/LongTextInput'
 
-export default class Hero extends PureComponent{
+export default class Hero extends Component{
   constructor(props){
     super(props)
   }
@@ -18,10 +18,6 @@ export default class Hero extends PureComponent{
     const d = this.props.data
     d[field] = value
     this.props.setData('hero', d)
-  }
-
-  shouldComponentUpdate = () => {
-    return true
   }
 
   render(){

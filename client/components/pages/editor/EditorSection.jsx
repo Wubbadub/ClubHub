@@ -1,9 +1,9 @@
-import React, {PureComponent, PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react'
 import classNames from 'classnames'
 
 import * as Sections from './sections'
 
-export default class EditorSection extends PureComponent{
+export default class EditorSection extends Component{
   constructor(props){
     super(props)
   }
@@ -19,10 +19,6 @@ export default class EditorSection extends PureComponent{
 
   toggleActive = () => {
     this.props.setActive(this.props.section)
-  }
-
-  shouldComponentUpdate = () => {
-    return true
   }
 
   render(){

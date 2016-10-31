@@ -1,18 +1,14 @@
-import React, {PureComponent, PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react'
 
 const bg = require('img/canoe.png')
 
-export default class Hero extends PureComponent{
+export default class Hero extends Component{
   constructor(props){
     super(props)
   }
 
   static propTypes = {
     site: PropTypes.object
-  }
-
-  shouldComponentUpdate = () => {
-    return true
   }
 
   render() {

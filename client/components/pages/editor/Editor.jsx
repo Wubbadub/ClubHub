@@ -1,9 +1,9 @@
-import React, {PureComponent, PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react'
 
 import Site from 'pages/site/Site'
 import EditorSection from 'pages/editor/EditorSection'
 
-export default class Editor extends PureComponent {
+export default class Editor extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -28,14 +28,12 @@ export default class Editor extends PureComponent {
     const sections = this.state.sectionStates
     sections[s] = !sections[s]
     this.setState({sectionStates: sections})
-    this.forceUpdate()
   }
 
   setData = (section, data) => {
     const s = this.state.site
     s.sections[section] = data
     this.setState({site: s})
-    this.forceUpdate()
   }
 
   render() {

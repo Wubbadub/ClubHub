@@ -1,18 +1,14 @@
-import React, {PureComponent, PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react'
 
 import * as Themes from './themes'
 
-export default class Site extends PureComponent{
+export default class Site extends Component{
   constructor(props){
     super(props)
   }
 
   static propTypes = {
     site: PropTypes.object
-  }
-
-  shouldComponentUpdate = () => {
-    return true
   }
 
   render() {

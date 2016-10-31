@@ -1,21 +1,17 @@
-import React, {PureComponent, PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react'
 
 import Hero from './Hero'
 import Header from './Header'
 import Content from './Content'
 import Footer from './Footer'
 
-export default class Classic extends PureComponent{
+export default class Classic extends Component{
   constructor(props){
     super(props)
   }
 
   static propTypes = {
     site: PropTypes.object
-  }
-
-  shouldComponentUpdate = () => {
-    return true
   }
 
   render() {
