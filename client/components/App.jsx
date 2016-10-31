@@ -44,7 +44,7 @@ export default class App extends PureComponent{
             }
           ]
         },
-        'headers': {
+        'header': {
           'editor': 'Social Links',
           'nonsense': 'nonsense'
         },

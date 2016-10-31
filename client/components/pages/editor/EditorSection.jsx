@@ -1,8 +1,7 @@
 import React, {PureComponent, PropTypes} from 'react'
 import classNames from 'classnames'
 
-import ShortTextInput from 'parts/ShortTextInput'
-import LongTextInput from 'parts/LongTextInput'
+import * as Sections from './sections'
 
 export default class EditorSection extends PureComponent{
   constructor(props){
@@ -12,6 +11,7 @@ export default class EditorSection extends PureComponent{
   static propTypes = {
     section: PropTypes.string,
     title: PropTypes.string,
+    data: PropTypes.object,
     active: PropTypes.bool,
     setActive: PropTypes.func
   }
@@ -21,19 +21,14 @@ export default class EditorSection extends PureComponent{
   }
 
   render(){
+    if (!Sections[this.props.section]) return null
+    const Section = Sections[this.props.section]
     return (
       <div className={classNames('accordion-section', {'active': this.props.active})}>
         <h5 className="accordion-header" onClick={this.toggleActive}>{this.props.title}</h5>
         <div className="accordion-content">
           <div>
-            <form>
-              <div className="form-group">
-                <ShortTextInput className="menu-item" name="Name" />
-              <div className="form-group">
-              </div>
-                <LongTextInput className="menu-item" name="Description" />
-              </div>
-            </form>
+            <Section data={this.props.data}/>
           </div>
         </div>
       </div>
