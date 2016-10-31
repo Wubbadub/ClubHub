@@ -48,17 +48,13 @@ module.exports = {
         loaders: ['style', 'css', 'less']
       },
       {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loaders: ['url?limit=10000&minetype=application/font-woff']
-      },
-      {
-        test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loaders: ['file']
+        test: /font\/[^\.]+\.(eot|svg|ttf|woff|woff2)$/,
+        loaders: ['file?name=assets/[name].[ext]']
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
-            'file?hash=sha512&digest=hex&name=assets/[hash].[ext]',
+            'file?name=assets/[name].[ext]',
             'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
         ]
       }

@@ -1,8 +1,5 @@
 import React, {PureComponent} from 'react'
-
-const twitter = require('img/twitter.svg')
-const facebook = require('img/facebook.svg')
-const instagram = require('img/instagram.png')
+import Icon from 'parts/Icon'
 
 export default class Hero extends PureComponent{
   constructor(props){
@@ -14,13 +11,13 @@ export default class Hero extends PureComponent{
       <header>
           <ul>
               <li>
-                  <a href="#" target="_blank" ><img src={twitter} alt="" /></a>
+                  <a href="#" target="_blank" ><Icon icon="twitter_circle" size="1.5"/></a>
               </li>
               <li>
-                  <a href="#" target="_blank" ><img src={facebook} alt="" /></a>
+                  <a href="#" target="_blank" ><Icon icon="facebook_circle" size="1.5"/></a>
               </li>
               <li>
-                  <a href="#" target="_blank" ><img src={instagram} alt="" /></a>
+                  <a href="#" target="_blank" ><Icon icon="instagram_circle" size="1.5"/></a>
               </li>
           </ul>
       </header>
