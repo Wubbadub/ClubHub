@@ -11,6 +11,10 @@ export default class Site extends PureComponent{
     site: PropTypes.object
   }
 
+  shouldComponentUpdate = () => {
+    return true
+  }
+
   render() {
     const Theme = Themes[this.props.site.theme]
     return (

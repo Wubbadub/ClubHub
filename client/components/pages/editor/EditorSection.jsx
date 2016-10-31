@@ -12,12 +12,17 @@ export default class EditorSection extends PureComponent{
     section: PropTypes.string,
     title: PropTypes.string,
     data: PropTypes.object,
+    setData: PropTypes.func,
     active: PropTypes.bool,
     setActive: PropTypes.func
   }
 
   toggleActive = () => {
     this.props.setActive(this.props.section)
+  }
+
+  shouldComponentUpdate = () => {
+    return true
   }
 
   render(){
@@ -28,7 +33,7 @@ export default class EditorSection extends PureComponent{
         <h5 className="accordion-header" onClick={this.toggleActive}>{this.props.title}</h5>
         <div className="accordion-content">
           <div>
-            <Section data={this.props.data}/>
+            <Section data={this.props.data} setData={this.props.setData}/>
           </div>
         </div>
       </div>

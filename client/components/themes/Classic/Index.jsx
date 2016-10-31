@@ -14,6 +14,10 @@ export default class Classic extends PureComponent{
     site: PropTypes.object
   }
 
+  shouldComponentUpdate = () => {
+    return true
+  }
+
   render() {
     return (
     <div className="theme-classic outer-container">

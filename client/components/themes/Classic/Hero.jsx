@@ -11,6 +11,10 @@ export default class Hero extends PureComponent{
     site: PropTypes.object
   }
 
+  shouldComponentUpdate = () => {
+    return true
+  }
+
   render() {
     return (
       <div className="hero-container">

@@ -6,14 +6,14 @@ export default class LongTextInput extends PureComponent{
   }
 
   static propTypes = {
-    name: PropTypes.string
+    label: PropTypes.string
   }
 
   render(){
     return (
-      <div>
-        <label className="form-label">{this.props.name}</label>
-        <textarea className="form-input" type="text" placeholder={this.props.name}></textarea>
+      <div className="form-group">
+        <label className="form-label">{this.props.label}</label>
+        <textarea className="form-input" type="text" placeholder={this.props.label}></textarea>
       </div>
     )
   }

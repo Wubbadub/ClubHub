@@ -7,7 +7,8 @@ export default class Editor extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      sectionStates: this.makeSiteSections()
+      sectionStates: this.makeSiteSections(),
+      site: this.props.site
     }
   }
 
@@ -30,22 +31,36 @@ export default class Editor extends PureComponent {
     this.forceUpdate()
   }
 
+  setData = (section, data) => {
+    const s = this.state.site
+    s.sections[section] = data
+    this.setState({site: s})
+    this.forceUpdate()
+  }
+
   render() {
     return (
       <div className="editor container">
         <div className="columns">
           <div className="editor-bar col-3">
             <div className="accordion">
-              {Object.keys(this.state.sectionStates).map((s) => {
-                if (!this.props.site.sections[s].editor) return
+              {Object.keys(this.state.site.sections).map((s) => {
+                const section = this.state.site.sections[s]
+                if (!section.editor) return null
                 return (
-                  <EditorSection key={s} section={s} title={this.props.site.sections[s].editor} active={this.state.sectionStates[s]} setActive={this.toggleSection} />
+                  <EditorSection key={s}
+                                 section={s}
+                                 title={section.editor}
+                                 active={this.state.sectionStates[s]}
+                                 setActive={this.toggleSection}
+                                 data={section}
+                                 setData={this.setData}/>
                 )
               })}
             </div>
           </div>
           <div className="site-preview col-12">
-            <Site site={this.props.site}/>
+            <Site site={this.state.site}/>
           </div>
         </div>
       </div>
