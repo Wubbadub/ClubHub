@@ -30,10 +30,19 @@ export default class App extends PureComponent{
           'editor': 'Landing',
           'component': 'Hero',
           'title': 'Our Club',
-          'button-a': {
-            'type': 'email',
-            'content': 'Hi'
-          }
+          'desciption': 'A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.',
+          'buttons': [
+            {
+              'type': 'email',
+              'text': 'Contact Us',
+              'href': 'mailto:canoe@uvic.ca'
+            },
+            {
+              'type': 'facebook',
+              'text': 'Join our Facebook Group',
+              'href': 'http://facebook.com/'
+            }
+          ]
         },
         'headers': {
           'editor': 'Social Links',
