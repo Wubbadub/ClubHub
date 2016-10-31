@@ -8,14 +8,14 @@ export default class Site extends PureComponent{
   }
 
   static propTypes = {
-    route: PropTypes.object
+    site: PropTypes.object
   }
 
   render() {
-    const Theme = Themes[this.props.route.site.theme]
+    const Theme = Themes[this.props.site.theme]
     return (
     <div className="site">
-      <Theme site={this.props.route.site}/>
+      <Theme site={this.props.site}/>
     </div>
     )
   }

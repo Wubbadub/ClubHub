@@ -6,6 +6,14 @@ import Splash from 'pages/Splash'
 import Editor from 'pages/Editor'
 import Site from 'templates/Site'
 
+
+class EditorContainer extends PureComponent {
+  render() { return (<Editor site={App.getSite()} />) }
+}
+class SiteContainer extends PureComponent {
+  render() { return (<Site site={App.getSite()} />) }
+}
+
 export default class App extends PureComponent{
   constructor(props){
     super(props)
@@ -13,7 +21,7 @@ export default class App extends PureComponent{
 
   // TODO: implement data object retrieval from DB
   // TODO: handle case where user does not yet have a site (supply default data)
-  getSite = () => {
+  static getSite = () => {
     return {
       'title': 'UVic Canoe Club',
       'theme': 'Classic',
@@ -42,8 +50,8 @@ export default class App extends PureComponent{
     return (
       <Router history={browserHistory}>
         <Route path="/" component={Splash}/>
-        <Route path="/editor/:site" site={this.getSite()} component={Editor}/>
-        <Route path="/site/:site" site={this.getSite()} component={Site}/>
+        <Route path="/editor/:site" component={EditorContainer}/>
+        <Route path="/site/:site" component={SiteContainer}/>
       </Router>
     )
   }

@@ -1,4 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react'
+
+import Site from 'templates/Site'
 import EditorSection from 'parts/EditorSection'
 
 export default class Editor extends PureComponent {
@@ -10,12 +12,12 @@ export default class Editor extends PureComponent {
   }
 
   static propTypes = {
-    route: PropTypes.object
+    site: PropTypes.object
   }
 
   makeSiteSections = () => {
     const sections = {}
-    for (const sectionTitle in this.props.route.site.sections) {
+    for (const sectionTitle in this.props.site.sections) {
       sections[sectionTitle] = false
     }
     return sections
@@ -35,12 +37,15 @@ export default class Editor extends PureComponent {
           <div className="editor-bar col-3">
             <div className="accordion">
               {Object.keys(this.state.sectionStates).map((s) => {
-                if (!this.props.route.site.sections[s].editor) return
+                if (!this.props.site.sections[s].editor) return
                 return (
-                  <EditorSection key={s} section={s} title={this.props.route.site.sections[s].editor} active={this.state.sectionStates[s]} setActive={this.toggleSection} />
+                  <EditorSection key={s} section={s} title={this.props.site.sections[s].editor} active={this.state.sectionStates[s]} setActive={this.toggleSection} />
                 )
               })}
             </div>
+          </div>
+          <div className="site-preview col-12">
+            <Site site={this.props.site}/>
           </div>
         </div>
       </div>
