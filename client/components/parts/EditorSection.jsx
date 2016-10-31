@@ -1,4 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react'
+import classNames from 'classnames'
+
 import ShortTextInput from 'parts/ShortTextInput'
 import LongTextInput from 'parts/LongTextInput'
 
@@ -9,6 +11,7 @@ export default class EditorSection extends PureComponent{
 
   static propTypes = {
     section: PropTypes.string,
+    title: PropTypes.string,
     active: PropTypes.bool,
     setActive: PropTypes.func
   }
@@ -19,14 +22,20 @@ export default class EditorSection extends PureComponent{
 
   render(){
     return (
-      <div className="accordion-section">
-        <button type="button" className="btn btn-link btn-block" onClick={this.toggleActive}>{this.props.section}</button>
-        <form className="form-group" >
-          <div className={`${this.props.active? '' : 'hide'} menu`} >
-            <ShortTextInput className="menu-item" name="Name" />
-            <LongTextInput className="menu-item" name="Description" />
+      <div className={classNames('accordion-section', {'active': this.props.active})}>
+        <h5 className="accordion-header" onClick={this.toggleActive}>{this.props.title}</h5>
+        <div className="accordion-content">
+          <div>
+            <form>
+              <div className="form-group">
+                <ShortTextInput className="menu-item" name="Name" />
+              <div className="form-group">
+              </div>
+                <LongTextInput className="menu-item" name="Description" />
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     )
   }

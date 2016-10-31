@@ -19,6 +19,7 @@ export default class App extends PureComponent{
       'theme': 'Classic',
       'sections': {
         'hero': {
+          'editor': 'Landing',
           'component': 'Hero',
           'title': 'Our Club',
           'button-a': {
@@ -27,6 +28,7 @@ export default class App extends PureComponent{
           }
         },
         'headers': {
+          'editor': 'Social Links',
           'nonsense': 'nonsense'
         },
         'footer': {
