@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react'
 
 import ShortTextField from 'parts/ShortTextField'
 import LongTextField from 'parts/LongTextField'
+import ButtonField from 'parts/ButtonField'
 
 export default class Hero extends Component{
   constructor(props){
@@ -27,6 +28,7 @@ export default class Hero extends Component{
       <form>
         <ShortTextField label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
         <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
+        <ButtonField label="First Button" onChange={this.handleChange} value={this.props.data.buttons[0]} name="buttons"/>
       </form>
     )
   }

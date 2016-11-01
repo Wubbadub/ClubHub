@@ -19,8 +19,11 @@ export default class Hero extends Component{
           <div className="hero-content center">
               <h1>{this.props.site.sections.hero.title}</h1>
               <p>{this.props.site.sections.hero.description}</p>
-              <button type="button" name="button">Join</button>
-              <button type="button" name="button">Contact</button>
+              {this.props.site.sections.hero.buttons.map((b, i) => {
+                return (
+                  <a target="blank" key={i} href={b.href}>{b.text}</a>
+                )
+              })}
           </div>
       </div>
     )

@@ -33,12 +33,12 @@ export default class App extends PureComponent{
           'buttons': [
             {
               'type': 'email',
-              'text': 'Contact Us',
+              'text': 'Contact',
               'href': 'mailto:canoe@uvic.ca'
             },
             {
               'type': 'facebook',
-              'text': 'Join our Facebook Group',
+              'text': 'Join us on Facebook',
               'href': 'http://facebook.com/'
             }
           ]
