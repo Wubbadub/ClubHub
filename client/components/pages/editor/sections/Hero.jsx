@@ -17,9 +17,10 @@ export default class Hero extends Component{
     setData: PropTypes.func
   }
 
-  handleChange = (field, value) => {
+  handleChange = (field, value, index) => {
     const d = this.props.data
-    d[field] = value
+    if (index !== null) d[field][index] = value
+    else d[field] = value
     this.props.setData('hero', d)
   }
 
@@ -28,7 +29,8 @@ export default class Hero extends Component{
       <form>
         <ShortTextField label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
         <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
-        <ButtonField label="First Button" onChange={this.handleChange} value={this.props.data.buttons[0]} name="buttons"/>
+        <ButtonField label="Button" onChange={this.handleChange} value={this.props.data.buttons[0]} index={0} name="buttons"/>
+        <ButtonField label="Button" onChange={this.handleChange} value={this.props.data.buttons[1]} index={1} name="buttons"/>
       </form>
     )
   }
