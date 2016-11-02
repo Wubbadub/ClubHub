@@ -48,7 +48,7 @@ module.exports = {
         loaders: ['style', 'css', 'less']
       },
       {
-        test: /font\/[^\.]+\.(eot|svg|ttf|woff|woff2)$/,
+        test: /font[\\|\/][^\.]+\.(eot|svg|ttf|woff|woff2)$/,
         loaders: ['file?name=assets/[name].[ext]']
       },
       {
