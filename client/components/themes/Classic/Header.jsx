@@ -1,24 +1,23 @@
-import React, {PureComponent} from 'react'
+import React, {Component, PropTypes} from 'react'
 import Icon from 'parts/Icon'
 
-export default class Hero extends PureComponent{
+export default class Hero extends Component{
   constructor(props){
     super(props)
   }
 
+  static propTypes = {
+    site: PropTypes.object
+  }
+
   render() {
+    const links = this.props.site.sections.header.links
     return (
       <header>
           <ul>
-              <li>
-                  <a href="#" target="_blank" ><Icon icon="twitter_circle" size={1.5} /></a>
-              </li>
-              <li>
-                  <a href="#" target="_blank" ><Icon icon="facebook_circle" size={1.5}/></a>
-              </li>
-              <li>
-                  <a href="#" target="_blank" ><Icon icon="instagram_circle" size={1.5}/></a>
-              </li>
+            {links.map((l, i) => {
+              return (<li><a href={l.href} key={i} target="_blank" title={l.text}><Icon icon={`${l.type}_circle`} size={1.5}/></a></li>)
+            })}
           </ul>
       </header>
     )

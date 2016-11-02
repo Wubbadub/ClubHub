@@ -23,7 +23,7 @@ export default class Editor extends Component {
   makeSiteSections = () => {
     const sections = {}
     for (const sectionTitle in this.props.site.sections) {
-      sections[sectionTitle] = true
+      sections[sectionTitle] = false
     }
     return sections
   }

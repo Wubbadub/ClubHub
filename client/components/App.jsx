@@ -44,7 +44,23 @@ export default class App extends PureComponent{
           ]
         },
         'header': {
-          'nonsense': 'nonsense'
+          'links': [
+            {
+              'type': 'facebook',
+              'text': 'Join us on Facebook',
+              'href': 'http://facebook.com/'
+            },
+            {
+              'type': 'twitter',
+              'text': 'Follow us on Twitter',
+              'href': 'http://twitter.com/'
+            },
+            {
+              'type': 'instagram',
+              'text': 'Follow us on Instagram',
+              'href': 'http://instagram.com/'
+            }
+          ]
         },
         'footer': {
           'nonsense': 'nonsense'

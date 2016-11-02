@@ -5,23 +5,15 @@ export default class ButtonField extends Component{
     super(props)
   }
 
-  buttonTypes = () => {
-    return [
-      'link',
-      'email',
-      'facebook',
-      'twitter'
-    ]
-  }
-
   static propTypes = () => {
     return {
       label: PropTypes.string,
       placeholder: PropTypes.string,
       name: PropTypes.string.isRequired,
       index: PropTypes.string,
+      types: PropTypes.array,
       value: PropTypes.shape({
-        type: PropTypes.oneOf(this.buttonTypes()),
+        type: PropTypes.string,
         text: PropTypes.string,
         href: PropTypes.string
       }).isRequired,
@@ -30,7 +22,14 @@ export default class ButtonField extends Component{
   }
 
   static defaultProps = {
-    index: null
+    index: null,
+    types: [
+      'link',
+      'email',
+      'facebook',
+      'twitter',
+      'instagram'
+    ]
   }
 
   handleChange = (e) => {
@@ -48,7 +47,7 @@ export default class ButtonField extends Component{
         <div className="form-border">
           <div className="form-group">
             <select className="form-select text-capitalize" data-kind="type" onChange={this.handleChange} value={this.props.value.type}>
-              {this.buttonTypes().map((t) => {
+              {this.props.types.map((t) => {
                 return (
                   <option key={t} value={t}>{t}</option>
                 )
