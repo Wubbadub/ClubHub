@@ -16,7 +16,7 @@ export default class Hero extends Component{
       <header>
           <ul>
             {links.map((l, i) => {
-              return (<li><a href={l.href} key={i} target="_blank" title={l.text}><Icon icon={`${l.type}_circle`} size={1.5}/></a></li>)
+              return (<li key={i}><a href={l.href} target="_blank" title={l.text}><Icon icon={`${l.type}_circle`} size={1.5}/></a></li>)
             })}
           </ul>
       </header>
