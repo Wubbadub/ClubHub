@@ -1,0 +1,57 @@
+.accordion-section {
+  
+  .accordion-header {
+    margin: 0;
+    padding: 0.5*@layout-gutter;
+
+    font-size: @body-font-size;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    border: solid @core-border-color;
+    border-width: 0 0 .1rem 0;
+
+    &:hover {
+      background-color: darken(@core-light-color, 4%);
+    }
+
+    &::before {
+      .icon;
+      content: "\f006";
+      font-size: 0.8em;
+      margin-right: 1rem;
+      position: relative;
+      top: -0.1rem;
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+  }
+  .accordion-content {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s;
+    & > div {
+      padding: 0.5*@layout-gutter;
+      border: solid @core-border-color;
+      border-width: 0 0 .1rem 0;
+    }
+  }
+
+  &.active {
+    .accordion-header {
+      background-color: darken(@core-light-color, 2%);
+      &:hover {
+        background-color: darken(@core-light-color, 4%);
+      }
+      &::before {
+        transform: rotate(90deg);
+      }
+    }
+    .accordion-content {
+      max-height: 200rem;
+      border-width: 0 0 .1rem 0;
+    }
+  }
+}
+

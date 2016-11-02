@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react'
 
-export default class ClassicContentTeam extends PureComponent{
+export default class Team extends PureComponent{
   constructor(props){
     super(props)
   }

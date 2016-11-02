@@ -1,4 +1,3 @@
 {
-  "ignore": ["dist/**"],
-  "ext": "js json jsx less"
+  "ignore": ["dist/**", "client/**"]
 }

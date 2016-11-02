@@ -1,8 +1,9 @@
 import React, {PureComponent} from 'react'
+import Icon from 'parts/Icon'
 
-const map = require('../../img/map.png')
+const map = require('img/map.png')
 
-export default class ClassicContentMeeting extends PureComponent{
+export default class Meeting extends PureComponent{
   constructor(props){
     super(props)
   }
@@ -18,11 +19,11 @@ export default class ClassicContentMeeting extends PureComponent{
                   for sodie pops at Swan’s downtown! On rainy days we usually cancel.
               </p>
               <p className="stats">
-                  <img className="icon" src="../../img/clock.svg" alt="" />
+                  <Icon icon="clock"/>&nbsp;
                   Usually <strong>Wednesdays</strong> at <strong>330pm</strong>
               </p>
               <p className="stats">
-                  <img className="icon" src="../../img/location.svg" alt="" />
+                  <Icon icon="placepin"/>&nbsp;
                   <a href="#" target="_blank">Outside the entrance of <strong>McKinnon Gym</strong></a>
               </p>
           </div>

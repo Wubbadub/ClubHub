@@ -24,7 +24,7 @@ module.exports = {
     'complexity': 1,
     'eqeqeq': ['warn', 'smart'],
     'no-eq-null': 1,
-    'no-console': ["error", { allow: ["warn", "error"] }],
+    'no-console': ["warn", { allow: ["warn", "error"] }],
     'no-alert': 1,
     'no-eval': 1,
     'no-extra-bind': 1,
