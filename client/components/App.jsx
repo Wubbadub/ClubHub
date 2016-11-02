@@ -26,23 +26,6 @@ export default class App extends PureComponent{
       'title': 'UVic Canoe Club',
       'theme': 'Classic',
       'sections': {
-        'hero': {
-          'component': 'Hero',
-          'title': 'Our Club',
-          'description': 'A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.',
-          'buttons': [
-            {
-              'type': 'email',
-              'text': 'Contact Us',
-              'href': 'mailto:canoe@uvic.ca'
-            },
-            {
-              'type': 'facebook',
-              'text': 'Join us on Facebook',
-              'href': 'http://facebook.com/'
-            }
-          ]
-        },
         'header': {
           'links': [
             {
@@ -59,6 +42,23 @@ export default class App extends PureComponent{
               'type': 'instagram',
               'text': 'Follow us on Instagram',
               'href': 'http://instagram.com/'
+            }
+          ]
+        },
+        'hero': {
+          'component': 'Hero',
+          'title': 'Our Club',
+          'description': 'A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.',
+          'buttons': [
+            {
+              'type': 'email',
+              'text': 'Contact Us',
+              'href': 'mailto:canoe@uvic.ca'
+            },
+            {
+              'type': 'facebook',
+              'text': 'Join us on Facebook',
+              'href': 'http://facebook.com/'
             }
           ]
         },
