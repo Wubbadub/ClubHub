@@ -50,18 +50,20 @@ export default class Editor extends Component {
         <div className="columns">
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right"/></button>
-            <div className="accordion">
-              {Object.keys(this.state.site.sections).map((s) => {
-                const section = this.state.site.sections[s]
-                return (
-                  <EditorSection key={s}
-                                 section={s}
-                                 active={this.state.sectionStates[s]}
-                                 setActive={this.toggleSection}
-                                 data={section}
-                                 setData={this.setData}/>
-                )
-              })}
+            <div className="editor-viewbox">
+              <div className="accordion">
+                {Object.keys(this.state.site.sections).map((s) => {
+                  const section = this.state.site.sections[s]
+                  return (
+                    <EditorSection key={s}
+                                  section={s}
+                                  active={this.state.sectionStates[s]}
+                                  setActive={this.toggleSection}
+                                  data={section}
+                                  setData={this.setData}/>
+                  )
+                })}
+              </div>
             </div>
           </div>
           <div className="site-preview col-12">
