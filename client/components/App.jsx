@@ -62,8 +62,8 @@ export default class App extends PureComponent{
             }
           ]
         },
-        'footer': {
-          'nonsense': 'nonsense'
+        'meeting': {
+          'description': 'A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.'
         }
       }
     }
