@@ -62,8 +62,28 @@ export default class App extends PureComponent{
             }
           ]
         },
-        'footer': {
-          'nonsense': 'nonsense'
+        'meeting': {
+          'description': 'A community of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.',
+          'place': 'DTB A104',
+          'day': 'Wednesday',
+          'time': '3:30pm'
+        },
+        'team': {
+          'person1': {
+            'name': 'Christopher Plummer',
+            'position': 'Prez',
+            'email': 'chrissy_plum@uvic.ca'
+          },
+          'person2': {
+            'name': 'Michael Scarn',
+            'position': 'Regional Manager',
+            'email': 'michael@uvic.ca'
+          },
+          'person3': {
+            'name': 'Dwight Shrudt',
+            'position': 'Assistant (to the) Regional Manager',
+            'email': 'turnupwithturnips@uvic.ca'
+          }
         }
       }
     }
