@@ -19,13 +19,8 @@ export default class Hero extends Component{
 
   handleChange = (field, value, index) => {
     const d = this.props.data
-
-    if (index != null){
-      d[field][index] = value
-
-    } else {
-      d[field] = value
-    }
+    if (index === undefined || index === null) d[field] = value
+    else d[field][index] = value
     this.props.setData('hero', d)
   }
 

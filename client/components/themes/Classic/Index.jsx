@@ -2,7 +2,8 @@ import React, {Component, PropTypes} from 'react'
 
 import Hero from './Hero'
 import Header from './Header'
-import Content from './Content'
+import Meeting from './Meeting'
+import Team from './Team'
 import Footer from './Footer'
 
 export default class Classic extends Component{
@@ -19,10 +20,12 @@ export default class Classic extends Component{
     <div className="theme-classic outer-container">
       <Header site={this.props.site}/>
       <Hero site={this.props.site}/>
-      <Content site={this.props.site}/>
+      <div className="main-container">
+        <Meeting data={this.props.site.sections.meeting} />
+        <Team data={this.props.site.sections.team} />
+      </div>
       <Footer site={this.props.site}/>
     </div>
     )
   }
 }
-
