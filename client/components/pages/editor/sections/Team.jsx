@@ -17,10 +17,10 @@ export default class Team extends Component{
   handleChange = (field, value, index) => {
     const d = this.props.data
 
-    if (index !== undefined){
-      d[field][index] = value
-    } else {
+    if (index === undefined || index === null){
       d[field] = value
+    } else {
+      d[field][index] = value
     }
 
     this.props.setData('team', d)
