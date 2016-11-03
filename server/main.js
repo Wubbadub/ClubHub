@@ -15,6 +15,7 @@ const app = express()
 // const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const path = require('path')
+const db = require('./api/db.js')
 
 // #######################
 // #       WEBPACK       #
@@ -52,18 +53,12 @@ app.use(function (req, res, next) {
 app.use('/assets', express.static(path.join(__dirname, '/../dist/assets')))
 
 app.get('/api/site/*', function (req, res) {
-  res.json({
-    'title': 'Sample Club',
-    'sections': [
-      {
-        'type': 'hero',
-        'title': 'Sample Club',
-        'button-a': {
-          'type': 'email',
-          'content': 'sample@uvic.ca'
-        }
-      }
-    ]
+  let url = req.path.substring(req.path.lastIndexOf('/') + 1)
+  db.getSiteData(url, function (json) {
+    if (url === null)
+      res.status(404).json({'error': 'site not found'})
+    else
+      res.json(json)
   })
 })
 
