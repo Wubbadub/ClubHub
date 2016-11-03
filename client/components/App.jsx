@@ -63,7 +63,10 @@ export default class App extends PureComponent{
           ]
         },
         'meeting': {
-          'description': 'A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.'
+          'description': 'A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.',
+          'place': 'DTB A104',
+          'day': 'Wednesday',
+          'time': '3:30pm'
         }
       }
     }

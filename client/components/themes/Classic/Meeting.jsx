@@ -20,11 +20,11 @@ export default class Meeting extends Component{
               <p id="description">{this.props.data.description}</p>
               <p className="stats">
                   <Icon icon="clock"/>&nbsp;
-                  Usually <strong>Wednesdays</strong> at <strong>330pm</strong>
+                  {this.props.data.day} at {this.props.data.time}
               </p>
               <p className="stats">
                   <Icon icon="placepin"/>&nbsp;
-                  <a href="#" target="_blank">Outside the entrance of <strong>McKinnon Gym</strong></a>
+                  {this.props.data.place}
               </p>
           </div>
           <div className="main-container-img" style={{backgroundImage: `url(${map})`}}></div>
