@@ -1,8 +1,12 @@
-import React, {PureComponent} from 'react'
+import React, {Component, PropTypes} from 'react'
 
-export default class Team extends PureComponent{
+export default class Team extends Component{
   constructor(props){
     super(props)
+  }
+
+  static propTypes = {
+    data: PropTypes.object
   }
 
   render() {
@@ -11,26 +15,18 @@ export default class Team extends PureComponent{
         <div>
           <h1>Who</h1>
           <div className="people">
-            <div className="person">
-              <span>Chris Henley</span>
-              <a href="#" target="_blank">facebook.com/chrishenley</a>
-            </div>
-            <div className="person">
-              <span>Misha Turani</span>
-              <a href="#" target="_blank">mishaturani@gmail.com</a>
-            </div>
-            <div className="person">
-              <span>Manning Ganier</span>
-              <a href="#" target="_blank">manninganier@hotmail.com</a>
-            </div>
-            <div className="person">
-              <span>Manning Ganier</span>
-              <a href="#" target="_blank">manninganier@hotmail.com</a>
-            </div>
-            <div className="person">
-              <span>Cornelious Trump</span>
-              <a href="#" target="_blank">corneliousmanning@gmail.com</a>
-            </div>
+
+            {
+              Object.keys(this.props.data).map((person) => {
+                return (
+                  <div className="person">
+                    <span>{this.props.data[person].name} - {this.props.data[person].position}</span>
+                    <a href="#" target="_blank">{this.props.data[person].email}</a>
+                  </div>
+                )
+              })
+            }
+
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import Icon from 'parts/Icon'
 
-export default class Hero extends Component{
+export default class Header extends Component{
   constructor(props){
     super(props)
   }

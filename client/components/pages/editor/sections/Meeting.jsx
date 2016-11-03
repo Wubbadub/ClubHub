@@ -24,7 +24,7 @@ export default class Meeting extends Component{
   render(){
     return (
       <form>
-        <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
+        <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description" />
         <ShortTextField label="Place" onChange={this.handleChange} value={this.props.data.place} name="place" />
         <ShortTextField label="Time" onChange={this.handleChange} value={this.props.data.time} name="time" />
       </form>

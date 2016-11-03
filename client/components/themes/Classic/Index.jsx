@@ -22,7 +22,7 @@ export default class Classic extends Component{
       <Hero site={this.props.site}/>
       <div className="main-container">
         <Meeting data={this.props.site.sections.meeting} />
-        <Team />
+        <Team data={this.props.site.sections.team} />
       </div>
       <Footer site={this.props.site}/>
     </div>

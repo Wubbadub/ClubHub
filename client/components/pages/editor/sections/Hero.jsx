@@ -20,7 +20,7 @@ export default class Hero extends Component{
   handleChange = (field, value, index) => {
     const d = this.props.data
 
-    if (index != null){
+    if (index !== undefined){
       d[field][index] = value
 
     } else {
