@@ -33,3 +33,7 @@ db.rawQuery('DELETE FROM clubs WHERE url=\'175d2fba54c496095f19df4d1d9a12bd3ec02
       console.log("createNewSite #2 result = " + success)
     })
 })
+
+db.updateSite('test123', 2, { updated: 33}, function (success) {
+  console.log("updateSite('test123') = " + success)
+})

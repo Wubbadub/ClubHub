@@ -28,7 +28,10 @@ const updateSite = function(url, userID, site_data, next){
    else
      //TODO: Handle corrupted (possibly maliciously) data here and/or when loading it
      pool.query('UPDATE clubs SET site_data = $1::json WHERE url = $2::text', [site_data, url], function(err) {
-       next(err != null)
+       if (err)
+         next(false)
+       else
+         next(true)
      })
   })
 }
