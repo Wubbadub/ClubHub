@@ -3,6 +3,7 @@ import {Link} from 'react-router'
 import classNames from 'classnames'
 
 import Icon from 'parts/Icon'
+import Brand from 'parts/Brand'
 
 import Site from 'pages/site/Site'
 import EditorSection from 'pages/editor/EditorSection'
@@ -65,6 +66,11 @@ export default class Editor extends Component {
         <div className="columns">
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" /></button>
+            <div className="editor-header">
+              <Link to="/" target="_blank">
+                <Brand />
+              </Link>
+            </div>
             <div className="editor-viewbox">
               <div className="accordion">
                 {Object.keys(this.state.site.sections).map((s) => {
