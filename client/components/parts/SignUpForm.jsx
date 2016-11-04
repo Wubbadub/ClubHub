@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import classNames from 'classnames'
+import {browserHistory} from 'react-router'
 
 // use when state and lifecycle functions are needed
 export default class SignUpForm extends PureComponent {
@@ -30,6 +31,20 @@ export default class SignUpForm extends PureComponent {
 
   static defaultProps = {
     hostUrl: 'uvic.club'
+  }
+
+  handleSubmit = () => {
+
+    fetch(`http://www.hubsite.club/api/newsite/${this.state.siteInput}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({'siteName': 'FIX ME'})
+    }).then(() => {
+      browserHistory.push(`/editor/${this.state.siteInput}`)
+    })
   }
 
   siteChange = (e) => {
@@ -104,6 +119,10 @@ export default class SignUpForm extends PureComponent {
               <span className="input-group-addon">.{this.props.hostUrl}</span>
           </div>
           <span className="form-input-hint">{this.siteInputHint()}</span>
+        </div>
+
+        <div className="form-group">
+          <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Create Site</button>
         </div>
       </form>
     )
