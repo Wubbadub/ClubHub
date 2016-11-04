@@ -34,7 +34,7 @@ export default class SignUp extends PureComponent {
               <SignUpForm />
             </div>
             <div className="modal-footer">
-              <Link className="btn btn-primary" to="/editor">Create Site</Link>
+              <Link className="btn btn-primary" to="/editor/create">Create Site</Link>
             </div>
           </div>
         </div>
