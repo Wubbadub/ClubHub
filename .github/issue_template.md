@@ -1,19 +1,13 @@
-__Feature Name__
-[Feature Name]
+__Description:__
 
-__Description__
-[Feature Description]
 
-__Requires__
-* [requirement 1]
+__Requires:__
+* █
 
-__Subtask Breakdown__
-- [ ] First this
-- [ ] Then this
-- [ ] And finally this
-
-__Due__
-Milestone []
+__Breakdown:__
+- [ ] 1st
+- [ ] 2nd
+- [ ] 3rd
 
 __Time Estimation:__
-[]hrs.
+█ hrs.

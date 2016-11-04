@@ -4,89 +4,113 @@
 // #      CONSTANTS      #
 // #######################
 
-const PORT = require('./constants.js').PORT;
+const PORT = require('./constants.js').PORT
 
 // #######################
 // #  SERVER INITIATION  #
 // #######################
 
-const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-const bodyParser = require('body-parser');
-const path = require ('path');
-const handlebars = require('handlebars');
-const fs = require('fs');
+const express = require('express')
+const app = express()
+// const server = require('http').Server(app)
+const bodyParser = require('body-parser')
+const path = require('path')
+const db = require('./api/db.js')
 
-/*  #######################
-*  #       WEBPACK       #
-*  #######################
-*/
-const webpack = require('webpack');
-const webpackConfig = require('../webpack.config.js');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
+// #######################
+// #       WEBPACK       #
+// #######################
 
-const compiler = webpack(webpackConfig);
-const webpackMiddleware = webpackDevMiddleware(compiler, {
-  pnoInfo: true,
-  publicPath: webpackConfig.output.publicPath,
-  stats: {
-    colors: true,
-    hash: false,
-    timings: true,
-    chunks: false,
-    chunkModules: false,
-    modules: false
-  }
-});
+let webpackValid = false
 
-// Use webpack to build files in memory (to be served) ToDo: build to /dist for production
-app.use(webpackMiddleware);
-app.use(webpackHotMiddleware(compiler));
+const webpack = require('webpack')
+const webpackConfig = require('../webpack.config.js')
+const compiler = webpack(webpackConfig)
+
+compiler.watch({}, function (err, stats) {
+  if (err) { throw err }
+
+  console.log(stats.toString({
+    chunks: false, // Makes the build much quieter
+    colors: true
+  }))
+
+  webpackValid = true
+})
 
 // #######################
 // #       ROUTING       #
 // #######################
 
 // MIDDLEWARE FUNCTIONS -- app.use()
+
+app.use(function (req, res, next) {
+  console.log(`[app] ${req.method} ${req.url}`)
+  next()
+})
+
 // provide resources in client path
-app.use(express.static(path.join(__dirname + '/../client')));
+app.use('/assets', express.static(path.join(__dirname, '/../dist/assets')))
+
+app.use(bodyParser.json({type: 'application/json'}))
 
 app.use(bodyParser.urlencoded({
   extended: true
-}));
+}))
 
-// Splash page
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname + '/../client/template/landing/landing.html'));
-});
+app.get('/api/site/*', function (req, res) {
+  let url = req.path.substring(req.path.lastIndexOf('/') + 1)
+  db.getSiteData(url, function (json) {
+    if (json === null)
+      res.status(404).json({'error': 'site not found'})
+    else
+      res.json(json)
+  })
+})
 
-// Template page
-app.get('/sample', function(req, res) {
-  res.sendFile(path.join(__dirname + '/../client/template/sample/sample.html'));
-});
+// Check if a given site exists without transmitting the entire site data
+// Use in the create
+app.get('/api/site_exists/*', function (req, res) {
+  let url = req.path.substring(req.path.lastIndexOf('/') + 1)
+  db.checkSiteExists(url, function (exists) {
+    res.send(exists)
+  })
+})
 
-// Create form page
-app.get('/create', function(req, res) {
-  res.sendFile(path.join(__dirname + '/../client/form/create.html'));
-});
+app.get('/api/*', function (req, res) {
+  res.status(404).json({'error': 'PC Load Letter'})
+})
 
-// Create form endpoint
-app.post('/newclub', function(req, res){
-  const data = {
-    "clubName" : req.body.clubName,
-    "clubDescr" : req.body.clubDescr
-  }
+app.get('/*', function (req, res) {
+  if (webpackValid) res.sendFile(path.join(__dirname, '/../dist/index.html'))
+  else console.log('[app] waiting for valid webpack')
+})
 
-  fs.readFile(path.join(__dirname + '/../client/template/hubsite/hubsite.html'), 'utf-8', function(err, source){
-    var template = handlebars.compile(source);
-    var html = template(data);
-    res.send(html);
-  });
-});
+// Update a site
+app.post('/api/site/*', function(req, res){
+  let url = req.path.substring(req.path.lastIndexOf('/') + 1)
+  // TODO: User authentication
+  db.updateSite(url, 1, req.body, function (success) {
+    res.send(success) // Just return success for now, later add error codes possibly
+  })
+})
 
-// Server listens to requests on PORT
-app.listen(PORT, function reportRunning() {
-  console.log(`Running on port ${PORT}`);
-});
+// Create a new site with the url indicated by the post address
+// and sitename sent in the json object { "siteName" : "Example Club" }
+// Returns the json object of the new site upon success; false otherwise
+app.post('/api/newsite/*', function(req, res){
+  let url = req.path.substring(req.path.lastIndexOf('/') + 1)
+  let siteName = req.body.siteName
+  if (siteName)
+    db.createNewSite(url, siteName, function (json) {
+      res.json(json)
+    })
+  else
+    res.send(false)
+})
+
+// Create new site
+
+app.listen(PORT, function reportRunning () {
+  console.log(`[app] running on port ${PORT}`)
+})

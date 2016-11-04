@@ -1,0 +1,81 @@
+.splash {
+    @blurb-width: 42rem;
+
+    font-family: @brand-font-family;
+
+    section.hero {
+        .flex;
+
+        margin: @splash-gutter;
+        padding: @layout-gutter;
+
+        /* The height of the viewport minus twice the margin */
+        height: 100vh - 2*@splash-gutter;
+        min-height: 1.5*@blurb-width;
+
+        border-radius: @border-base;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: @core-dark-color;
+
+        &, a {
+            color: @core-light-color;
+        }
+
+        
+    }        
+    .blurb {
+        .centered;
+        align-self: center;
+        max-width: @blurb-width;
+        
+        h1 {
+            margin: 0 0 3*@layout-gutter;
+        }
+
+        .brand {
+            .centered;
+            .img-responsive;
+            max-width: 0.6*@blurb-width;
+        }
+
+        path.logotype {
+            fill: @core-light-color;
+        }
+
+        p {
+            text-align: center;
+            margin: 0 0 2*@layout-gutter;
+            font-size: 1.2*@body-font-size;
+            line-height: 1.4*@html-line-height;
+            letter-spacing: 0.04em;
+        }
+
+        .btn-cta {
+            max-width: 0.6*@blurb-width;
+        }
+
+    }
+}
+
+.btn {
+    &.btn-cta {
+        display: block;
+        margin: 0 auto;
+        height: 6.4rem;
+        line-height: 2rem;
+        padding: 2rem 1.8rem;
+        color: @core-light-color;
+        background: fade(@core-mid-color, 20%); 
+        border-color: fade(darken(@core-mid-color, 5%), 20%);
+
+        &:hover {
+            background: fade(darken(@core-mid-color, 15%), 20%);
+        }
+
+        &:active {
+            background: fade(darken(@core-mid-color, 25%), 20%);
+        }
+    }
+}
