@@ -5,7 +5,7 @@
 // #######################
 
 const PORT = require('./constants.js').PORT
-
+"use strict"
 // #######################
 // #  SERVER INITIATION  #
 // #######################
