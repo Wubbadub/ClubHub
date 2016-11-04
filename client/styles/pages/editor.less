@@ -55,6 +55,10 @@
       padding: 0.5*@layout-gutter;
       .btn-save {
         float: right;
+        &.disabled {
+          background-color: lighten(@core-meta-color, 20%);
+          border-color: lighten(@core-meta-color, 15%);
+        }
       }
     }
   }
