@@ -127,15 +127,11 @@
 
   // Header Navigation
   .nav-link {
-    text-decoration: none;
-    font-size: 13px;
+    color: @core-meta-color;
     font-weight: 700;
-    text-transform: uppercase;
-    line-height: 20px;
-    letter-spacing: .3px;
-  }
-  .nav-link:not(:first-of-type) {
-    margin-left: 10px;
+    &:hover {
+      color: darken(@core-meta-color, 15%);
+    }
   }
 
   // CTAs
@@ -166,8 +162,7 @@
   // Colors and Gradients
   .header-subheading,
   .header-heading,
-  .nav-logo,
-  .nav-link {
+  .nav-logo {
     color: @splash-font-color;
   }
 

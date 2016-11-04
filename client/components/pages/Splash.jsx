@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react'
+import {Link} from 'react-router'
 
 import SignUp from 'parts/SignUp'
 import Brand from 'parts/Brand'
@@ -41,7 +42,9 @@ export default class Splash extends PureComponent {
                 <a><Brand/></a>
               </div>
               <div>
-                <a className="nav-link" target="_blank" href="mailto:contact@hubsite.club">Contact</a>
+                <Link className="btn btn-link nav-link" to="/editor/create">Login</Link>
+                <a className="btn btn-link nav-link" href="#" onClick={this.showSignUp}>Sign up</a>
+                <a className="btn btn-link nav-link" target="_blank" href="mailto:contact@hubsite.club">Contact</a>
               </div>
             </div>
           </div>
