@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {Link} from 'react-router'
 import classNames from 'classnames'
 
 import Icon from 'parts/Icon'
@@ -80,6 +81,7 @@ export default class Editor extends Component {
                 })}
               </div>
               <div className="editor-footer">
+                <Link className={classNames('btn', 'btn-link')} to={`/site/${this.props.siteId}`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
                 <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', {disabled: !this.state.dirtyBit})} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
               </div>
             </div>
