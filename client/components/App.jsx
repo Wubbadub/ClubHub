@@ -78,8 +78,7 @@ export default class App extends PureComponent{
       })
     }))
   }
-        //`${window.location.protocol}//${window.location.hostname}/api/site/${this.props.params.site}`,
-
+  
   render() {
     return (
       <Router history={browserHistory}>
