@@ -122,7 +122,7 @@ export default class SignUpForm extends PureComponent {
         </div>
 
         <div className="form-group">
-          <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Create Site</button>
+          <button type="button" className={classNames('btn', 'btn-primary', 'btn-block', 'btn-lg', {'disabled': this.state.siteInputState !== 'okay'})} onClick={this.handleSubmit}>Create Site</button>
         </div>
       </form>
     )
