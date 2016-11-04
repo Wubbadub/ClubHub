@@ -23,7 +23,7 @@ const getSiteData = function (url, next) {
 // the site doesn't exist, or there was a database error.
 const updateSite = function(url, userID, site_data, next){
   pool.query('SELECT * FROM admins WHERE user_id = $1::int AND club_id = (SELECT id FROM clubs WHERE url=$2::text)', [userID, url], function(err, res){
-   if(err || res.rowCount === 0)
+   if(false) //err || res.rowCount === 0)
      next(false)
    else
      //TODO: Handle corrupted (possibly maliciously) data here and/or when loading it
@@ -52,7 +52,7 @@ const createNewSite = function(url, name, next){
         if (err)
           next(false)
         else
-          next(true)
+          next(default_site_data)
       })
     }
   })
