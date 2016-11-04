@@ -9,22 +9,45 @@ import Site from 'pages/site/Site'
 
 
 class EditorContainer extends PureComponent {
+  constructor(props) {
+    super(props)
+  }
+
+  static propTypes = {
+    params: PropTypes.shape ({
+      siteId: PropTypes.string
+    })
+  }
+
   render() {
+    const {siteId} = this.props.params
     return (
       <Async
-        promise={App.getSite()}
+        promise={App.getSite(siteId)}
         then={(site) =>
-          <Editor site={site} />
+          <Editor site={site} siteId={siteId}/>
         }>
       </Async>
     )
   }
 }
+
 class SiteContainer extends PureComponent {
+  constructor(props) {
+    super(props)
+  }
+
+  static propTypes = {
+    params: PropTypes.shape ({
+      siteId: PropTypes.string
+    })
+  }
+
   render() {
+    const {siteId} = this.props.params
     return (
       <Async
-        promise={App.getSite()}
+        promise={App.getSite(siteId)}
         then={(site) =>
           <Site site={site} />
         }>
@@ -38,19 +61,19 @@ export default class App extends PureComponent{
     super(props)
   }
 
-  // static propTypes = {
-  //   params: {
-  //     site: PropTypes.string
-  //   }
-  // }
+  static propTypes = {
+    params: PropTypes.shape ({
+      siteId: PropTypes.string
+    })
+  }
 
-  // TODO: implement data object retrieval from DB
-  // TODO: handle case where user does not yet have a site (supply default data)
-  static getSite = () => {
-    const request = new Request('http://www.hubsite.club/api/site/test1', {method: 'GET'})
+  static getSite = (siteId) => {
+    const request = new Request(
+      `http://www.hubsite.club/api/site/${siteId}`,
+      {method: 'GET'}
+    )
     return Promise.resolve(fetch(request).then((response) => {
       return response.json().then((content) => {
-        console.log(content)
         return content
       })
     }))
@@ -61,8 +84,8 @@ export default class App extends PureComponent{
     return (
       <Router history={browserHistory}>
         <Route path="/" component={Splash}/>
-        <Route path="/editor/:site" component={EditorContainer}/>
-        <Route path="/site/:site" component={SiteContainer}/>
+        <Route path="/editor/:siteId" component={EditorContainer}/>
+        <Route path="/site/:siteId" component={SiteContainer}/>
       </Router>
     )
   }

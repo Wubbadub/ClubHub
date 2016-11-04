@@ -17,7 +17,8 @@ export default class Editor extends Component {
   }
 
   static propTypes = {
-    site: PropTypes.object
+    site: PropTypes.object,
+    siteId: PropTypes.string
   }
 
   makeSiteSections = () => {
@@ -44,6 +45,17 @@ export default class Editor extends Component {
     this.setState({site: s})
   }
 
+  handleSubmit = () => {
+    const data = JSON.stringify( this.state.site )
+    console.log(this.state.site)
+    console.log(data)
+    const request = new Request(
+      `http://www.hubsite.club/api/site/${this.props.siteId}`,
+      {method: 'POST', body: this.state.site}
+    )
+    fetch(request)
+  }
+
   render() {
     return (
       <div className="editor container">
@@ -60,10 +72,12 @@ export default class Editor extends Component {
                                   active={this.state.sectionStates[s]}
                                   setActive={this.toggleSection}
                                   data={section}
-                                  setData={this.setData}/>
+                                  setData={this.setData}
+                                  />
                   )
                 })}
               </div>
+              <button type="button" onClick={this.handleSubmit}>submit</button>
             </div>
           </div>
           <div className="site-preview col-12">
