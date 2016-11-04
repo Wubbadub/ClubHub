@@ -42,7 +42,7 @@ export default class Splash extends PureComponent {
                 <a><Brand/></a>
               </div>
               <div>
-                <Link className="btn btn-link nav-link" to="/editor/create">Login</Link>
+                <Link className="btn btn-link nav-link" to="/editor/create">Log in</Link>
                 <button type="button" className="btn btn-link nav-link" href="#" onClick={this.showSignUp}>Sign up</button>
                 <a className="btn btn-link nav-link" target="_blank" href="mailto:contact@hubsite.club">Contact</a>
               </div>
