@@ -29,22 +29,48 @@ export default class Splash extends PureComponent {
 
   render() {
     return (
-      <main className="splash">
+      <div className="splash">
         <SignUp active={this.state.signup} close={this.hideSignUp}/>
-        <section className="hero" style={{backgroundImage: `url(${bg})`}}>
-          <div className="blurb">
-            <h1>
-              <Brand />
-            </h1>
-            <p>
-              You want a first point of contact to your university club for potential members and sponsors.
-            We offer a simple Q&A interface for university clubs to create beautiful, minimal websites.
-            Shoot us an <a href="mailto:contact@hubsite.club" target="_blank">email</a> if you have any questions, or want to learn more about what we do.
-            </p>
-            <button className="btn btn-lg btn-cta" onClick={this.showSignUp}>Create Your Website</button>
+        <header className="header">
+          <div className="container-lrg">
+            <div className="col-12 spread">
+              <div>
+                <a><Brand/></a>
+              </div>
+              <div>
+                <a className="nav-link" href="#">Contact</a>
+              </div>
+            </div>
           </div>
-        </section>
-      </main>
+          <div className="container-sml">
+            <div className="col-12 text-center">
+              <h1 className="header-heading">Provide your university club with the resources it needs.</h1>
+              <h2 className="header-subheading">Creating a website with us takes less than ten minutes.
+                We host the website for you and give you a url so you can start sharing your website to students, members, and sponsors.</h2>
+              <div className="ctas">
+                <a className="ctas-button" href="#" onClick={this.showSignUp}>Start Creating</a>
+              </div>
+            </div>
+          </div>
+          <div className="container-lrg">
+            <div className="col-12">
+              <div className="header-images">
+                <div className="iphone">
+                  <div className="mask">
+                    <img className="mask-img" src={bg}/>
+                  </div>
+                </div>
+                <div className="browser">
+                  <div className="mask">
+                    <img className="mask-img" src={bg}/>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </header>
+      </div>
     )
   }
 }
