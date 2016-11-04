@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, { Component, PropTypes } from 'react'
 import classNames from 'classnames'
 
 import Icon from 'parts/Icon'
@@ -30,50 +30,50 @@ export default class Editor extends Component {
   }
 
   toggleEditorBar = () => {
-    this.setState({showEditorBar: !this.state.showEditorBar})
+    this.setState({ showEditorBar: !this.state.showEditorBar })
   }
 
   toggleSection = (s) => {
     const sections = this.state.sectionStates
     sections[s] = !sections[s]
-    this.setState({sectionStates: sections})
+    this.setState({ sectionStates: sections })
   }
 
   setData = (section, data) => {
     const s = this.state.site
     s.sections[section] = data
-    this.setState({site: s})
+    this.setState({ site: s })
   }
 
   handleSubmit = () => {
-    const data = JSON.stringify( this.state.site )
-    console.log(this.state.site)
-    console.log(data)
-    const request = new Request(
-      `http://www.hubsite.club/api/site/${this.props.siteId}`,
-      {method: 'POST', body: this.state.site}
-    )
-    fetch(request)
+    fetch(`http://www.hubsite.club/api/site/${this.props.siteId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state.site)
+    })
   }
 
   render() {
     return (
       <div className="editor container">
         <div className="columns">
-          <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})}>
-            <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right"/></button>
+          <div className={classNames('editor-bar', 'col-3', { 'active': this.state.showEditorBar })}>
+            <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" /></button>
             <div className="editor-viewbox">
               <div className="accordion">
                 {Object.keys(this.state.site.sections).map((s) => {
                   const section = this.state.site.sections[s]
                   return (
                     <EditorSection key={s}
-                                  section={s}
-                                  active={this.state.sectionStates[s]}
-                                  setActive={this.toggleSection}
-                                  data={section}
-                                  setData={this.setData}
-                                  />
+                      section={s}
+                      active={this.state.sectionStates[s]}
+                      setActive={this.toggleSection}
+                      data={section}
+                      setData={this.setData}
+                      />
                   )
                 })}
               </div>
@@ -81,7 +81,7 @@ export default class Editor extends Component {
             </div>
           </div>
           <div className="site-preview col-12">
-            <Site site={this.state.site}/>
+            <Site site={this.state.site} />
           </div>
         </div>
       </div>
