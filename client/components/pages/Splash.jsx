@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react'
+import {Link} from 'react-router'
 
 import SignUp from 'parts/SignUp'
 import Brand from 'parts/Brand'
@@ -41,7 +42,9 @@ export default class Splash extends PureComponent {
                 <a><Brand/></a>
               </div>
               <div>
-                <a className="nav-link" target="_blank" href="mailto:contact@hubsite.club">Contact</a>
+                <Link className="btn btn-link nav-link" to="/editor/create">Log in</Link>
+                <button type="button" className="btn btn-link nav-link" href="#" onClick={this.showSignUp}>Sign up</button>
+                <a className="btn btn-link nav-link" target="_blank" href="mailto:contact@hubsite.club">Contact</a>
               </div>
             </div>
           </div>
@@ -51,7 +54,7 @@ export default class Splash extends PureComponent {
               <h2>Creating a website with us takes less than ten minutes.
                 We host the website for you and give you a URL so you can start sharing your website with students, members, and sponsors.</h2>
               <div className="ctas">
-                <a className="ctas-button" href="#" onClick={this.showSignUp}>Start Creating</a>
+                <button type="button" className="btn ctas-button" onClick={this.showSignUp}>Start Creating</button>
               </div>
             </div>
           </div>
@@ -91,11 +94,11 @@ export default class Splash extends PureComponent {
             <div className="col-12 text-center">
               <h1>Spend less time sweating the details and more time enjoying your club.</h1>
               <div className="ctas">
-                <a className="ctas-button" href="#" onClick={this.showSignUp}>Get started in minutes</a>
+                <button type="button" className="btn ctas-button" onClick={this.showSignUp}>Get started in minutes</button>
               </div>
               <div className="footer">
                 <a><Brand/></a>
-                <a className="footer-link">Email Us</a>
+                <a className="footer-link" target="_blank" href="mailto:contact@hubsite.club">Email Us</a>
               </div>
             </div>
           </div>
