@@ -95,7 +95,7 @@ export default class Splash extends PureComponent {
               </div>
               <div className="footer">
                 <a><Brand/></a>
-                <a className="footer-link">Email Us</a>
+                <a className="footer-link" target="_blank" href="mailto:contact@hubsite.club">Email Us</a>
               </div>
             </div>
           </div>
