@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
 import {Router, Route, browserHistory} from 'react-router'
 
 // Our Pages
@@ -8,10 +8,38 @@ import Site from 'pages/site/Site'
 
 
 class EditorContainer extends PureComponent {
-  render() { return (<Editor site={App.getSite()} />) }
+  constructor(props) {
+    super(props)
+    this.state = {
+      siteData: undefined
+    }
+  }
+
+  componentWillMount() {
+    Promise.resolve(App.getSite()).then((content)=>this.setState({siteData:content}))
+  }
+
+  render() {
+    if (this.state.siteData === undefined) return <p>Loading</p>
+    else return <Site site={this.state.siteData} id={this.state.siteData.title}/>
+  }
 }
 class SiteContainer extends PureComponent {
-  render() { return (<Site site={App.getSite()} />) }
+  constructor(props) {
+    super(props)
+    this.state = {
+      siteData: undefined
+    }
+  }
+
+  componentWillMount() {
+    Promise.resolve(App.getSite()).then((content)=>this.setState({siteData:content}))
+  }
+
+  render() {
+    if (this.state.siteData === undefined) return <p>Loading</p>
+    else return <Site site={this.state.siteData} id={this.state.siteData.title}/>
+  }
 }
 
 export default class App extends PureComponent{
@@ -19,75 +47,24 @@ export default class App extends PureComponent{
     super(props)
   }
 
+  // static propTypes = {
+  //   params: {
+  //     site: PropTypes.string
+  //   }
+  // }
+
   // TODO: implement data object retrieval from DB
   // TODO: handle case where user does not yet have a site (supply default data)
   static getSite = () => {
-    return {
-      'title': 'UVic Canoe Club',
-      'theme': 'Classic',
-      'sections': {
-        'header': {
-          'links': [
-            {
-              'type': 'facebook',
-              'text': 'Join us on Facebook',
-              'href': 'http://facebook.com/'
-            },
-            {
-              'type': 'twitter',
-              'text': 'Follow us on Twitter',
-              'href': 'http://twitter.com/'
-            },
-            {
-              'type': 'instagram',
-              'text': 'Follow us on Instagram',
-              'href': 'http://instagram.com/'
-            }
-          ]
-        },
-        'hero': {
-          'component': 'Hero',
-          'title': 'Our Club',
-          'description': 'A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.',
-          'buttons': [
-            {
-              'type': 'email',
-              'text': 'Contact Us',
-              'href': 'mailto:canoe@uvic.ca'
-            },
-            {
-              'type': 'facebook',
-              'text': 'Join us on Facebook',
-              'href': 'http://facebook.com/'
-            }
-          ]
-        },
-        'meeting': {
-          'description': 'A community of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.',
-          'place': 'DTB A104',
-          'day': 'Wednesday',
-          'time': '3:30pm'
-        },
-        'team': {
-          'person1': {
-            'name': 'Christopher Plummer',
-            'position': 'Prez',
-            'email': 'chrissy_plum@uvic.ca'
-          },
-          'person2': {
-            'name': 'Michael Scarn',
-            'position': 'Regional Manager',
-            'email': 'michael@uvic.ca'
-          },
-          'person3': {
-            'name': 'Dwight Shrudt',
-            'position': 'Assistant (to the) Regional Manager',
-            'email': 'turnupwithturnips@uvic.ca'
-          }
-        }
-      }
-    }
+    const request = new Request('http://www.hubsite.club/api/site/test1', {method: 'GET'})
+    return Promise.resolve(fetch(request).then((response) => {
+      return response.json().then((content) => {
+        console.log(content)
+        return content
+      })
+    }))
   }
+        //`${window.location.protocol}//${window.location.hostname}/api/site/${this.props.params.site}`,
 
   render() {
     return (
