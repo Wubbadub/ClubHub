@@ -43,7 +43,7 @@ export default class SignUpForm extends PureComponent {
       },
       body: JSON.stringify({'siteName': 'FIX ME'})
     }).then(() => {
-      browserHistory.push(`/editor/${this.state.siteInput}`)
+      browserHistory.push(`/editor/${this.state.siteInput.toLowerCase()}`)
     })
   }
 
