@@ -1,11 +1,12 @@
 .splash {
   // Variables
-  @splash-font-color: #FFF;
   @splash-font-family: @brand-font-family;
-  @splash-gradient: linear-gradient(220deg, #1FDE91 15%, #57dc80 70%, #5eecab 94%);
+  @splash-theme-color: #FFF;
+  @splash-font-color: #444;
 
   // Styles
   margin: 0;
+  background: @splash-theme-color;
   color: @splash-font-color;
   font-family: @splash-font-family;
   -webkit-font-smoothing: antialiased;
@@ -13,16 +14,18 @@
 
   // Brand Logo
   .brand svg {
-    width: 30%;
+    height: 20px;
     fill: @splash-font-color;
+    @media (max-width: 580px) {
+      height: 15px;
+    }
   }
 
   // Flexbox Styles
   .flex,
   .spread,
   .center
-  .right,
-  .centervertical {
+  .right {
     display: flex;
   }
   .spread {
@@ -44,23 +47,34 @@
   }
 
   // Grid Modification
-  .col-12 {
-    position: relative;
-    margin: 0 10px 0 0;
-  }
-  .element-container {
-    padding-top: 100px;
+.element-container {
+  padding-top: 100px;
     h2 {
       max-width: 350px;
       margin: 20px auto;
     }
+    img {
+      max-width: 100%;
+    }
+    @media (max-width: 760px) {
+      flex-direction: column;
+      padding-top: 50px;
+      img {
+        margin-top: 30px;
+      }
+      h2 {
+        margin: 0 auto;
+      }
+      .col-6 {
+        width: 100%;
+      }
+    }
   }
-
 
   // Containers
   .container-lrg,
   .container-sml {
-    margin: 10px auto;
+    margin: auto;
     width: 100%;
   }
   .container-lrg {
@@ -69,10 +83,13 @@
   .container-sml {
     max-width: 700px;
   }
+  .second-cta {
+    max-width: 700px;
+  }
 
   // Header
   .header {
-    padding: 20px 0 0 0;
+    padding: 20px;
     overflow: hidden;
   }
   h1 {
@@ -81,6 +98,16 @@
     line-height: 68px;
     margin: 120px 0 0 0;
     outline: none;
+    @media (max-width: 580px) {
+      margin: 100px 0 0 0;
+      font-size: 22px;
+      line-height: 36px;
+    }
+    @media (max-width: 380px) {
+      margin: 40px 0 0 0;
+      font-size: 26px;
+      line-height: 39px;
+    }
   }
   h2 {
     font-weight: 400;
@@ -88,6 +115,14 @@
     line-height: 28px;
     margin: 20px 0 0 0;
     outline: none;
+    @media (max-width: 580px) {
+      font-size: 16px;
+      line-height: 26px;
+    }
+    @media (max-width: 380px) {
+      font-size: 15px;
+      line-height: 25px;
+    }
   }
 
   // Header Navigation
@@ -96,7 +131,7 @@
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
-    line-height: 30px;
+    line-height: 20px;
     letter-spacing: .3px;
   }
   .nav-link:not(:first-of-type) {
@@ -109,6 +144,7 @@
   }
   .ctas-button,
   .ctas-button-2 {
+    color: #FFF;
     display: inline-block;
     height: 40px;
     line-height: 38px;
@@ -121,6 +157,10 @@
     letter-spacing: .3px;
     border: 1px solid @splash-font-color;
     text-decoration: none;
+    &:hover {
+      background: #555;
+      border-color: #555;
+    }
   }
   .ctas-button-2 {
     background: transparent;
@@ -134,16 +174,11 @@
   .nav-link {
     color: @splash-font-color;
   }
-  .header {
-    background: @splash-gradient;
-  }
-  .ctas-button {
-    color: #169aff;
-  }
 
   // Images and Devices
   .header-images {
     margin: 60px 0;
+    position: relative;
     left: 0;
     top: 0;
   }
@@ -161,7 +196,7 @@
     border-radius: 6px;
     background: linear-gradient(to bottom, rgba(233,232,233,1) 0%,rgba(212,212,213,1) 100%);
     background-size: 60px;
-    box-shadow: 0 10px 20px rgba(40,39,66,.06);
+    box-shadow: 0 14px 70px rgba(40, 39, 66, 0.1);
     overflow: hidden;
     width: 900px;
     height: 550px;
@@ -229,5 +264,19 @@
     position: absolute;
     top: 24px;
     left: 91px;
+  }
+
+  // Footer
+  .footer {
+    margin: 150px 0 30px;
+    &-link {
+      color: @splash-font-color;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
   }
 }

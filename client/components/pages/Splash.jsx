@@ -49,9 +49,9 @@ export default class Splash extends PureComponent {
             <div className="col-12 text-center">
               <h1>Provide your university club with the resources it needs.</h1>
               <h2>Creating a website with us takes less than ten minutes.
-                We host the website for you and give you a url so you can start sharing your website to students, members, and sponsors.</h2>
+                We host the website for you and give you a URL so you can start sharing your website with students, members, and sponsors.</h2>
               <div className="ctas">
-                <a className="ctas-button-2" href="#" onClick={this.showSignUp}>Start Creating</a>
+                <a className="ctas-button" href="#" onClick={this.showSignUp}>Start Creating</a>
               </div>
             </div>
           </div>
@@ -87,11 +87,15 @@ export default class Splash extends PureComponent {
               </h2>
             </div>
           </div>
-          <div className="container-lrg">
+          <div className="container-lrg second-cta">
             <div className="col-12 text-center">
-              <h1>Start Creating now</h1>
+              <h1>Spend less time sweating the details and more time enjoying your club.</h1>
               <div className="ctas">
-                <a className="ctas-button-2" href="#" onClick={this.showSignUp}>Start Creating</a>
+                <a className="ctas-button" href="#" onClick={this.showSignUp}>Get started in minutes</a>
+              </div>
+              <div className="footer">
+                <a><Brand/></a>
+                <a className="footer-link">Email Us</a>
               </div>
             </div>
           </div>
