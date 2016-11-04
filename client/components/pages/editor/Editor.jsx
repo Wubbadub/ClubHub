@@ -77,7 +77,9 @@ export default class Editor extends Component {
                   )
                 })}
               </div>
-              <button type="button" onClick={this.handleSubmit}>submit</button>
+              <div className="editor-footer">
+                <button type="button" className="btn btn-primary btn-save" onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
+              </div>
             </div>
           </div>
           <div className="site-preview col-12">
