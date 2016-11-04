@@ -2,10 +2,11 @@
   // Variables
   @splash-font-color: #FFF;
   @splash-font-family: @brand-font-family;
-  @splash-gradient: linear-gradient(150deg,#3339ff 15%,#05d5ff 70%,#a6efff 94%);
+  @splash-gradient: linear-gradient(220deg, #1FDE91 15%, #57dc80 70%, #5eecab 94%);
 
   // Styles
   margin: 0;
+  color: @splash-font-color;
   font-family: @splash-font-family;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
@@ -47,12 +48,19 @@
     position: relative;
     margin: 0 10px 0 0;
   }
+  .element-container {
+    padding-top: 100px;
+    h2 {
+      max-width: 350px;
+      margin: 20px auto;
+    }
+  }
 
 
   // Containers
   .container-lrg,
   .container-sml {
-    margin: auto;
+    margin: 10px auto;
     width: 100%;
   }
   .container-lrg {
@@ -67,14 +75,14 @@
     padding: 20px 0 0 0;
     overflow: hidden;
   }
-  .header-heading {
+  h1 {
     font-weight: 400;
     font-size: 42px;
     line-height: 68px;
     margin: 120px 0 0 0;
     outline: none;
   }
-  .header-subheading {
+  h2 {
     font-weight: 400;
     font-size: 17px;
     line-height: 28px;
@@ -203,7 +211,6 @@
     border-radius: 50%;
     background: rgba(0,0,0,.05);
     position: absolute;
-    top: ~"calc(50% - 22px)";
     right: 23px;
   }
   .iphone:after {

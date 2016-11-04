@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="200" viewBox="0 0 350 200" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <rect id="a" width="236.634" height="155.573" x=".366" y=".072" rx="6"/>
+    <filter id="b" width="200%" height="200%" x="-50%" y="-50%" filterUnits="objectBoundingBox">
+      <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0" in="shadowBlurOuter1"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(56 19)">
+    <mask id="c" fill="white">
+      <use xlink:href="#a"/>
+    </mask>
+    <use fill="black" filter="url(#b)" xlink:href="#a"/>
+    <use fill="#FFFFFF" xlink:href="#a"/>
+    <g mask="url(#c)">
+      <g transform="translate(-4)">
+        <rect width="270.65" height="20.648" x="78.493" y="25.167" fill="#FFFFFF"/>
+        <rect width="173.077" height="7.743" x="78.493" y="175.723" fill="#E7E5FF"/>
+        <rect width="196.391" height="16.346" x="78.493" y="180.629" fill="#F1F1F1"/>
+        <rect width="269.792" height="14.843" fill="#D8D8D8"/>
+        <circle cx="11.787" cy="7.421" r="3.056" fill="#FF635B"/>
+        <circle cx="21.391" cy="7.421" r="3.056" fill="#FFC330"/>
+        <circle cx="30.995" cy="7.421" r="3.056" fill="#29CF42"/>
+      </g>
+    </g>
+  </g>
+</svg>

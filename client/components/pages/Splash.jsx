@@ -3,7 +3,10 @@ import React, {PureComponent} from 'react'
 import SignUp from 'parts/SignUp'
 import Brand from 'parts/Brand'
 
-const bg = require('../../img/splash-bg.jpg')
+const browserview = require('../../img/browser-view.png')
+const mobileview = require('../../img/mobile-view.png')
+const seo = require('../../img/seo-optimize.svg')
+const transfer = require('../../img/transfer.svg')
 
 export default class Splash extends PureComponent {
   constructor(props) {
@@ -31,24 +34,24 @@ export default class Splash extends PureComponent {
     return (
       <div className="splash">
         <SignUp active={this.state.signup} close={this.hideSignUp}/>
-        <header className="header">
+        <div className="header">
           <div className="container-lrg">
             <div className="col-12 spread">
               <div>
                 <a><Brand/></a>
               </div>
               <div>
-                <a className="nav-link" href="#">Contact</a>
+                <a className="nav-link" target="_blank" href="mailto:contact@hubsite.club">Contact</a>
               </div>
             </div>
           </div>
           <div className="container-sml">
             <div className="col-12 text-center">
-              <h1 className="header-heading">Provide your university club with the resources it needs.</h1>
-              <h2 className="header-subheading">Creating a website with us takes less than ten minutes.
+              <h1>Provide your university club with the resources it needs.</h1>
+              <h2>Creating a website with us takes less than ten minutes.
                 We host the website for you and give you a url so you can start sharing your website to students, members, and sponsors.</h2>
               <div className="ctas">
-                <a className="ctas-button" href="#" onClick={this.showSignUp}>Start Creating</a>
+                <a className="ctas-button-2" href="#" onClick={this.showSignUp}>Start Creating</a>
               </div>
             </div>
           </div>
@@ -57,19 +60,42 @@ export default class Splash extends PureComponent {
               <div className="header-images">
                 <div className="iphone">
                   <div className="mask">
-                    <img className="mask-img" src={bg}/>
+                    <img className="mask-img" src={mobileview}/>
                   </div>
                 </div>
                 <div className="browser">
                   <div className="mask">
-                    <img className="mask-img" src={bg}/>
+                    <img className="mask-img" src={browserview}/>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
-        </header>
+          <div className="container-lrg columns element-container">
+            <div className="col-6 text-center">
+              <img src={seo}/>
+              <h2>
+                We make sure to serve your website right so your club website
+                can gain traffic from organic google searches.
+              </h2>
+            </div>
+            <div className="col-6 text-center">
+              <img src={transfer}/>
+              <h2>
+                Using Clubhub makes it easy for you and your club members to
+                maintain and transfer ownership.
+              </h2>
+            </div>
+          </div>
+          <div className="container-lrg">
+            <div className="col-12 text-center">
+              <h1>Start Creating now</h1>
+              <div className="ctas">
+                <a className="ctas-button-2" href="#" onClick={this.showSignUp}>Start Creating</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
