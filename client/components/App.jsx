@@ -1,5 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {Router, Route, browserHistory} from 'react-router'
+import Async from 'react-promise'
 
 // Our Pages
 import Splash from 'pages/Splash'
@@ -8,37 +9,27 @@ import Site from 'pages/site/Site'
 
 
 class EditorContainer extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      siteData: undefined
-    }
-  }
-
-  componentWillMount() {
-    Promise.resolve(App.getSite()).then((content)=>this.setState({siteData:content}))
-  }
-
   render() {
-    if (this.state.siteData === undefined) return <p>Loading</p>
-    else return <Site site={this.state.siteData} id={this.state.siteData.title}/>
+    return (
+      <Async
+        promise={App.getSite()}
+        then={(site) =>
+          <Editor site={site} />
+        }>
+      </Async>
+    )
   }
 }
 class SiteContainer extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      siteData: undefined
-    }
-  }
-
-  componentWillMount() {
-    Promise.resolve(App.getSite()).then((content)=>this.setState({siteData:content}))
-  }
-
   render() {
-    if (this.state.siteData === undefined) return <p>Loading</p>
-    else return <Site site={this.state.siteData} id={this.state.siteData.title}/>
+    return (
+      <Async
+        promise={App.getSite()}
+        then={(site) =>
+          <Site site={site} />
+        }>
+      </Async>
+    )
   }
 }
 
