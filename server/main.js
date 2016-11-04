@@ -55,7 +55,7 @@ app.use('/assets', express.static(path.join(__dirname, '/../dist/assets')))
 app.get('/api/site/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   db.getSiteData(url, function (json) {
-    if (url === null)
+    if (json === null)
       res.status(404).json({'error': 'site not found'})
     else
       res.json(json)
