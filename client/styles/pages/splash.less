@@ -149,22 +149,18 @@
     height: 40px;
     line-height: 38px;
     padding: 0 30px;
-    background: @splash-font-color;
+    background: @core-color;
     border-radius: 3px;
     font-size: @body-font-size;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .3px;
-    border: 1px solid @splash-font-color;
+    border: 1px solid @core-color;
     text-decoration: none;
     &:hover {
-      background: #555;
-      border-color: #555;
+      background: darken(@core-color, 10%);
+      border-color: darken(@core-color, 10%);
     }
-  }
-  .ctas-button-2 {
-    background: transparent;
-    color: @splash-font-color;
   }
 
   // Colors and Gradients
