@@ -78,7 +78,7 @@ export default class App extends PureComponent{
       })
     }))
   }
-  
+
   render() {
     return (
       <Router history={browserHistory}>
