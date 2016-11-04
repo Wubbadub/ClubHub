@@ -52,19 +52,22 @@ export default class SignUpForm extends PureComponent {
     const site = e.target.value
 
     this.setState({siteInput: site, siteInputState: 'testing'})
-
     this.validateSite(site, function(s){ self.setState({siteInputState: s}) })
   }
 
   validateSite = (site, callback) => {
-    clearTimeout(this.timer) // TODO: REMOVE once connect to server
+    clearTimeout(this.timer)
+    const self = this
     if (site === '') return callback('empty')
     else if (!/^[a-zA-Z0-9-]+$/.test(site)) return callback('invalid')
 
-    // TODO: Test with the DB, This simulates a server call
     this.timer = setTimeout(function() {
-      callback(site === 'taken' ? 'unavailable' : 'okay')
-    }, 200) // TODO: REMOVE once connect to server
+      Promise.resolve(fetch(`http://www.hubsite.club/api/site_exists/${self.state.siteInput}`, {
+        method: 'GET'
+      })).then((res) => {
+        res.text().then((t) => callback(t === 'true' ? 'unavailable' : 'okay'))
+      })
+    }, 200)
   }
 
   siteInputHint = () => {
