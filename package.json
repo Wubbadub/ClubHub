@@ -1,7 +1,7 @@
 {
   "name": "clubhub",
   "version": "0.0.1",
-  "description": "platform to create club hubsites",
+  "description": "platform to create club websites",
   "main": "server/main.js",
   "dependencies": {
     "babel-cli": "6.16.0",
@@ -54,8 +54,7 @@
     "club",
     "hub",
     "clubhub",
-    "hosting",
-    "hubsite"
+    "hosting"
   ],
   "author": "Wubbadub",
   "license": "UNLICENSED",

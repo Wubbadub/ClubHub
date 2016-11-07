@@ -2,6 +2,8 @@ import React, {PureComponent, PropTypes} from 'react'
 import {Router, Route, browserHistory} from 'react-router'
 import Async from 'react-promise'
 
+import Config from 'Config'
+
 // Our Pages
 import Splash from 'pages/Splash'
 import Editor from 'pages/editor/Editor'
@@ -69,7 +71,7 @@ export default class App extends PureComponent{
 
   static getSite = (siteId) => {
     const request = new Request(
-      `http://www.hubsite.club/api/site/${siteId}`,
+      `http://${Config.server}/api/site/${siteId}`,
       {method: 'GET'}
     )
     return Promise.resolve(fetch(request).then((response) => {

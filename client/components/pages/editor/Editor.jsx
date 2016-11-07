@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
 import classNames from 'classnames'
 
+import Config from 'Config'
 import Icon from 'parts/Icon'
 import Brand from 'parts/Brand'
 
@@ -49,7 +50,7 @@ export default class Editor extends Component {
   }
 
   handleSubmit = () => {
-    const res = fetch(`http://www.hubsite.club/api/site/${this.props.siteId}`, {
+    const res = fetch(`http://${Config.server}/api/site/${this.props.siteId}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

@@ -5,6 +5,8 @@ var webpack = require('webpack')
 var failPlugin = require('webpack-fail-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
+var production = (process.env.ENV === 'production')
+
 module.exports = {
   entry: [
     'babel-polyfill',
@@ -59,6 +61,9 @@ module.exports = {
         ]
       }
     ]
+  },
+  externals: {
+    'Config': JSON.stringify(production ? require('./config.prod.json') : require('./config.dev.json'))
   },
   resolve: {
     modulesDirectories: [
