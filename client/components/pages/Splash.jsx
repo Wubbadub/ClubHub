@@ -1,9 +1,13 @@
 import React, {PureComponent} from 'react'
+import {Link} from 'react-router'
 
 import SignUp from 'parts/SignUp'
 import Brand from 'parts/Brand'
 
-const bg = require('../../img/splash-bg.jpg')
+const browserview = require('../../img/browser-view.png')
+const mobileview = require('../../img/mobile-view.png')
+const seo = require('../../img/seo-optimize.svg')
+const transfer = require('../../img/transfer.svg')
 
 export default class Splash extends PureComponent {
   constructor(props) {
@@ -29,22 +33,77 @@ export default class Splash extends PureComponent {
 
   render() {
     return (
-      <main className="splash">
+      <div className="splash">
         <SignUp active={this.state.signup} close={this.hideSignUp}/>
-        <section className="hero" style={{backgroundImage: `url(${bg})`}}>
-          <div className="blurb">
-            <h1>
-              <Brand />
-            </h1>
-            <p>
-              You want a first point of contact to your university club for potential members and sponsors.
-            We offer a simple Q&A interface for university clubs to create beautiful, minimal websites.
-            Shoot us an <a href="mailto:contact@hubsite.club" target="_blank">email</a> if you have any questions, or want to learn more about what we do.
-            </p>
-            <button className="btn btn-lg btn-cta" onClick={this.showSignUp}>Create Your Website</button>
+        <div className="header">
+          <div className="container-lrg">
+            <div className="col-12 spread">
+              <div>
+                <a><Brand/></a>
+              </div>
+              <div>
+                <Link className="btn btn-link nav-link" to="/editor/create">Log in</Link>
+                <button type="button" className="btn btn-link nav-link" href="#" onClick={this.showSignUp}>Sign up</button>
+                <a className="btn btn-link nav-link" target="_blank" href="mailto:contact@hubsite.club">Contact</a>
+              </div>
+            </div>
           </div>
-        </section>
-      </main>
+          <div className="container-sml">
+            <div className="col-12 text-center">
+              <h1>Provide your university club with the resources it needs.</h1>
+              <h2>Creating a website with us takes less than ten minutes.
+                We host the website for you and give you a URL so you can start sharing your website with students, members, and sponsors.</h2>
+              <div className="ctas">
+                <button type="button" className="btn ctas-button" onClick={this.showSignUp}>Start Creating</button>
+              </div>
+            </div>
+          </div>
+          <div className="container-lrg">
+            <div className="col-12">
+              <div className="header-images">
+                <div className="iphone">
+                  <div className="mask">
+                    <img className="mask-img" src={mobileview}/>
+                  </div>
+                </div>
+                <div className="browser">
+                  <div className="mask">
+                    <img className="mask-img" src={browserview}/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="container-lrg columns element-container">
+            <div className="col-6 text-center">
+              <img src={seo}/>
+              <h2>
+                We make sure to serve your website right so your club website
+                can gain traffic from organic google searches.
+              </h2>
+            </div>
+            <div className="col-6 text-center">
+              <img src={transfer}/>
+              <h2>
+                Using Clubhub makes it easy for you and your club members to
+                maintain and transfer ownership.
+              </h2>
+            </div>
+          </div>
+          <div className="container-lrg second-cta">
+            <div className="col-12 text-center">
+              <h1>Spend less time sweating the details and more time enjoying your club.</h1>
+              <div className="ctas">
+                <button type="button" className="btn ctas-button" onClick={this.showSignUp}>Get started in minutes</button>
+              </div>
+              <div className="footer">
+                <a><Brand/></a>
+                <a className="footer-link" target="_blank" href="mailto:contact@hubsite.club">Email Us</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 }

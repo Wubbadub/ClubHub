@@ -21,6 +21,7 @@
     .editor-viewbox {
       overflow-y: scroll;
       max-height: 100%;
+      padding-bottom: 5.2rem; //Todo: fix hack
     }
 
     .toggle {
@@ -43,6 +44,35 @@
         display: inline-block;
         transition: transform 0.5s;
         transform: rotate(0deg);
+      }
+    }
+    .editor-header {
+      width: 100%;
+      border-bottom: 0.1em solid @core-border-color;
+      background-color: @core-light-color;
+      padding: @layout-gutter;
+      .brand {
+        height: 2em;
+        svg {
+          max-height: 100%;
+          fill: @core-meta-color;
+        }
+      }
+    }
+
+    .editor-footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      border-top: 0.1em solid @core-border-color;
+      background-color: @core-light-color;
+      padding: 0.5*@layout-gutter;
+      .btn-save {
+        float: right;
+        &.disabled {
+          background-color: lighten(@core-meta-color, 20%);
+          border-color: lighten(@core-meta-color, 15%);
+        }
       }
     }
   }

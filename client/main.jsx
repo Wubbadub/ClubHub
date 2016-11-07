@@ -4,8 +4,9 @@ import {render} from 'react-dom'
 // Import App
 import App from 'App'
 
-// Import Styles
-import './styles/main.less'
+// Import Styles and favicon
+import 'styles/main.less'
+import 'img/favicon.png'
 
 render((
   <App/>
