@@ -61,10 +61,8 @@ app.use(bodyParser.urlencoded({
 app.get('/api/site/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   db.getSiteData(url, function (json) {
-    if (json === null)
-      res.status(404).json({'error': 'site not found'})
-    else
-      res.json(json)
+    if (json === null) res.status(404).json({'error': 'site not found'})
+    else res.json(json)
   })
 })
 
@@ -87,7 +85,7 @@ app.get('/*', function (req, res) {
 })
 
 // Update a site
-app.post('/api/site/*', function(req, res){
+app.post('/api/site/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   // TODO: User authentication
   db.updateSite(url, 1, req.body, function (success) {
@@ -98,15 +96,15 @@ app.post('/api/site/*', function(req, res){
 // Create a new site with the url indicated by the post address
 // and sitename sent in the json object { "siteName" : "Example Club" }
 // Returns the json object of the new site upon success; false otherwise
-app.post('/api/newsite/*', function(req, res){
+app.post('/api/newsite/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   let siteName = req.body.siteName
-  if (siteName)
+  if (siteName) {
     db.createNewSite(url, siteName, function (json) {
       res.json(json)
-    })
-  else
+    }) } else {
     res.send(false)
+  }
 })
 
 // Create new site
