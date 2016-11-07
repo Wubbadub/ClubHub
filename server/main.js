@@ -17,26 +17,33 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const db = require('./api/db.js')
 
+const production = (process.env.NODE_ENV === 'production')
+
 // #######################
 // #       WEBPACK       #
 // #######################
 
-let webpackValid = false
+let webpackValid = production
 
-const webpack = require('webpack')
-const webpackConfig = require('../webpack.config.js')
-const compiler = webpack(webpackConfig)
+if (production) {
+  console.log('[app] running in PRODUCTION mode')
+} else {
+  console.log('[app] running in DEVELOPMENT mode')
+  const webpack = require('webpack')
+  const webpackConfig = require('../webpack.config.js')
+  const compiler = webpack(webpackConfig)
 
-compiler.watch({}, function (err, stats) {
-  if (err) { throw err }
+  compiler.watch({}, function (err, stats) {
+    if (err) { throw err }
 
-  console.log(stats.toString({
-    chunks: false, // Makes the build much quieter
-    colors: true
-  }))
+    console.log(stats.toString({
+      chunks: false, // Makes the build much quieter
+      colors: true
+    }))
 
-  webpackValid = true
-})
+    webpackValid = true
+  })
+}
 
 // #######################
 // #       ROUTING       #

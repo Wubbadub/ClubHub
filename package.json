@@ -43,7 +43,9 @@
     "webpack-fail-plugin": "1.0.5"
   },
   "scripts": {
-    "start": "nodemon server/main.js",
+    "start": "npm run develop",
+    "develop": "nodemon server/main.js",
+    "production": "webpack -p --config webpack.config.production.js; NODE_ENV=production node server/main.js",
     "test": "webpack --bail"
   },
   "repository": {
