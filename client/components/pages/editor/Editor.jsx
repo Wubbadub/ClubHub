@@ -77,12 +77,12 @@ export default class Editor extends Component {
                   const section = this.state.site.sections[s]
                   return (
                     <EditorSection key={s}
-                      section={s}
-                      active={this.state.sectionStates[s]}
-                      setActive={this.toggleSection}
-                      data={section}
-                      setData={this.setData}
-                      />
+                                   section={s}
+                                   active={this.state.sectionStates[s]}
+                                   setActive={this.toggleSection}
+                                   data={section}
+                                   setData={this.setData}
+                    />
                   )
                 })}
               </div>
