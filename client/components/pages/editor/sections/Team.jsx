@@ -32,7 +32,7 @@ export default class Team extends Component{
         {
           Object.keys(this.props.data).map((person) => {
             return (
-              <div key={`${person}-editor`} className="form-group" >
+              <div key={person} className="form-group" >
                 <ClubRepField label="Club Rep"
                               index={person}
                               onChange={this.handleChange}
