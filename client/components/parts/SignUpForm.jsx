@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import classNames from 'classnames'
+import {browserHistory} from 'react-router'
 
 import Config from 'Config'
 
@@ -34,24 +35,41 @@ export default class SignUpForm extends PureComponent {
     hostUrl: Config.subhosts[0]
   }
 
+  handleSubmit = () => {
+
+    fetch(`http://www.hubsite.club/api/newsite/${this.state.siteInput}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({'siteName': 'FIX ME'})
+    }).then(() => {
+      browserHistory.push(`/editor/${this.state.siteInput.toLowerCase()}`)
+    })
+  }
+
   siteChange = (e) => {
     const self = this
     const site = e.target.value
 
     this.setState({siteInput: site, siteInputState: 'testing'})
-
     this.validateSite(site, function(s){ self.setState({siteInputState: s}) })
   }
 
   validateSite = (site, callback) => {
-    clearTimeout(this.timer) // TODO: REMOVE once connect to server
+    clearTimeout(this.timer)
+    const self = this
     if (site === '') return callback('empty')
     else if (!/^[a-zA-Z0-9-]+$/.test(site)) return callback('invalid')
 
-    // TODO: Test with the DB, This simulates a server call
     this.timer = setTimeout(function() {
-      callback(site === 'taken' ? 'unavailable' : 'okay')
-    }, 200) // TODO: REMOVE once connect to server
+      Promise.resolve(fetch(`http://www.hubsite.club/api/site_exists/${self.state.siteInput}`, {
+        method: 'GET'
+      })).then((res) => {
+        res.text().then((t) => callback(t === 'true' ? 'unavailable' : 'okay'))
+      })
+    }, 200)
   }
 
   siteInputHint = () => {
@@ -106,6 +124,10 @@ export default class SignUpForm extends PureComponent {
               <span className="input-group-addon">.{this.props.hostUrl}</span>
           </div>
           <span className="form-input-hint">{this.siteInputHint()}</span>
+        </div>
+
+        <div className="form-group">
+          <button type="button" className={classNames('btn', 'btn-primary', 'btn-block', 'btn-lg', {'disabled': this.state.siteInputState !== 'okay'})} onClick={this.handleSubmit}>Create Site</button>
         </div>
       </form>
     )
