@@ -22,7 +22,7 @@ export default class Footer extends PureComponent{
               </div>
               <ul>
                   <li><a href="#" target="_blank"><Icon icon="twitter"/>@getclubhub</a></li>
-                  <li><a href={`mailto:contact@${Config.server}`} target="_blank"><Icon icon="mail"/>{`contact@${Config.server}`}</a></li>
+                  <li><a href={`mailto:contact@${Config.host}`} target="_blank"><Icon icon="mail"/>{`contact@${Config.host}`}</a></li>
               </ul>
           </div>
           <ul className="more">

@@ -1,3 +1,7 @@
 {
-    "server": "tryclubhub.com"
+    "host": "tryclubhub.com.localhost",
+    "server": "tryclubhub.com",
+    "subhosts": [
+        "uvic.club.localhost"
+    ]
 }

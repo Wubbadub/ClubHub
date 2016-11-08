@@ -23,8 +23,6 @@ const production = (process.env.NODE_ENV === 'production')
 // #       WEBPACK       #
 // #######################
 
-let webpackValid = production
-
 if (production) {
   console.log('[app] running in PRODUCTION mode')
 } else {
@@ -40,8 +38,6 @@ if (production) {
       chunks: false, // Makes the build much quieter
       colors: true
     }))
-
-    webpackValid = true
   })
 }
 
@@ -65,6 +61,10 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
+// #######################
+// #        API          #
+// #######################
+
 app.get('/api/site/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   db.getSiteData(url, function (json) {
@@ -84,11 +84,6 @@ app.get('/api/site_exists/*', function (req, res) {
 
 app.get('/api/*', function (req, res) {
   res.status(404).json({'error': 'PC Load Letter'})
-})
-
-app.get('/*', function (req, res) {
-  if (webpackValid) res.sendFile(path.join(__dirname, '/../dist/index.html'))
-  else console.log('[app] waiting for valid webpack')
 })
 
 // Update a site
@@ -114,7 +109,14 @@ app.post('/api/newsite/*', function (req, res) {
   }
 })
 
-// Create new site
+// #######################
+// #        App          #
+// #######################
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/../dist/index.html'))
+})
+
 
 app.listen(PORT, function reportRunning () {
   console.log(`[app] running on port ${PORT}`)
