@@ -8,8 +8,7 @@ export default class ClubRepField extends Component{
   static propTypes = {
     label: PropTypes.string,
     name: PropTypes.string.isRequired,
-    index: PropTypes.string,
-    value: PropTypes.shape({
+    data: PropTypes.shape({
       name: PropTypes.string,
       position: PropTypes.string,
       email: PropTypes.string
@@ -18,12 +17,11 @@ export default class ClubRepField extends Component{
   }
 
   handleChange = (e) => {
-    const kind = e.target.dataset.kind
-    const val = this.props.value
-    val[kind] = e.target.value
-    this.props.onChange(this.props.name, val, this.props.index)
+    const field = e.target.dataset.kind
+    const val = this.props.data
+    val[field] = e.target.value
+    this.props.onChange(this.props.name, val)
   }
-
 
   render(){
     return (
@@ -32,15 +30,15 @@ export default class ClubRepField extends Component{
         <div className="form-border">
           <div className="form-group">
             <label className="form-label">Name</label>
-            <input className="form-input" type="text" data-kind="name" onChange={this.handleChange} value={this.props.value.name} />
+            <input className="form-input" type="text" data-kind="name" onChange={this.handleChange} value={this.props.data.name} />
           </div>
           <div className="form-group">
             <label className="form-label">Position</label>
-            <input className="form-input" type="text" data-kind="position" onChange={this.handleChange} value={this.props.value.position} />
+            <input className="form-input" type="text" data-kind="position" onChange={this.handleChange} value={this.props.data.position} />
           </div>
           <div className="form-group">
             <label className="form-label">Email</label>
-            <input className="form-input" type="text" data-kind="email" onChange={this.handleChange} value={this.props.value.email} />
+            <input className="form-input" type="text" data-kind="email" onChange={this.handleChange} value={this.props.data.email} />
           </div>
         </div>
       </div>
