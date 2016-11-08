@@ -19,7 +19,8 @@ export default class SignUpForm extends PureComponent {
         - testing
       */
       siteInput: '',
-      valid: false
+      valid: false,
+      loading: false
     }
 
     this.timer // TODO: REMOVE once connect to server
@@ -35,6 +36,7 @@ export default class SignUpForm extends PureComponent {
   }
 
   handleSubmit = () => {
+    this.setState({loading: true})
     fetch(`http://${Config.server}/api/newsite/${this.state.siteInput}`, {
       method: 'POST',
       headers: {
@@ -125,11 +127,11 @@ export default class SignUpForm extends PureComponent {
         </div>
         <div className="form-group">
           <button type="button"
-                  className={
-                    classNames(
+                  className={classNames(
                       'btn', 'btn-primary', 'btn-block', 'btn-lg',
-                      {'disabled': this.state.siteInputState !== 'okay'})
-                  }
+                      {'disabled': this.state.siteInputState !== 'okay'},
+                      {'loading': this.state.loading}
+                  )}
                   onClick={this.handleSubmit}
                   >
             Create Site
