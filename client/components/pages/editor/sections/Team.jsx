@@ -28,22 +28,22 @@ export default class Team extends Component{
 
   render(){
     return (
-      <div key="team-container" className="club-reps" >
+      <form className="club-reps">
         {
           Object.keys(this.props.data).map((person) => {
             return (
-              <form key={`${person}-form`} >
+              <div key={person} className="form-group" >
                 <ClubRepField label="Club Rep"
-                              key={person}
                               index={person}
                               onChange={this.handleChange}
                               value={this.props.data[person]}
                               name={person} />
-              </form>
+              </div>
+
             )
           })
         }
-      </div>
+      </form>
     )
   }
 }
