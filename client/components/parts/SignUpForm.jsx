@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react'
 import classNames from 'classnames'
 
+import Config from 'Config'
+
 // use when state and lifecycle functions are needed
 export default class SignUpForm extends PureComponent {
 
@@ -29,7 +31,7 @@ export default class SignUpForm extends PureComponent {
   }
 
   static defaultProps = {
-    hostUrl: 'uvic.club'
+    hostUrl: Config.subhosts[0]
   }
 
   siteChange = (e) => {
