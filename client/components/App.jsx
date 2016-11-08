@@ -64,7 +64,7 @@ export default class App extends PureComponent{
   }
 
   getRouter = () => {
-    let names = window.location.hostname.split('.')
+    let names = window.location.host.split('.')
     names = names[0] === ('www') ? names.slice(1) : names // trim www
 
     if (Config.subhosts.indexOf(names.slice(1).join('.')) >= 0)
