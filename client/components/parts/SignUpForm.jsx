@@ -65,7 +65,9 @@ export default class SignUpForm extends PureComponent {
       Promise.resolve(fetch(`http://www.hubsite.club/api/site_exists/${self.state.siteInput}`, {
         method: 'GET'
       })).then((res) => {
-        res.text().then((t) => callback(t === 'true' ? 'unavailable' : 'okay'))
+        res.text().then((t) => {
+          callback(t === 'true' ? 'unavailable' : 'okay')
+        })
       })
     }, 200)
   }
