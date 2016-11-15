@@ -38,7 +38,11 @@ export default class Editor extends Component {
 
   toggleSection = (s) => {
     const sections = this.state.sectionStates
-    sections[s] = !sections[s]
+    if (sections[s] === true) sections[s] = !sections[s]
+    else {
+      Object.keys(sections).forEach((section) => { sections[section] = false })
+      sections[s] = true
+    }
     this.setState({sectionStates: sections})
   }
 
