@@ -104,7 +104,8 @@ app.post('/api/newsite/*', function (req, res) {
   if (siteName) {
     db.createNewSite(url, siteName, function (json) {
       res.json(json)
-    }) } else {
+    })
+  } else {
     res.send(false)
   }
 })
@@ -116,7 +117,6 @@ app.post('/api/newsite/*', function (req, res) {
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, '/../dist/index.html'))
 })
-
 
 app.listen(PORT, function reportRunning () {
   console.log(`[app] running on port ${PORT}`)
