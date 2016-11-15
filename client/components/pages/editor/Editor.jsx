@@ -83,7 +83,7 @@ export default class Editor extends Component {
                     <EditorSection key={s}
                       section={s}
                       active={this.state.sectionStates[s]}
-                      setActive={this.toggleSection}
+                      toggleSection={this.toggleSection}
                       data={section}
                       setData={this.setData}
                       />
