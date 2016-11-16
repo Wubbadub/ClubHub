@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
 import classNames from 'classnames'
 
+import Config from 'Config'
 import Icon from 'parts/Icon'
 import Brand from 'parts/Brand'
 
@@ -49,7 +50,7 @@ export default class Editor extends Component {
   }
 
   handleSubmit = () => {
-    const res = fetch(`http://www.hubsite.club/api/site/${this.props.siteId}`, {
+    const res = fetch(`http://${Config.server}/api/site/${this.props.siteId}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -67,9 +68,9 @@ export default class Editor extends Component {
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" /></button>
             <div className="editor-header">
-              <Link to="/" target="_blank">
+              <a href={`http://${Config.host}`} target="_blank">
                 <Brand />
-              </Link>
+              </a>
             </div>
             <div className="editor-viewbox">
               <div className="accordion">
@@ -87,7 +88,7 @@ export default class Editor extends Component {
                 })}
               </div>
               <div className="editor-footer">
-                <Link className={classNames('btn', 'btn-link')} to={`/site/${this.props.siteId}`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
+                <Link className={classNames('btn', 'btn-link')} to={`/`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
                 <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', {disabled: !this.state.dirtyBit})} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
               </div>
             </div>

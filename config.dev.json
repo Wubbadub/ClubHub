@@ -1,0 +1,7 @@
+{
+    "host": "tryclubhub.com.localhost:8000",
+    "server": "tryclubhub.com",
+    "subhosts": [
+        "uvic.club.localhost:8000"
+    ]
+}
