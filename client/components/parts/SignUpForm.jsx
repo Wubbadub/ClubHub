@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react'
 import classNames from 'classnames'
-import {browserHistory} from 'react-router'
+
+import Config from 'Config'
 
 // use when state and lifecycle functions are needed
 export default class SignUpForm extends PureComponent {
@@ -18,7 +19,8 @@ export default class SignUpForm extends PureComponent {
         - testing
       */
       siteInput: '',
-      valid: false
+      valid: false,
+      loading: false
     }
 
     this.timer // TODO: REMOVE once connect to server
@@ -30,12 +32,12 @@ export default class SignUpForm extends PureComponent {
   }
 
   static defaultProps = {
-    hostUrl: 'uvic.club'
+    hostUrl: Config.subhosts[0]
   }
 
   handleSubmit = () => {
-
-    fetch(`http://www.hubsite.club/api/newsite/${this.state.siteInput}`, {
+    this.setState({loading: true})
+    fetch(`http://${Config.server}/api/newsite/${this.state.siteInput}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -43,13 +45,13 @@ export default class SignUpForm extends PureComponent {
       },
       body: JSON.stringify({'siteName': 'FIX ME'})
     }).then(() => {
-      browserHistory.push(`/editor/${this.state.siteInput.toLowerCase()}`)
+      window.location.assign(`http://${this.state.siteInput}.${this.props.hostUrl}/edit`)
     })
   }
 
   siteChange = (e) => {
     const self = this
-    const site = e.target.value
+    const site = e.target.value.toLowerCase()
 
     this.setState({siteInput: site, siteInputState: 'testing'})
     this.validateSite(site, function(s){ self.setState({siteInputState: s}) })
@@ -62,7 +64,7 @@ export default class SignUpForm extends PureComponent {
     else if (!/^[a-zA-Z0-9-]+$/.test(site)) return callback('invalid')
 
     this.timer = setTimeout(function() {
-      Promise.resolve(fetch(`http://www.hubsite.club/api/site_exists/${self.state.siteInput}`, {
+      Promise.resolve(fetch(`http://${Config.server}/api/site_exists/${self.state.siteInput}`, {
         method: 'GET'
       })).then((res) => {
         res.text().then((t) => {
@@ -125,9 +127,17 @@ export default class SignUpForm extends PureComponent {
           </div>
           <span className="form-input-hint">{this.siteInputHint()}</span>
         </div>
-
         <div className="form-group">
-          <button type="button" className={classNames('btn', 'btn-primary', 'btn-block', 'btn-lg', {'disabled': this.state.siteInputState !== 'okay'})} onClick={this.handleSubmit}>Create Site</button>
+          <button type="button"
+                  className={classNames(
+                      'btn', 'btn-primary', 'btn-block', 'btn-lg',
+                      {'disabled': this.state.siteInputState !== 'okay'},
+                      {'loading': this.state.loading}
+                  )}
+                  onClick={this.handleSubmit}
+                  >
+            Create Site
+          </button>
         </div>
       </form>
     )
