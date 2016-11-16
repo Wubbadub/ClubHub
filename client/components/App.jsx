@@ -2,6 +2,8 @@ import React, {PureComponent, PropTypes} from 'react'
 import {Router, Route, browserHistory} from 'react-router'
 import Async from 'react-promise'
 
+import Config from 'Config'
+
 // Our Pages
 import Splash from 'pages/Splash'
 import Editor from 'pages/editor/Editor'
@@ -14,13 +16,13 @@ class EditorContainer extends PureComponent {
   }
 
   static propTypes = {
-    params: PropTypes.shape ({
+    route: PropTypes.shape ({
       siteId: PropTypes.string
     })
   }
 
   render() {
-    const {siteId} = this.props.params
+    const {siteId} = this.props.route
     return (
       <Async
         promise={App.getSite(siteId)}
@@ -38,13 +40,13 @@ class SiteContainer extends PureComponent {
   }
 
   static propTypes = {
-    params: PropTypes.shape ({
+    route: PropTypes.shape ({
       siteId: PropTypes.string
     })
   }
 
   render() {
-    const {siteId} = this.props.params
+    const {siteId} = this.props.route
     return (
       <Async
         promise={App.getSite(siteId)}
@@ -61,15 +63,30 @@ export default class App extends PureComponent{
     super(props)
   }
 
-  static propTypes = {
-    params: PropTypes.shape ({
-      siteId: PropTypes.string
-    })
+  getRouter = () => {
+    let names = window.location.host.split('.')
+    names = names[0] === ('www') ? names.slice(1) : names // trim www
+
+    if (Config.subhosts.indexOf(names.slice(1).join('.')) >= 0)
+      // Sub host (club site)
+      return (
+        <Router history={browserHistory}>
+          <Route siteId={names[0]} component={SiteContainer} path="/" />
+          <Route siteId={names[0]} component={EditorContainer} path="/edit"/>
+        </Router>
+      )
+    else
+      // Main host (clubhub site)
+      return (
+        <Router history={browserHistory}>
+          <Route component={Splash} path="/"/>
+        </Router>
+      )
   }
 
   static getSite = (siteId) => {
     const request = new Request(
-      `http://www.hubsite.club/api/site/${siteId}`,
+      `http://${Config.server}/api/site/${siteId}`,
       {method: 'GET'}
     )
     return Promise.resolve(fetch(request).then((response) => {
@@ -80,12 +97,6 @@ export default class App extends PureComponent{
   }
 
   render() {
-    return (
-      <Router history={browserHistory}>
-        <Route path="/" component={Splash}/>
-        <Route path="/editor/:siteId" component={EditorContainer}/>
-        <Route path="/site/:siteId" component={SiteContainer}/>
-      </Router>
-    )
+    return (this.getRouter())
   }
 }

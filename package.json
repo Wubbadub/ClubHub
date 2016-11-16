@@ -1,7 +1,7 @@
 {
   "name": "clubhub",
   "version": "0.0.1",
-  "description": "platform to create club hubsites",
+  "description": "platform to create club websites",
   "main": "server/main.js",
   "dependencies": {
     "babel-cli": "6.16.0",
@@ -43,7 +43,9 @@
     "webpack-fail-plugin": "1.0.5"
   },
   "scripts": {
-    "start": "nodemon server/main.js",
+    "start": "npm run develop",
+    "develop": "nodemon server/main.js",
+    "production": "webpack -p --config webpack.config.production.js; NODE_ENV=production node server/main.js",
     "test": "webpack --bail"
   },
   "repository": {
@@ -54,8 +56,7 @@
     "club",
     "hub",
     "clubhub",
-    "hosting",
-    "hubsite"
+    "hosting"
   ],
   "author": "Wubbadub",
   "license": "UNLICENSED",
