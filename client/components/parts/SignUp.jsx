@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react'
-import {Link} from 'react-router'
 
 import SignUpForm from './SignUpForm'
 
@@ -32,9 +31,6 @@ export default class SignUp extends PureComponent {
             </div>
             <div className="modal-body">
               <SignUpForm />
-            </div>
-            <div className="modal-footer">
-              <Link className="btn btn-primary" to="/editor/create">Create Site</Link>
             </div>
           </div>
         </div>
