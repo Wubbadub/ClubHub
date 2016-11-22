@@ -27,8 +27,8 @@ export default class Hero extends Component{
   render(){
     return (
       <form>
-        <ShortTextField label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
-        <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
+        <ShortTextField maxLength="60"label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
+        <LongTextField maxLength="500" label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
         <ButtonField label="Button" onChange={this.handleChange} value={this.props.data.buttons[0]} index={0} name="buttons"/>
         <ButtonField label="Button" onChange={this.handleChange} value={this.props.data.buttons[1]} index={1} name="buttons"/>
       </form>
