@@ -39,7 +39,11 @@ export default class Editor extends Component {
 
   toggleSection = (s) => {
     const sections = this.state.sectionStates
-    sections[s] = !sections[s]
+    if (sections[s] === true) sections[s] = !sections[s]
+    else {
+      Object.keys(sections).forEach((section) => { sections[section] = false })
+      sections[s] = true
+    }
     this.setState({sectionStates: sections})
   }
 
@@ -78,12 +82,12 @@ export default class Editor extends Component {
                   const section = this.state.site.sections[s]
                   return (
                     <EditorSection key={s}
-                                   section={s}
-                                   active={this.state.sectionStates[s]}
-                                   setActive={this.toggleSection}
-                                   data={section}
-                                   setData={this.setData}
-                    />
+                      section={s}
+                      active={this.state.sectionStates[s]}
+                      toggleSection={this.toggleSection}
+                      data={section}
+                      setData={this.setData}
+                      />
                   )
                 })}
               </div>
