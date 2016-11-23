@@ -1,4 +1,7 @@
 import React, {PureComponent} from 'react'
+
+import Config from 'Config'
+
 import Icon from 'parts/Icon'
 import Brand from 'parts/Brand'
 
@@ -19,7 +22,7 @@ export default class Footer extends PureComponent{
               </div>
               <ul>
                   <li><a href="#" target="_blank"><Icon icon="twitter"/>@getclubhub</a></li>
-                  <li><a href="mailto:contact@hubsite.club" target="_blank"><Icon icon="mail"/>contact@hubsite.club</a></li>
+                  <li><a href={`mailto:contact@${Config.host}`} target="_blank"><Icon icon="mail"/>{`contact@${Config.host}`}</a></li>
               </ul>
           </div>
           <ul className="more">

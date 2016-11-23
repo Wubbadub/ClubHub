@@ -6,6 +6,7 @@ var failPlugin = require('webpack-fail-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   entry: [
     'babel-polyfill',
     `${__dirname}/client/main.jsx`
@@ -22,6 +23,14 @@ module.exports = {
       filename: 'index.html'
     }),
     failPlugin,
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+    new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
   ],
@@ -61,7 +70,7 @@ module.exports = {
     ]
   },
   externals: {
-    'Config': JSON.stringify(require('./config.dev.json'))
+    'Config': JSON.stringify(require('./config.prod.json'))
   },
   resolve: {
     modulesDirectories: [
