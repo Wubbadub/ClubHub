@@ -25,7 +25,7 @@ export default class LongTextField extends PureComponent{
     return (
       <div className="form-group">
         <label className="form-label">{this.props.label}</label>
-        <textarea className="form-input" type="text" onChange={this.handleChange} placeholder={this.props.placeholder} value={this.props.value}/>
+        <textarea maxLength="512" className="form-input" type="text" onChange={this.handleChange} placeholder={this.props.placeholder} value={this.props.value}/>
       </div>
     )
   }
