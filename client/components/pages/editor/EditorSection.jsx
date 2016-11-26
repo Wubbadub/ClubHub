@@ -13,11 +13,11 @@ export default class EditorSection extends Component{
     data: PropTypes.object,
     setData: PropTypes.func,
     active: PropTypes.bool,
-    setActive: PropTypes.func
+    toggleSection: PropTypes.func
   }
 
   toggleActive = () => {
-    this.props.setActive(this.props.section)
+    this.props.toggleSection(this.props.section)
   }
 
   render(){

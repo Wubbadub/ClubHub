@@ -17,26 +17,29 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const db = require('./api/db.js')
 
+const production = (process.env.NODE_ENV === 'production')
+
 // #######################
 // #       WEBPACK       #
 // #######################
 
-let webpackValid = false
+if (production) {
+  console.log('[app] running in PRODUCTION mode')
+} else {
+  console.log('[app] running in DEVELOPMENT mode')
+  const webpack = require('webpack')
+  const webpackConfig = require('../webpack.config.js')
+  const compiler = webpack(webpackConfig)
 
-const webpack = require('webpack')
-const webpackConfig = require('../webpack.config.js')
-const compiler = webpack(webpackConfig)
+  compiler.watch({}, function (err, stats) {
+    if (err) { throw err }
 
-compiler.watch({}, function (err, stats) {
-  if (err) { throw err }
-
-  console.log(stats.toString({
-    chunks: false, // Makes the build much quieter
-    colors: true
-  }))
-
-  webpackValid = true
-})
+    console.log(stats.toString({
+      chunks: false, // Makes the build much quieter
+      colors: true
+    }))
+  })
+}
 
 // #######################
 // #       ROUTING       #
@@ -58,13 +61,15 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
+// #######################
+// #        API          #
+// #######################
+
 app.get('/api/site/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   db.getSiteData(url, function (json) {
-    if (json === null)
-      res.status(404).json({'error': 'site not found'})
-    else
-      res.json(json)
+    if (json === null) res.status(404).json({'error': 'site not found'})
+    else res.json(json)
   })
 })
 
@@ -81,13 +86,8 @@ app.get('/api/*', function (req, res) {
   res.status(404).json({'error': 'PC Load Letter'})
 })
 
-app.get('/*', function (req, res) {
-  if (webpackValid) res.sendFile(path.join(__dirname, '/../dist/index.html'))
-  else console.log('[app] waiting for valid webpack')
-})
-
 // Update a site
-app.post('/api/site/*', function(req, res){
+app.post('/api/site/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   // TODO: User authentication
   db.updateSite(url, 1, req.body, function (success) {
@@ -98,18 +98,25 @@ app.post('/api/site/*', function(req, res){
 // Create a new site with the url indicated by the post address
 // and sitename sent in the json object { "siteName" : "Example Club" }
 // Returns the json object of the new site upon success; false otherwise
-app.post('/api/newsite/*', function(req, res){
+app.post('/api/newsite/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   let siteName = req.body.siteName
-  if (siteName)
+  if (siteName) {
     db.createNewSite(url, siteName, function (json) {
       res.json(json)
     })
-  else
+  } else {
     res.send(false)
+  }
 })
 
-// Create new site
+// #######################
+// #        App          #
+// #######################
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/../dist/index.html'))
+})
 
 app.listen(PORT, function reportRunning () {
   console.log(`[app] running on port ${PORT}`)

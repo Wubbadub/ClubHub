@@ -25,7 +25,7 @@ export default class ShortTextField extends PureComponent{
     return (
       <div className="form-group">
         <label className="form-label">{this.props.label}</label>
-        <input className="form-input" type="text" onChange={this.handleChange} placeholder={this.props.placeholder} value={this.props.value}/>
+        <input maxLength="64" className="form-input" type="text" onChange={this.handleChange} placeholder={this.props.placeholder} value={this.props.value}/>
       </div>
     )
   }

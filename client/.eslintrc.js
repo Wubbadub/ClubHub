@@ -29,8 +29,6 @@ module.exports = {
     'no-eval': 1,
     'no-extra-bind': 1,
     'no-unused-vars': 1,
-    'react/jsx-no-bind': [1, {'ignoreRefs': true}],
-    'no-else-return': 1,
     'no-floating-decimal': 1,
     'no-undef-init': 1,
     'global-require' : 1,
