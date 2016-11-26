@@ -19,7 +19,7 @@ export default class Team extends Component{
             {
               Object.keys(this.props.data).map((person) => {
                 return (
-                  <div className="person">
+                  <div key={person} className="person">
                     <span>{this.props.data[person].name} - {this.props.data[person].position}</span>
                     <a href="#" target="_blank">{this.props.data[person].email}</a>
                   </div>
