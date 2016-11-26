@@ -87,10 +87,6 @@ export default class Editor extends Component {
                 <Brand />
               </a>
             </div>
-            <div className="editor-footer">
-              <Link className={classNames('btn', 'btn-link')} to={`/`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
-              <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', {disabled: !this.state.dirtyBit})} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
-            </div>
             <div className="editor-viewbox">
               <div className="accordion">
                 {Object.keys(this.state.site.sections).map((s) => {
@@ -106,6 +102,10 @@ export default class Editor extends Component {
                   )
                 })}
               </div>
+            </div>
+            <div className="editor-footer">
+              <Link className={classNames('btn', 'btn-link')} to={`/`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
+              <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', {disabled: !this.state.dirtyBit})} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
             </div>
           </div>
           <div className="site-preview col-12">
