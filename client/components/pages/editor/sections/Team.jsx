@@ -14,36 +14,29 @@ export default class Team extends Component{
     setData: PropTypes.func
   }
 
-  handleChange = (field, value, index) => {
+  handleChange = (field, value) => {
     const d = this.props.data
-
-    if (index === undefined || index === null){
-      d[field] = value
-    } else {
-      d[field][index] = value
-    }
-
+    d[field] = value
     this.props.setData('team', d)
   }
 
   render(){
     return (
-      <div key="team-container" className="club-reps" >
+      <form className="club-reps">
         {
           Object.keys(this.props.data).map((person) => {
             return (
-              <form key={`${person}-form`} >
+              <div key={person} className="form-group" >
                 <ClubRepField label="Club Rep"
-                              key={person}
-                              index={person}
                               onChange={this.handleChange}
-                              value={this.props.data[person]}
+                              data={this.props.data[person]}
                               name={person} />
-              </form>
+              </div>
+
             )
           })
         }
-      </div>
+      </form>
     )
   }
 }
