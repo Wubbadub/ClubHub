@@ -16,7 +16,8 @@ export default class Editor extends Component {
       sectionStates: this.makeSiteSections(),
       showEditorBar: true,
       dirtyBit: false,
-      site: this.props.site
+      site: this.props.site,
+      bodyScroll: true
     }
   }
 
@@ -65,11 +66,21 @@ export default class Editor extends Component {
     if (res) this.setState({dirtyBit: false})
   }
 
+  disableBodyScroll = () => {
+    this.setState({bodyScroll: false})
+    document.body.style.overflow = 'hidden'
+  }
+
+  enableBodyScroll = () => {
+    this.setState({bodyScroll: true})
+    document.body.style.overflow = ''
+  }
+
   render() {
     return (
       <div className="editor container">
         <div className="columns">
-          <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})}>
+          <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" /></button>
             <div className="editor-header">
               <a href={`http://${Config.host}`} target="_blank">
@@ -91,10 +102,10 @@ export default class Editor extends Component {
                   )
                 })}
               </div>
-              <div className="editor-footer">
-                <Link className={classNames('btn', 'btn-link')} to={`/`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
-                <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', {disabled: !this.state.dirtyBit})} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
-              </div>
+            </div>
+            <div className="editor-footer">
+              <Link className={classNames('btn', 'btn-link')} to={`/`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
+              <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', {disabled: !this.state.dirtyBit})} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
             </div>
           </div>
           <div className="site-preview col-12">
