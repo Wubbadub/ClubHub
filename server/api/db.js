@@ -9,16 +9,24 @@ const pool = new pg.Pool({
 
 // Get the site data given its url
 const getSiteData = function (url, next) {
-  pool.query('SELECT site_data FROM clubs WHERE url=$1::text', [url], function (err, res) {
-    if (err || res.rowCount === 0)
+  pool.query('SELECT id, active, site_data FROM clubs WHERE url=$1::text', [url], function (err, res) {
+    if (err || res.rowCount === 0) {
       next(null)
-    else
-      next(res.rows[0].site_data)
-    })
+    } else {
+      let site = res.rows[0]
+      // Placeholder logic
+      if (true || site.active) {
+        next(site.site_data)
+      } else {
+        // TODO: Verify the user requesting the site has admin or editor credentials before sending the data back
+      }
+    }
+  })
 }
 
 // Given the short url of a site, the userID of the user attempting to update it,
 // and an updated json object, update the site's data if the user has access.
+// Also updates the modified_date timestamp to reflect this update.
 // Passes on true on success, false if the user didn't have access,
 // the site doesn't exist, or there was a database error.
 const updateSite = function(url, userID, site_data, next){
@@ -27,7 +35,7 @@ const updateSite = function(url, userID, site_data, next){
      next(false)
    else
      //TODO: Handle corrupted (possibly maliciously) data here and/or when loading it
-     pool.query('UPDATE clubs SET site_data = $1::json WHERE url = $2::text', [site_data, url], function(err) {
+     pool.query('UPDATE clubs SET (site_data, modified_date) = ($1::json, now()) WHERE url = $2::text', [site_data, url], function(err) {
        if (err)
          next(false)
        else

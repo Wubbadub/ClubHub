@@ -12,7 +12,6 @@ const PORT = require('./constants.js').PORT
 
 const express = require('express')
 const app = express()
-// const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const path = require('path')
 const db = require('./api/db.js')
