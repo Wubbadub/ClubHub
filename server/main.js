@@ -5,16 +5,22 @@
 // #######################
 
 const PORT = require('./constants.js').PORT
+const GOOGLE_CLIENT_ID = require('./constants.js').GOOGLE_CLIENT_ID
+
 "use strict"
 // #######################
 // #  SERVER INITIATION  #
 // #######################
 
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const bodyParser = require('body-parser')
 const path = require('path')
 const db = require('./api/db.js')
+
+const oauth2 = require('google-auth-library/lib/auth/oauth2client')
+const jwt = new oauth2(GOOGLE_CLIENT_ID)
 
 const production = (process.env.NODE_ENV === 'production')
 
@@ -46,8 +52,10 @@ if (production) {
 
 // MIDDLEWARE FUNCTIONS -- app.use()
 
+// Server console log
 app.use(function (req, res, next) {
-  console.log(`[app] ${req.method} ${req.url}`)
+  let timestamp = new Date().toISOString()
+  console.log(`[app ${timestamp}] [${req.ip}] ${req.method} ${req.url}`)
   next()
 })
 
@@ -59,6 +67,31 @@ app.use(bodyParser.json({type: 'application/json'}))
 app.use(bodyParser.urlencoded({
   extended: true
 }))
+
+// Add the "Access-Control-Allow-Origin:*" header to everything
+app.use(cors())
+
+// Extract and validate user authentication, if it was included
+app.use((req, res, next) => {
+  let auth = req.get("authorization")
+  if(!auth)
+  {
+    next()
+  } else {
+    try {
+      // Validate using google's library
+      jwt.verifyIdToken(auth, null, function (err, login){
+        if (login)
+        {
+          req.payload = login.getPayload()
+        }
+        next()
+      })
+    } catch (err) {
+      next()
+    }
+  }
+})
 
 // #######################
 // #        API          #
@@ -73,7 +106,7 @@ app.get('/api/site/*', function (req, res) {
 })
 
 // Check if a given site exists without transmitting the entire site data
-// Use in the create
+// Use to verify a url is available as the user types it
 app.get('/api/site_exists/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   db.checkSiteExists(url, function (exists) {

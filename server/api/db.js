@@ -24,13 +24,27 @@ const getSiteData = function (url, next) {
   })
 }
 
+// Get a list of all active sites for the given subhost
+// Inside a json object in the format:
+// { sites: [ { name: 'Canoe Club', url: 'canoe' }, { name: 'Webdev Club', url: 'webdev' } ] }
+const getDirectory = function (subhost, next) {
+  pool.query('SELECT name, url from clubs WHERE subhost=$1::text AND active=true', [subhost], function (err, res) {
+    if (err || res.rowCount === 0)
+    {
+      next({sites : []})
+    } else {
+      next({sites: res.rows})
+    }
+  })
+}
+
 // Given the short url of a site, the userID of the user attempting to update it,
 // and an updated json object, update the site's data if the user has access.
 // Also updates the modified_date timestamp to reflect this update.
 // Passes on true on success, false if the user didn't have access,
 // the site doesn't exist, or there was a database error.
 const updateSite = function(url, userID, site_data, next){
-  pool.query('SELECT * FROM admins WHERE user_id = $1::int AND club_id = (SELECT id FROM clubs WHERE url=$2::text)', [userID, url], function(err, res){
+  pool.query('SELECT * FROM permissions WHERE user_id = $1::int AND club_id = (SELECT id FROM clubs WHERE url=$2::text)', [userID, url], function(err, res){
    if(false) //err || res.rowCount === 0)
      next(false)
    else
