@@ -18,6 +18,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const path = require('path')
 const db = require('./api/db.js')
+const crypto = require('crypto')
 
 const oauth2 = require('google-auth-library/lib/auth/oauth2client')
 const jwt = new oauth2(GOOGLE_CLIENT_ID)
@@ -81,6 +82,10 @@ app.use((req, res, next) => {
     try {
       // Validate using google's library
       jwt.verifyIdToken(auth, null, function (err, login){
+        if (err)
+        {
+          req.auth_error = err
+        }
         if (login)
         {
           req.payload = login.getPayload()
@@ -97,6 +102,7 @@ app.use((req, res, next) => {
 // #        API          #
 // #######################
 
+// TODO: User authentication (via user or temp_token)
 app.get('/api/site/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   db.getSiteData(url, function (json) {
@@ -119,9 +125,10 @@ app.get('/api/*', function (req, res) {
 })
 
 // Update a site
+// TODO: User authentication
 app.post('/api/site/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
-  // TODO: User authentication
+
   db.updateSite(url, 1, req.body, function (success) {
     res.send(success) // Just return success for now, later add error codes possibly
   })
@@ -130,15 +137,48 @@ app.post('/api/site/*', function (req, res) {
 // Create a new site with the url indicated by the post address
 // and sitename sent in the json object { "siteName" : "Example Club" }
 // Returns the json object of the new site upon success; false otherwise
+// TODO: Random token
 app.post('/api/newsite/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   let siteName = req.body.siteName
-  if (siteName) {
-    db.createNewSite(url, siteName, function (json) {
-      res.json(json)
+
+  // If there's already a user logged in
+  if (req.payload)
+  {
+    // Get user db id
+    db.getUserID(0, req.payload.sub, function (id) {
+      if (!id) {
+        // User doesn't exist despite sending this token --> This should never happen here
+        res.send("Error User Not Found")
+      } else {
+        db.createNewSite(url, siteName, null, function (json) {
+          if (!json) {
+            res.send("Error creating site")
+          } else {
+            db.addUserPermission(0, id, url, 1, function (result) {
+              if (!result)
+              {
+                // This should also never happen
+                res.send("Error assigning ownership to site " + url)
+              } else {
+                res.send(json) // Success
+              }
+            })
+          }
+        })
+      }
+    })
+  } else if (!req.get("authorization")){
+    let temporary_key = crypto.randomBytes(32).toString('base64').replace(/\//g,'_').replace(/\+/g,'-')
+    db.createNewSite(url, siteName, temporary_key, function (json) {
+      if (!json) {
+        res.send("Error creating site")
+      } else {
+        res.append('Temporary-Key', temporary_key)
+      }
     })
   } else {
-    res.send(false)
+    res.send("Invalid Token")
   }
 })
 

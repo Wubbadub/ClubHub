@@ -85,3 +85,9 @@ db.addUserPermission(4, 1, 'test123', 1, function (result) {
   if (result !== 'Access Denied')
     console.log("TEST FAILURE: Give User 1 permission on test123 via user 4: " + result)
 })
+
+db.createUser('Josh', 1, 76234616274, 'josh@pres.com', function (result){
+  if (result) {
+    console.log("TEST FAILURE: Add (existing) user Josh: " + result)
+  }
+})
