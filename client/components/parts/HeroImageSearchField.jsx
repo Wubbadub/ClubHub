@@ -4,7 +4,8 @@ export default class HeroImageSearchField extends Component {
   constructor(props){
     super(props)
     this.state = {
-      searchKeyword: ''
+      searchKeywords: [],
+      searchRawString: ''
     }
   }
 
@@ -13,7 +14,8 @@ export default class HeroImageSearchField extends Component {
   }
 
   searchByKeyword = (e) => {
-    this.setState({searchKeyword: [e.target.value] })
+    const newKeywords = (e.target.value).split(' ')
+    this.setState({searchKeywords: [newKeywords], searchRawString: [e.target.value] })
   }
 
   updateHeroImage = (e) => {
@@ -26,9 +28,11 @@ export default class HeroImageSearchField extends Component {
     return (
       <div id="heroImageSearch" >
         <label className="form-label">Search Image</label>
-        <input onChange={this.searchByKeyword} maxLength="64" className="form-input" type="url" value={this.state.searchKeyword}/>
+        <input onChange={this.searchByKeyword} maxLength="64" className="form-input" type="url" value={this.state.searchRawString}/>
         <div id="thumbnails">
-          <img onClick={this.updateHeroImage} height="50" width="80" className="accordion-header" src={`https://source.unsplash.com/category/${this.state.searchKeyword}`} />
+          <img onClick={this.updateHeroImage} height="70" width="80" className="accordion-header" src={`https://source.unsplash.com/2000x1000/?${this.state.searchKeywords}`} />
+          <img onClick={this.updateHeroImage} height="70" width="80" className="accordion-header" src={`https://source.unsplash.com/2000x1000/?${this.state.searchKeywords}`} />
+          <img onClick={this.updateHeroImage} height="70" width="80" className="accordion-header" src={`https://source.unsplash.com/2000x1000/?${this.state.searchKeywords}`} />
         </div>
       </div>
     )
