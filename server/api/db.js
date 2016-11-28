@@ -7,6 +7,10 @@ const pool = new pg.Pool({
   host: 'localhost',
 })
 
+// #######################
+// #   SITE MANAGEMENT   #
+// #######################
+
 // Get the site data given its url
 const getSiteData = function (url, next) {
   pool.query('SELECT id, active, site_data FROM clubs WHERE url=$1::text', [url], function (err, res) {
@@ -24,11 +28,11 @@ const getSiteData = function (url, next) {
   })
 }
 
-// Get a list of all active sites for the given subhost
+// Get a list of all sites (either active, or inactive, but not both) for the given subhost
 // Inside a json object in the format:
 // { sites: [ { name: 'Canoe Club', url: 'canoe' }, { name: 'Webdev Club', url: 'webdev' } ] }
-const getDirectory = function (subhost, next) {
-  pool.query('SELECT name, url from clubs WHERE subhost=$1::text AND active=true', [subhost], function (err, res) {
+const getDirectory = function (subhost, active, next) {
+  pool.query('SELECT name, url from clubs WHERE subhost=$1::text AND active=$2::boolean', [subhost, active], function (err, res) {
     if (err || res.rowCount === 0)
     {
       next({sites : []})
@@ -67,7 +71,7 @@ const createNewSite = function(url, name, next){
   checkSiteExists(url, function(exists){
     if(exists){
       next(false)
-    }else{
+    } else {
       // The default data to populate a new site with
       const default_site_data = require('./default_template.json')
       pool.query('INSERT INTO clubs (url, name, active, site_data, creation_date, modified_date) VALUES ($1::text, $2::text, false, $3::json, current_timestamp, current_timestamp)', [url, name, default_site_data], function (err) {
@@ -91,9 +95,86 @@ const checkSiteExists = function(url, next){
   })
 }
 
+// Verify the user has owner access to the site and then update its active status if they do
+// ATTENTION: Only user_ids from fresh validated tokens should be passed into this function.
+const updateSiteActive = function(state, url, user_id, next){
+  pool.query('UPDATE clubs SET active=$1::boolean WHERE id=(SELECT club_id FROM permissions WHERE user_id=$2::int AND permission=1 AND club_id=(SELECT id FROM clubs WHERE url=$3::text))', [state, user_id, url], function (err, res){
+    if (err) {
+      next(null)
+    } else if (res.rowCount === 0) {
+      next("Access Denied")
+    } else {
+      next("Site Active State Updated")
+    }
+  })
+}
+
+// #######################
+// #   USER MANAGEMENT   #
+// #######################
+
+
+// Verify the user has owner access to the site and then update the user's permission for
+// that site if they do. A user can modify their own permission downwards this way (Which would be foolish)
+// ATTENTION: Only owner_ids from fresh validated tokens should be passed into this function
+const updateUserPermission = function (owner_id, user_id, url, permission, next) {
+  pool.query('UPDATE permissions SET permission=$1::int WHERE user_id=$2::int AND club_id=(SELECT club_id FROM permissions WHERE user_id=$3::int AND permission=1 AND club_id=(SELECT id FROM clubs WHERE url=$4::text))', [permission, user_id, owner_id, url], function (err, res) {
+    if (err) {
+      next(null)
+    } else if (res.rowCount === 0) {
+      next("Access Denied") // Technically if the user doesn't have _any_ permissions we'll get this but the client shouldn't generate this request if they don't
+    } else {
+      next("User Permission Updated")
+    }
+  })
+}
+
+// Get a user's permission level for a given club
+// Returning null if they don't have permissions
+// Also return the club_id for use in future queries
+const getUserPermission = function (user_id, url, next) {
+  pool.query('SELECT permission, club_id FROM permissions WHERE user_id=$1::int AND club_id=(SELECT id FROM clubs WHERE url=$2::text)', [user_id, url], function (err, res) {
+    if (err || res.rowCount === 0) {
+      next(null)
+    } else {
+      next(res.rows[0].permission, res.rows[0].club_id)
+    }
+  })
+}
+
+// Add permissions for a user to a club if they didn't already
+// have any permission. Use owner_id 0 for internally adding
+// the first admin or any other methods of adding permissions internally
+const addUserPermission = function (owner_id, user_id, url, permission, next) {
+  if (owner_id === 0) // For adding the admin in new site creation
+  {
+    pool.query('INSERT INTO permissions VALUES ($1::int, (SELECT id FROM clubs WHERE url=$2::text), $3::int)', [user_id, url, permission], function (err, res) {
+      if (err) {
+        next(null)
+      } else {
+        next("User Permission Added")
+      }
+    })
+  }  else {
+    getUserPermission(owner_id, url, function (owner_permission, club_id) {
+      if (owner_permission != 1) {
+        next("Access Denied")
+      } else {
+        pool.query('INSERT INTO permissions VALUES ($1::int, $2::int, $3::int)', [user_id, club_id, permission], function (err, res) {
+          if (err) {
+            next(null)
+          } else {
+            next("User Permission Added")
+          }
+        })
+      }
+    })
+  }
+}
+
 // Internal testing only
 const rawQuery = function(query, next){
   pool.query(query, next)
 }
 
-module.exports = {checkSiteExists, createNewSite, getSiteData, updateSite, rawQuery}
+module.exports = {checkSiteExists, createNewSite, getSiteData, updateSite, rawQuery, getDirectory, updateSiteActive, updateUserPermission, getUserPermission, addUserPermission}
