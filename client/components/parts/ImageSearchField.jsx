@@ -22,7 +22,7 @@ export default class ImageSearchField extends Component {
 
   searchByKeyword = (e) => {
     const newKeywords = (e.target.value).split(' ')
-    this.setState({searchKeywords: [newKeywords], searchRawString: [e.target.value] })
+    this.setState({searchKeywords: newKeywords, searchRawString: [e.target.value] })
   }
 
   handleChange = (e) => {
@@ -39,12 +39,23 @@ export default class ImageSearchField extends Component {
                type="url"
                value={this.state.searchRawString}
                placeholder={this.props.placeholder} />
-        <div id="thumbnails">
-          <img onClick={this.handleChange}
-               height="60px"
-               width="96px"
-               className={classNames('thumbnail')}
-               src={`https://source.unsplash.com/2000x1000/?${this.state.searchKeywords}`} />
+        <div className={classNames('columns')} id="thumbnails">
+          <div className={classNames('column', 'col-md-3')}>
+            <img onClick={this.handleChange}
+                 className={classNames('thumbnail')}
+                 src={`https://source.unsplash.com/2000x1000/?${this.state.searchKeywords}`} />
+          </div>
+          {(this.state.searchKeywords).map((keyword) => {
+            return (
+              <div className={classNames('column', 'col-md-3')} key={keyword}>
+                <img onClick={this.handleChange}
+                     className={classNames('thumbnail')}
+                     src={`https://source.unsplash.com/2000x1000/?${keyword}`}
+                     key={keyword+'Img'} />
+              </div>
+            )
+          })
+          }
         </div>
       </div>
     )

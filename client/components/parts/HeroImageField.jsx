@@ -54,7 +54,7 @@ export default class HeroImageField extends Component{
     }
     return (
       <div className="form-group" >
-        <ul className="tab tab-block">
+        <ul className="tab tab-block pt-5">
           <li id="search"
               onClick={this.selectTab}
               style={tabStyle}
@@ -68,7 +68,7 @@ export default class HeroImageField extends Component{
               <a id="update">Upload</a>
           </li>
         </ul>
-
+        <label className={classNames('form-label')}>Main Image</label>
         <ImageSearchField isActive={this.state.tabStates['search'].isActive}
                           updateImage={this.updateHeroImage}
                           placeholder={'e.g. \"sunset city\"'} />

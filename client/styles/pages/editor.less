@@ -3,18 +3,17 @@
     display: none;
   }
 
-  // ***********************
-  // ToDo: wire this into Hero image stuff
   .thumbnail {
-    width: '96px';
-    height: '70px';
-    cursor: 'pointer';
-  }
+    margin: 0;
+    padding: 0.25*@layout-gutter;
+    width: 120px;
+    height: 75px;
+    cursor: pointer;
 
-  .tab {
-    cursor: 'pointer';
+    &:hover {
+      background-color: darken(@core-light-color, 10%);
+    }
   }
-  // ***********************
 
   .editor-bar {
     height: 100vh;
