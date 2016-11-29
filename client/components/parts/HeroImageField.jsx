@@ -20,7 +20,7 @@ export default class HeroImageField extends Component{
       'search': {
         'isActive': true
       },
-      'url': {
+      'update': {
         'isActive': false
       }
     })
@@ -47,10 +47,8 @@ export default class HeroImageField extends Component{
   }
 
   render() {
-    // ToDo: create separate file for styling
-    // ToDo: implement tabs each image selection method
+    // ToDo: move styling to seperate file
     // ToDo: use an icon as for tab title e.g. magnifying glass in place of "Search"
-    // ToDo: implement url
     const tabStyle = {
       'cursor': 'pointer'
     }
@@ -61,20 +59,20 @@ export default class HeroImageField extends Component{
               onClick={this.selectTab}
               style={tabStyle}
               className={classNames('tab-item', {'active': this.state.tabStates['search'].isActive})}>
-              Search
+              <a id="search">Search</a>
           </li>
-          <li id="url"
+          <li id="update"
               onClick={this.selectTab}
               style={tabStyle}
-              className={classNames('tab-item', {'active': this.state.tabStates['url'].isActive})}>
-              Upload
+              className={classNames('tab-item', {'active': this.state.tabStates['update'].isActive})}>
+              <a id="update">Upload</a>
           </li>
         </ul>
 
         <ImageSearchField isActive={this.state.tabStates['search'].isActive}
                           updateImage={this.updateHeroImage}
                           placeholder={'e.g. \"sunset city\"'} />
-        <ImageUploadField isActive={this.state.tabStates['url'].isActive}
+        <ImageUploadField isActive={this.state.tabStates['update'].isActive}
                           updateImage={this.updateHeroImage}
                           placeholder="http://www.example.com/pretty.jpg" />
       </div>
