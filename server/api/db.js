@@ -13,17 +13,11 @@ const pool = new pg.Pool({
 
 // Get the site data given its url
 const getSiteData = function (url, next) {
-  pool.query('SELECT id, active, site_data FROM clubs WHERE url=$1::text', [url], function (err, res) {
+  pool.query('SELECT site_data FROM clubs WHERE url=$1::text', [url], function (err, res) {
     if (err || res.rowCount === 0) {
       next(null)
     } else {
-      let site = res.rows[0]
-      // Placeholder logic
-      if (true || site.active) {
-        next(site.site_data)
-      } else {
-        // TODO: Verify the user requesting the site has admin or editor credentials before sending the data back
-      }
+      next(res.rows[0].site_data)
     }
   })
 }
@@ -98,7 +92,7 @@ const checkSiteExists = function(url, next){
 
 // Gives true or false depending on whether the site with the given url is active
 const checkSiteActive = function(url, next) {
-  pool.query('SELECT active FROM clubs WHERE url$1::text', [url], function (err, res){
+  pool.query('SELECT active FROM clubs WHERE url=$1::text', [url], function (err, res){
     if (err || res.rowCount === 0)
       next(null)
     else
@@ -116,6 +110,17 @@ const updateSiteActive = function(state, url, user_id, next){
       next("Access Denied")
     } else {
       next("Site Active State Updated")
+    }
+  })
+}
+
+const getSiteAgeAndTemporaryKey = function(url, next){
+  pool.query('SELECT temporary_key, (current_timestamp - creation_date) AS age FROM clubs WHERE url=$1::text', [url], function (err, res) {
+    if (err || res.rowCount === 0)
+    {
+      next(null)
+    } else {
+      next(res.rows[0].temporary_key, res.rows[0].age)
     }
   })
 }
@@ -259,4 +264,6 @@ const rawQuery = function(query, next){
   pool.query(query, next)
 }
 
-module.exports = {checkSiteExists, createNewSite, getSiteData, updateSite, rawQuery, getDirectory, updateSiteActive, updateUserPermission, getUserPermission, addUserPermission, createUser, getUserID}
+module.exports = {checkSiteExists, createNewSite, getSiteData, updateSite, rawQuery, getDirectory, updateSiteActive,
+  updateUserPermission, getUserPermission, addUserPermission, createUser, getUserID, getUserSitePermissions,
+  removeUserPermission, checkSiteActive, getSiteAgeAndTemporaryKey}

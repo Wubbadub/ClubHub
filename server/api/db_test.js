@@ -27,7 +27,7 @@ db.checkSiteExists('dsfsdf', function(exists) {
     console.log("TEST FAILURE: checkSiteExists('dsfsdf') = " + exists)
 })
 
-db.createNewSite('test123', 'Testing Club', function(success) {
+db.createNewSite('test123', 'Testing Club', '7696eacb29d652766147e4ef4da80f42', function(success) {
   if(success)
     console.log("TEST FAILURE: createNewSite('test123') = " + success)
 })
@@ -36,7 +36,7 @@ db.rawQuery('DELETE FROM clubs WHERE url=\'175d2fba54c496095f19df4d1d9a12bd3ec02
   if (err)
     console.log(err)
   else
-    db.createNewSite('175d2fba54c496095f19df4d1d9a12bd3ec0242ebae188d46938922be9a9e362', 'Testing Club 2', function(success) {
+    db.createNewSite('175d2fba54c496095f19df4d1d9a12bd3ec0242ebae188d46938922be9a9e362', 'Testing Club 2', '7696eacb29d652766147e4ef4da80f42', function(success) {
       if (!success)
         console.log("TEST FAILURE: createNewSite #2 result = " + success)
     })
@@ -90,4 +90,8 @@ db.createUser('Josh', 1, 76234616274, 'josh@pres.com', function (result){
   if (result) {
     console.log("TEST FAILURE: Add (existing) user Josh: " + result)
   }
+})
+
+db.getSiteAgeAndTemporaryKey('josh', function(temporary_key, creation_timestamp) {
+  console.log("TEMP KEY: " + temporary_key + "  CREATION_TIMESTAMP: " + JSON.stringify(creation_timestamp))
 })
