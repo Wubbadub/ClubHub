@@ -72,7 +72,7 @@ db.updateUserPermission(4, 2, 'test123', 1, function (result) {
 })
 
 db.getUserPermission(1, 'test123', function (permission, club_id) {
-  if(permission !== 1 || club_id != 49)
+  if(permission !== 1 || club_id !== 49)
     console.log("TEST FAILURE: User 1's permission on test123: " + permission + ", club_id: " + club_id)
 })
 
@@ -94,4 +94,8 @@ db.createUser('Josh', 1, 76234616274, 'josh@pres.com', function (result){
 
 db.getSiteAgeAndTemporaryKey('josh', function(temporary_key, age) {
   console.log("temporary_key: " + temporary_key + "  Age in seconds: " + JSON.stringify(age))
+})
+
+db.getUserSitePermissions(15, function(result) {
+  console.log("User 15's Permissions: " + JSON.stringify(result))
 })

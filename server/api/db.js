@@ -166,12 +166,10 @@ const getUserID = function (service, user_id, next) {
 
 
 // Get a list of every site the user has permissions on
-// TODO: Make this query not be terrible
 const getUserSitePermissions = function (id, next) {
-  pool.query('SELECT (SELECT name from clubs where id=club_id), (SELECT url from clubs where id=club_id), permission FROM permissions WHERE user_id=$1::int', [id], function (err, res) {
+  pool.query('SELECT clubs.name, clubs.url, permissions.permission FROM clubs JOIN permissions ON permissions.club_id=clubs.id WHERE permissions.user_id=$1::int', [id], function (err, res) {
     if (err || res.rowCount === 0)
     {
-      console.log(err)
       next({sites : []})
     } else {
       next({sites: res.rows})
@@ -206,8 +204,8 @@ const updateUserPermission = function (owner_id, user_id, url, permission, next)
   }
 }
 
+// Remove a user's permission entry for a given club, with a given owner attempting removal.
 const removeUserPermission = function (owner_id, user_id, url, permission, next) {
-
   if (owner_id === 0) // For adding the admin in new site creation
   {
     pool.query('DELETE FROM permissions WHERE user_id=$2::int AND club_id=(SELECT id FROM clubs WHERE url=$2::text)', [permission, user_id, url], function (err, res) {
