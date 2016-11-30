@@ -20,7 +20,7 @@ export default class HeroImageField extends Component{
       'search': {
         'isActive': true
       },
-      'update': {
+      'url': {
         'isActive': false
       }
     })
@@ -53,7 +53,8 @@ export default class HeroImageField extends Component{
       'cursor': 'pointer'
     }
     return (
-      <div className="form-group" >
+      <div className={classNames('form-group')} >
+        <label className={classNames('form-label')}>Main Image</label>
         <ul className="tab tab-block pt-5">
           <li id="search"
               onClick={this.selectTab}
@@ -61,19 +62,20 @@ export default class HeroImageField extends Component{
               className={classNames('tab-item', {'active': this.state.tabStates['search'].isActive})}>
               <a id="search">Search</a>
           </li>
-          <li id="update"
+          <li id="url"
               onClick={this.selectTab}
               style={tabStyle}
-              className={classNames('tab-item', {'active': this.state.tabStates['update'].isActive})}>
-              <a id="update">Upload</a>
+              className={classNames('tab-item', {'active': this.state.tabStates['url'].isActive})}>
+              <a id="url">Link</a>
           </li>
         </ul>
-        <label className={classNames('form-label')}>Main Image</label>
         <ImageSearchField isActive={this.state.tabStates['search'].isActive}
                           updateImage={this.updateHeroImage}
+                          label="Free High-Res Photos"
                           placeholder={'e.g. \"sunset city\"'} />
-        <ImageUploadField isActive={this.state.tabStates['update'].isActive}
+        <ImageUploadField isActive={this.state.tabStates['url'].isActive}
                           updateImage={this.updateHeroImage}
+                          label="URL"
                           placeholder="http://www.example.com/pretty.jpg" />
       </div>
     )

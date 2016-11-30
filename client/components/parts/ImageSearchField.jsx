@@ -5,7 +5,7 @@ export default class ImageSearchField extends Component {
   constructor(props){
     super(props)
     this.state = {
-      searchKeywords: [],
+      searchKeywords: ['nature', 'water', 'sun'],
       searchRawString: ''
     }
   }
@@ -13,6 +13,7 @@ export default class ImageSearchField extends Component {
   static propTypes = {
     placeholder: PropTypes.string.isRequired,
     updateImage: PropTypes.func.isRequired,
+    label: PropTypes.string,
     isActive: PropTypes.bool
   }
 
@@ -33,6 +34,7 @@ export default class ImageSearchField extends Component {
     // ToDo: create a style file & port 'height', 'width', etc. attributes to it
     return (
       <div className={classNames({'hidden': !this.props.isActive})} id="heroImageSearch" >
+        <label className={classNames('form-label')}>{this.props.label}</label>
         <input onChange={this.searchByKeyword}
                maxLength="64"
                className="form-input"
