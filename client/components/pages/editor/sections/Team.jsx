@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 
 import ClubRepField from 'parts/ClubRepField'
+import Icon from 'parts/Icon'
 
 export default class Team extends Component{
   constructor(props){
@@ -11,7 +12,9 @@ export default class Team extends Component{
 
   static propTypes = {
     data: PropTypes.object,
-    setData: PropTypes.func
+    setData: PropTypes.func,
+    addElement: PropTypes.func.isRequired,
+    removeElement: PropTypes.func.isRequired
   }
 
   handleChange = (field, value) => {
@@ -20,17 +23,37 @@ export default class Team extends Component{
     this.props.setData('team', d)
   }
 
+  addTeamMember = () => {
+    let max = 0
+    Object.keys(this.props.data).forEach((k) => {
+      const cur = `${k.replace(/[^\d]*/, '')}`
+      if (cur > max) max = cur
+    })
+    const name = `person${+max+1}`
+    const copy = this.props.data[`person${max}`]
+    console.log(name)
+    console.log(copy)
+    this.props.addElement(name, copy)
+  }
+
   render(){
     return (
       <form className="club-reps">
+        <button className={'btn'}
+          onClick={this.addTeamMember}>
+          <Icon icon="plus"
+            size={0.8} />
+        </button>
         {
           Object.keys(this.props.data).map((person) => {
             return (
               <div key={person} className="form-group" >
+
                 <ClubRepField label="Club Rep"
                               onChange={this.handleChange}
                               data={this.props.data[person]}
-                              name={person} />
+                              name={person}
+                              removeElement={this.props.removeElement} />
               </div>
 
             )

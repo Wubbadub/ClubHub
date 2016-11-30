@@ -20,6 +20,20 @@ export default class EditorSection extends Component{
     this.props.toggleSection(this.props.section)
   }
 
+  addElement = (key, data) => {
+    const newData = this.props.data
+    newData[key] = data
+    console.log(newData)
+    this.props.setData(this.props.section, newData)
+  }
+
+  removeElement = (key) => {
+    const newData = this.props.data
+    delete newData[key]
+    console.log(newData)
+    this.props.setData(this.props.section, newData)
+  }
+
   render(){
     if (!Sections[this.props.section]) return null
     const Section = Sections[this.props.section]
@@ -28,7 +42,7 @@ export default class EditorSection extends Component{
         <h5 className="accordion-header" onClick={this.toggleActive}>{Section.Title}</h5>
         <div className="accordion-content">
           <div>
-            <Section data={this.props.data} setData={this.props.setData}/>
+            <Section data={this.props.data} setData={this.props.setData} addElement={this.addElement} removeElement={this.removeElement}/>
           </div>
         </div>
       </div>
