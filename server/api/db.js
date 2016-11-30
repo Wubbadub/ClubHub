@@ -39,21 +39,24 @@ const getDirectory = function (subhost, active, next) {
 
 // Given the short url of a site, the userID of the user attempting to update it,
 // and an updated json object, update the site's data if the user has access.
+// The temporary_key is also updated with the passed value (should either be null or the existing key)
 // Also updates the modified_date timestamp to reflect this update.
 // Passes on true on success, false if the user didn't have access,
 // the site doesn't exist, or there was a database error.
-const updateSite = function(url, userID, site_data, next){
+const updateSite = function(url, userID, temporary_key, site_data, next){
   pool.query('SELECT * FROM permissions WHERE user_id = $1::int AND club_id = (SELECT id FROM clubs WHERE url=$2::text)', [userID, url], function(err, res){
-   if(false) //err || res.rowCount === 0)
+   if(err || res.rowCount === 0)
+   {
      next(false)
-   else
-     //TODO: Handle corrupted (possibly maliciously) data here and/or when loading it
-     pool.query('UPDATE clubs SET (site_data, modified_date) = ($1::json, now()) WHERE url = $2::text', [site_data, url], function(err) {
+   } else {
+     // TODO: Handle corrupted (possibly maliciously) data here and/or when loading it
+     pool.query('UPDATE clubs SET (site_data, modified_date, temporary_key) = ($1::json, now(), $2::text) WHERE url=$3::text', [site_data, temporary_key, url], function (err) {
        if (err)
          next(false)
        else
          next(true)
      })
+   }
   })
 }
 
@@ -70,10 +73,11 @@ const createNewSite = function(url, name, temporary_key, next){
       // The default data to populate a new site with
       const default_site_data = require('./default_template.json')
       pool.query('INSERT INTO clubs (url, name, temporary_key, site_data) VALUES ($1::text, $2::text, $3::text, $4::json)', [url, name, temporary_key, default_site_data], function (err) {
-        if (err)
+        if (err) {
           next(false)
-        else
+        } else {
           next(default_site_data)
+        }
       })
     }
   })
@@ -114,14 +118,23 @@ const updateSiteActive = function(state, url, user_id, next){
   })
 }
 
+// Get the temporary key and the age of the site in seconds
 const getSiteAgeAndTemporaryKey = function(url, next){
-  pool.query('SELECT temporary_key, (current_timestamp - creation_date) AS age FROM clubs WHERE url=$1::text', [url], function (err, res) {
+  pool.query('SELECT temporary_key, EXTRACT(EPOCH FROM (current_timestamp - creation_date)) AS age FROM clubs WHERE url=$1::text', [url], function (err, res) {
     if (err || res.rowCount === 0)
     {
-      next(null)
+      next(null, null)
     } else {
       next(res.rows[0].temporary_key, res.rows[0].age)
     }
+  })
+}
+
+const removeSite = function(url, next) {
+  pool.query('DELETE FROM clubs WHERE url=$1::text LIMIT 1', [url], function (err, res) {
+    if (err)
+      console.log(err)
+    next()
   })
 }
 
@@ -131,7 +144,7 @@ const getSiteAgeAndTemporaryKey = function(url, next){
 
 // Create a new user (assumed to be verified data in main.js)
 const createUser = function (name, service, user_id, email, next) {
-  pool.query('INSERT INTO users (name, service, user_id, email) VALUES ($1::text, $2::int, $3::bigint, $4::text)', [name, service, user_id, email], function (err, res) {
+  pool.query('INSERT INTO users (name, service, user_id, email) VALUES ($1::text, $2::int, $3::text, $4::text)', [name, service, user_id, email], function (err, res) {
     if (err) {
       next(false)
     } else {
@@ -142,7 +155,7 @@ const createUser = function (name, service, user_id, email, next) {
 
 // Given the service and user_id pair, return the actual database id for the user
 const getUserID = function (service, user_id, next) {
-  pool.query('SELECT id FROM users WHERE service=$1::int AND user_id=$2::bigint', [service, user_id], function (err, res) {
+  pool.query('SELECT id FROM users WHERE service=$1::int AND user_id=$2::text', [service, user_id], function (err, res) {
     if (err || res.rowCount === 0) {
       next(null)
     } else {
@@ -155,9 +168,10 @@ const getUserID = function (service, user_id, next) {
 // Get a list of every site the user has permissions on
 // TODO: Make this query not be terrible
 const getUserSitePermissions = function (id, next) {
-  pool.query('SELECT (SELECT url from clubs where id=club_id), permission FROM permissions WHERE user_id=$1::int', [id], function (err, res) {
+  pool.query('SELECT (SELECT name from clubs where id=club_id), (SELECT url from clubs where id=club_id), permission FROM permissions WHERE user_id=$1::int', [id], function (err, res) {
     if (err || res.rowCount === 0)
     {
+      console.log(err)
       next({sites : []})
     } else {
       next({sites: res.rows})

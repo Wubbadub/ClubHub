@@ -42,7 +42,7 @@ db.rawQuery('DELETE FROM clubs WHERE url=\'175d2fba54c496095f19df4d1d9a12bd3ec02
     })
 })
 
-db.updateSite('test123', 1, { updated: 33}, function (success) {
+db.updateSite('test123', 1, '', { updated: 33}, function (success) {
   if (!success)
     console.log("TEST FAILURE: updateSite('test123') via user 1 = " + success)
 })
@@ -92,6 +92,6 @@ db.createUser('Josh', 1, 76234616274, 'josh@pres.com', function (result){
   }
 })
 
-db.getSiteAgeAndTemporaryKey('josh', function(temporary_key, creation_timestamp) {
-  console.log("TEMP KEY: " + temporary_key + "  CREATION_TIMESTAMP: " + JSON.stringify(creation_timestamp))
+db.getSiteAgeAndTemporaryKey('josh', function(temporary_key, age) {
+  console.log("temporary_key: " + temporary_key + "  Age in seconds: " + JSON.stringify(age))
 })
