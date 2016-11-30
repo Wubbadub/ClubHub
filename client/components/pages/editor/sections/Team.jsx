@@ -30,7 +30,7 @@ export default class Team extends Component{
       if (cur > max) max = cur
     })
     const name = `person${+max+1}`
-    const copy = this.props.data[`person${max}`]
+    const copy = Object.assign({}, this.props.data[`person${+max}`])
     console.log(name)
     console.log(copy)
     this.props.addElement(name, copy)
@@ -39,7 +39,8 @@ export default class Team extends Component{
   render(){
     return (
       <form className="club-reps">
-        <button className={'btn'}
+        <button type="button"
+          className={'btn'}
           onClick={this.addTeamMember}>
           <Icon icon="plus"
             size={0.8} />

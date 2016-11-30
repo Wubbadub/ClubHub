@@ -34,7 +34,9 @@ export default class ClubRepField extends Component{
     return (
       <div className="form-group">
         <label className="form-label">{this.props.label}</label>
-        <button className="btn" onClick={this.removeMember}>
+        <button className="btn"
+          type="button"
+          onClick={this.removeMember}>
           <Icon icon="minus"
                 size={0.8} />
         </button>
