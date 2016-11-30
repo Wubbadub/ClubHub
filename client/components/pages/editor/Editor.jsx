@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import Config from 'Config'
 import Icon from 'parts/Icon'
 import Brand from 'parts/Brand'
+import Toast from 'parts/Toast'
 
 import Site from 'pages/site/Site'
 import EditorSection from 'pages/editor/EditorSection'
@@ -80,6 +81,7 @@ export default class Editor extends Component {
     return (
       <div className="editor container">
         <div className="columns">
+          <Toast text="Tastey Toast" type="success"/>
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" /></button>
             <div className="editor-header">
@@ -110,6 +112,9 @@ export default class Editor extends Component {
           </div>
           <div className="site-preview col-12">
             <Site site={this.state.site} />
+          </div>
+          <div className={classNames('editor-help')}>
+            <button className={classNames('btn', 'btn-lg')} type="button">Help <Icon icon="white_question" /></button>
           </div>
         </div>
       </div>
