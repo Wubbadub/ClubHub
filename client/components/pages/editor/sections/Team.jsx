@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 
 import ClubRepField from 'parts/ClubRepField'
 import Icon from 'parts/Icon'
@@ -40,10 +41,12 @@ export default class Team extends Component{
     return (
       <form className="club-reps">
         <button type="button"
-          className={'btn'}
+          className={classNames('btn', 'btn-block')}
           onClick={this.addTeamMember}>
-          <Icon icon="plus"
-            size={0.8} />
+          <span>
+            <Icon icon="plus"
+              size={0.8} /> Add New Member
+          </span>
         </button>
         {
           Object.keys(this.props.data).map((person) => {
