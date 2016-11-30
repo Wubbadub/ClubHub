@@ -52,9 +52,11 @@ export default class Splash extends PureComponent {
           </div>
           <div className="container-sml">
             <div className="col-12 text-center">
-              <h1>Provide your university club with the resources it needs.</h1>
-              <h2>Creating a website with us takes less than ten minutes.
-                We host the website for you and give you a URL so you can start sharing your website with students, members, and sponsors.</h2>
+              <h1>Provide the resources your university club needs, all you have to do is answer a few questions.</h1>
+              <h2>
+                You don’t even need to worry about buying a domain or serving your website.
+                We give you a live, beautiful website that's ready to share within the first five minute of joining.
+              </h2>
               <div className="ctas">
                 <button type="button" className="btn ctas-button" onClick={this.showSignUp}>Start Creating</button>
               </div>
