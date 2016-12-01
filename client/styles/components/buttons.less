@@ -135,9 +135,17 @@
     }
   }
 
-  &.btn-plain:extend(.btn-clear all) {
-    :before {
-      content: none;
+  &.btn-plain {
+    background: transparent;
+    border: 0;
+    color: #666;
+    height: 2rem;
+    margin-left: .3rem;
+    opacity: .45;
+    padding: 0;
+
+    &:hover {
+      opacity: .85;
     }
   }
 }
