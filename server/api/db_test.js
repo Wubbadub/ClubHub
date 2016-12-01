@@ -32,7 +32,7 @@ db.createNewSite('test123', 'Testing Club', '7696eacb29d652766147e4ef4da80f42', 
     console.log("TEST FAILURE: createNewSite('test123') = " + success)
 })
 
-db.remoteSite('175d2fba54c496095f19df4d1d9a12bd3ec0242ebae188d46938922be9a9e362', function (err){
+db.removeSite('175d2fba54c496095f19df4d1d9a12bd3ec0242ebae188d46938922be9a9e362', function (err){
   if (err)
     console.log(err)
   else

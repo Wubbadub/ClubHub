@@ -257,9 +257,6 @@ app.post('/api/site/*', function (req, res) {
 // Create a new site with the url indicated by the post address
 // and sitename sent in the json object { "siteName" : "Example Club" }
 // Returns the json object of the new site upon success; false otherwise
-
-
-
 app.post('/api/newsite/*', function (req, res) {
   let newSite = function(){
     if (req.payload)
@@ -322,6 +319,14 @@ app.post('/api/newsite/*', function (req, res) {
     } else {
       newSite()
     }
+  })
+})
+
+// Responds with a list of club names and urls for active club sites in the specified subhost, eg. /uvic.club
+app.get('/api/directory/*', function (req, res) {
+  let subhost = req.path.substring(req.path.lastIndexOf('/') + 1)
+  db.getDirectory(subhost, true, function (directory) {
+    res.json(directory)
   })
 })
 
