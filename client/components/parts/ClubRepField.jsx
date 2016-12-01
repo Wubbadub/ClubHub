@@ -28,7 +28,7 @@ export default class ClubRepField extends Component{
   }
 
   removeMember = () => {
-    this.props.removeElement(this.props.name)
+    this.props.removeElement(this.props.name, true)
   }
 
   render(){

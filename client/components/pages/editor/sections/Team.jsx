@@ -34,7 +34,7 @@ export default class Team extends Component{
     const copy = Object.assign({}, this.props.data[`person${+max}`])
     console.log(name)
     console.log(copy)
-    this.props.addElement(name, copy)
+    this.props.addElement(name, copy, true)
   }
 
   render(){
@@ -45,14 +45,13 @@ export default class Team extends Component{
           onClick={this.addTeamMember}>
           <span>
             <Icon icon="plus"
-              size={0.8} /> Add New Member
+              size={1} /> Add New Member
           </span>
         </button>
         {
           Object.keys(this.props.data).map((person) => {
             return (
               <div key={person} className="form-group" >
-
                 <ClubRepField label="Club Rep"
                               onChange={this.handleChange}
                               data={this.props.data[person]}
