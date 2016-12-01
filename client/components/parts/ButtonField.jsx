@@ -1,5 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 
+import classNames from 'classnames'
+import Icon from 'parts/Icon'
+
 export default class ButtonField extends Component{
   constructor(props){
     super(props)
@@ -17,7 +20,8 @@ export default class ButtonField extends Component{
         text: PropTypes.string,
         href: PropTypes.string
       }).isRequired,
-      onChange: PropTypes.func.isRequired
+      onChange: PropTypes.func.isRequired,
+      removeElement: PropTypes.func.isRequired
     }
   }
 
@@ -39,10 +43,19 @@ export default class ButtonField extends Component{
     this.props.onChange(this.props.name, val, this.props.index)
   }
 
+  removeSocialIcon = () => {
+    this.props.removeElement(this.props.value, false)
+  }
 
   render(){
     return (
       <div className="form-group">
+        <button className={classNames('btn', 'btn-plain')}
+          type="button"
+          onClick={this.removeSocialIcon}>
+          <Icon icon="trash_can"
+                size={1} />
+        </button>
         <label className="form-label">{this.props.label}</label>
         <div className="form-border">
           <div className="form-group">
