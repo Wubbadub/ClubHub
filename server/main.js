@@ -312,7 +312,7 @@ app.post('/api/newsite/*', function (req, res) {
       db.getSiteAgeAndTemporaryKey(url, function(k, age) {
         if((k && age > C.MAX_TEMP_KEY_SECONDS))
         {
-          db.removeSite('url', function() {
+          db.removeSite(url, function() {
             newSite()
           })
         } else {

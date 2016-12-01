@@ -27,7 +27,7 @@ const getSiteData = function (url, next) {
 // { sites: [ { name: 'Canoe Club', url: 'canoe' }, { name: 'Webdev Club', url: 'webdev' } ] }
 // TODO: Potentially serve more information than just name, url
 const getDirectory = function (subhost, active, next) {
-  pool.query('SELECT name, url from clubs WHERE subhost=$1::text AND active=$2::boolean', [subhost, active], function (err, res) {
+  pool.query('SELECT name, url from clubs WHERE subhost=$1::text AND active=$2::boolean ORDER BY name', [subhost, active], function (err, res) {
     if (err || res.rowCount === 0)
     {
       next({sites : []})
@@ -131,9 +131,10 @@ const getSiteAgeAndTemporaryKey = function(url, next){
 }
 
 const removeSite = function(url, next) {
-  pool.query('DELETE FROM clubs WHERE url=$1::text LIMIT 1', [url], function (err, res) {
+  pool.query('DELETE FROM clubs WHERE url=$1::text', [url], function (err, res) {
     if (err)
       console.log(err)
+    console.log("Deleting site with url " + url + " removed " + res.rowCount + " row(s) from the clubs table")
     next()
   })
 }
@@ -167,7 +168,7 @@ const getUserID = function (service, user_id, next) {
 
 // Get a list of every site the user has permissions on
 const getUserSitePermissions = function (id, next) {
-  pool.query('SELECT clubs.name, clubs.url, permissions.permission FROM clubs JOIN permissions ON permissions.club_id=clubs.id WHERE permissions.user_id=$1::int', [id], function (err, res) {
+  pool.query('SELECT clubs.name, clubs.url, permissions.permission FROM clubs JOIN permissions ON permissions.club_id=clubs.id WHERE permissions.user_id=$1::int ORDER BY clubs.name', [id], function (err, res) {
     if (err || res.rowCount === 0)
     {
       next({sites : []})
@@ -278,4 +279,4 @@ const rawQuery = function(query, next){
 
 module.exports = {checkSiteExists, createNewSite, getSiteData, updateSite, rawQuery, getDirectory, updateSiteActive,
   updateUserPermission, getUserPermission, addUserPermission, createUser, getUserID, getUserSitePermissions,
-  removeUserPermission, checkSiteActive, getSiteAgeAndTemporaryKey}
+  removeUserPermission, checkSiteActive, getSiteAgeAndTemporaryKey, removeSite}
