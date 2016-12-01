@@ -34,7 +34,7 @@ export default class ClubRepField extends Component{
   render(){
     return (
       <div className="form-group">
-        <button className={classNames('btn', 'btn-link')}
+        <button className={classNames('btn', 'btn-plain')}
           type="button"
           onClick={this.removeMember}>
           <Icon icon="trash_can"
