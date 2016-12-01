@@ -32,8 +32,6 @@ export default class Team extends Component{
     })
     const name = `person${+max+1}`
     const copy = Object.assign({}, this.props.data[`person${+max}`])
-    console.log(name)
-    console.log(copy)
     this.props.addElement(name, copy, true)
   }
 

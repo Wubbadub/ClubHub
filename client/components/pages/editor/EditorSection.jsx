@@ -24,7 +24,6 @@ export default class EditorSection extends Component{
     const newData = this.props.data
     if (isObject) newData[key] = data
     else newData.links.push(data)
-    console.log(newData)
     this.props.setData(this.props.section, newData)
   }
 
@@ -32,10 +31,9 @@ export default class EditorSection extends Component{
     const newData = this.props.data
     if (isObject) delete newData[key]
     else {
-      let index = this.props.data.links.indexOf(key)
+      const index = this.props.data.links.indexOf(key)
       if (index > -1) this.props.data.links.splice(index, 1)
     }
-    console.log(newData)
     this.props.setData(this.props.section, newData)
   }
 
