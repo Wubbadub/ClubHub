@@ -108,6 +108,12 @@ export default class Editor extends Component {
   }
 
   render() {
+    const sections = [
+      'hero',
+      'header',
+      'meeting',
+      'team'
+    ]
     return (
       <div className="editor container">
         <div className="columns">
@@ -124,7 +130,7 @@ export default class Editor extends Component {
             </div>
             <div className="editor-viewbox">
               <div className="accordion">
-                {Object.keys(this.state.site.sections).map((s) => {
+                {sections.map((s) => {
                   const section = this.state.site.sections[s]
                   return (
                     <EditorSection key={s}
