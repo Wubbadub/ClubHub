@@ -26,8 +26,8 @@ export default class Footer extends PureComponent{
               </ul>
           </div>
           <ul className="more">
-              <li><a href="#" target="_blank">Create your own website <Icon icon="arrow_right"/></a></li>
-              <li><a href="#" target="_blank">Search more clubs at UVic <Icon icon="arrow_right"/></a></li>
+              <li><a href="http://tryclubhub.com" target="_blank">Create your own website <Icon icon="arrow_right"/></a></li>
+              <li><a href="http://tryclubhub.com" target="_blank">Search more clubs at UVic <Icon icon="arrow_right"/></a></li>
           </ul>
       </footer>
     )
