@@ -21,7 +21,13 @@ export default class SignUpForm extends PureComponent {
         - unavailable
         - testing
       */
-      siteInput: '',
+      clubSiteInput: '',
+      clubNameInput: '',
+      clubTimeInput: '',
+      clubDayInput: '',
+      clubLocationInput: '',
+      clubTwitterInput: '',
+      clubFacebookInput: '',
       valid: false,
       loading: false
     }
@@ -40,29 +46,73 @@ export default class SignUpForm extends PureComponent {
 
   handleNext = () => {
     const p = this.state.page
-    if (p !== 2) {
+    if (p !== 1) {
       this.setState({page: p + 1})
+    } else {
+      this.setState({loading: true})
+      fetch(`http://${Config.server}/api/newsite/${this.state.clubSiteInput}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'siteName': this.state.clubNameInput
+        })
+      }).then(() => {
+
+        const request = new Request(
+          `http://${Config.server}/api/site/${this.state.clubSiteInput}`
+        )
+        Promise.resolve(fetch(request).then((response) => response.json().then((site) => {
+          site.title = this.state.clubNameInput
+
+          const links = []
+          if (this.state.clubFacebookInput !== '') links.push({
+            'type': 'facebook',
+            'text': 'Join us on Facebook',
+            'href': `http://facebook.com/groups/${this.state.clubFacebookInput}`
+          })
+          if (this.state.clubTwitterInput !== '') links.push({
+            'type': 'twitter',
+            'text': 'Follow us on Twitter',
+            'href': `http://twitter.com/${this.state.clubTwitterInput}`
+          })
+
+          site.sections.header.links = links
+          site.sections.hero.buttons = links
+
+          site.sections.meeting.time = this.state.clubTimeInput
+          site.sections.meeting.day = this.state.clubDayInput
+          site.sections.meeting.place = this.state.clubLocationInput
+
+          fetch(`http://${Config.server}/api/site/${this.state.clubSiteInput}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(site)
+          }).then(() => { window.location.assign(`http://${this.state.clubSiteInput}.${this.props.hostUrl}/edit`) })
+        })))
+      })
     }
-    // this.setState({loading: true})
-    // fetch(`http://${Config.server}/api/newsite/${this.state.siteInput}`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({'siteName': 'FIX ME'})
-    // }).then(() => {
-    //   window.location.assign(`http://${this.state.siteInput}.${this.props.hostUrl}/edit`)
-    // })
   }
 
-  siteChange = (e) => {
+  clubSiteInputChange = (e) => {
     const self = this
     const site = e.target.value.toLowerCase()
 
-    this.setState({siteInput: site, siteInputState: 'testing'})
+    this.setState({clubSiteInput: site, siteInputState: 'testing'})
     this.validateSite(site, function(s) { self.setState({siteInputState: s}) })
   }
+
+  clubNameInputChange = (e) => { this.setState({clubNameInput: e.target.value}) }
+  clubTimeInputChange = (e) => { this.setState({clubTimeInput: e.target.value}) }
+  clubDayInputChange = (e) => { this.setState({clubDayInput: e.target.value}) }
+  clubLocationInputChange = (e) => { this.setState({clubLocationInput: e.target.value}) }
+  clubTwitterInputChange = (e) => { this.setState({clubTwitterInput: e.target.value}) }
+  clubFacebookInputChange = (e) => { this.setState({clubFacebookInput: e.target.value}) }
 
   validateSite = (site, callback) => {
     clearTimeout(this.timer)
@@ -71,7 +121,7 @@ export default class SignUpForm extends PureComponent {
     else if (!/^[a-zA-Z0-9-]+$/.test(site)) return callback('invalid')
 
     this.timer = setTimeout(function() {
-      Promise.resolve(fetch(`http://${Config.server}/api/site_exists/${self.state.siteInput}`, {
+      Promise.resolve(fetch(`http://${Config.server}/api/site_exists/${self.state.clubSiteInput}`, {
         method: 'GET'
       })).then((res) => {
         res.text().then((t) => {
@@ -82,18 +132,18 @@ export default class SignUpForm extends PureComponent {
   }
 
   siteInputHint = () => {
-    const siteInput = this.state.siteInput
+    const site = this.state.clubSiteInput
     switch (this.state.siteInputState) {
       case 'okay':
-        return (<span><b className="siteName">{siteInput}.{this.props.hostUrl}</b> is available!</span>)
+        return (<span><b className="siteName">{site}.{this.props.hostUrl}</b> is available!</span>)
       case 'unavailable':
-        return (<span><b className="siteName">{siteInput}.{this.props.hostUrl}</b> is unavailable.</span>)
+        return (<span><b className="siteName">{site}.{this.props.hostUrl}</b> is unavailable.</span>)
       case 'invalid':
-        return (<span><b className="siteName">{siteInput}.{this.props.hostUrl}</b> is invalid.</span>)
+        return (<span><b className="siteName">{site}.{this.props.hostUrl}</b> is invalid.</span>)
       case 'testing':
-        return (<span>Checking <b className="siteName">{siteInput}.{this.props.hostUrl}</b>.</span>)
+        return (<span>Checking <b className="siteName">{site}.{this.props.hostUrl}</b>.</span>)
       case 'empty':
-        return (<span>&nbsp;</span>)
+        return (<span></span>)
       default:
         console.error('Unexpected input state: %s', this.state.siteInputState)
         return (<span>&nbsp;</span>)
@@ -116,68 +166,67 @@ export default class SignUpForm extends PureComponent {
 
     return (
       <div className="tabs">
-        {/* Name and Url */}
+        {/* Day of Week */}
         <div className={classNames('tab', {'active': this.state.page === 0})}>
           <form>
             <div className="form-group">
-              <label className="form-label" htmlFor="club-name-input">What's your Club name?</label>
-              <input className="form-input"
-                type="text"
-                maxLength="128"
-                id="club-name-input"
-                placeholder="UVic Kool Kidz Club" />
-            </div>
-            <div className={siteInputClass}>
-              <label className="form-label" htmlFor="club-site-input">Where should we put your new website?</label>
-              <div className="input-group">
-                <input type="text"
-                  className="form-input"
-                  maxLength="24"
-                  placeholder="kidz"
-                  id="club-site-input"
-                  onChange={this.siteChange} />
-                <span className="input-group-addon">.{this.props.hostUrl}</span>
-              </div>
-              <span className="form-input-hint">{this.siteInputHint()}</span>
+              <label className="form-label" htmlFor="club-name-input">What is your club called?</label>
+              <input className="form-input" type="text" maxLength="8" id="club-name-input" placeholder="Super cool club name" onChange={this.clubNameInputChange} value={this.state.clubNameInput} />
             </div>
             <div className="form-group">
-              <button type="button"
-                className={classNames(
-                  'btn', 'btn-default', 'btn-block',
-                  {'disabled': this.state.siteInputState !== 'okay'},
-                  {'loading': this.state.loading}
-                )}
-                onClick={this.handleNext}
-                >
-                Next thing&nbsp;&nbsp;<Icon icon="arrow_right"/>
-              </button>
-            </div>
-          </form>
-        </div>
-        {/* Day of Week */}
-        <div className={classNames('tab', {'active': this.state.page === 1})}>
-          <form>
-            <div className="form-group">
-              <label className="form-label" htmlFor="club-name-input">What day does your club meet?</label>
-              <label className="btn-group btn-group-block">
+              <label className="form-label" htmlFor="club-day-input">What day does your club meet? <small>(optional)</small></label>
+              <label className="btn-group btn-group-block" id="club-day-input">
                 {days.map((day) =>
                   <label key={day} className="btn btn-link btn-radio">
-                    <input type="radio" name="options" id={`day-${day}`}/>
-                    <label htmlFor={`day-${day}`}>{day.charAt(0).toUpperCase() + day.slice(1)}</label>
+                    <input type="radio" name="club-day-radio" id={`club-day-${day}-radio`} onChange={this.clubDayInputChange} value={day} checked={this.state.clubDayInput === day} />
+                    <label htmlFor={`club-day-${day}-radio`}>{day.charAt(0).toUpperCase() + day.slice(1)}</label>
                   </label>
                 )}
               </label>
             </div>
             <div className="form-group">
-              <button type="button"
-                className={classNames(
-                  'btn', 'btn-default', 'btn-block',
-                  {'disabled': this.state.siteInputState !== 'okay'},
-                  {'loading': this.state.loading}
-                )}
-                onClick={this.handleNext}
-                >
+              <label className="form-label" htmlFor="club-time-input">What time does your club meet? <small>(optional)</small></label>
+              <input className="form-input" type="text" maxLength="8" id="club-time-input" placeholder="2 AM" onChange={this.clubTimeInputChange} value={this.state.clubTimeInput} />
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="club-location-input">Where does your club meet? <small>(optional)</small></label>
+              <input className="form-input" type="text" maxLength="64" id="club-location-input" placeholder="The roof of ECS" onChange={this.clubLocationInputChange} value={this.state.clubLocationInput} />
+            </div>
+            <div className="form-group next-action">
+              <button type="button" className={classNames('btn', 'btn-primary', 'btn-block')} onClick={this.handleNext} >
                 Almost done!&nbsp;&nbsp;<Icon icon="arrow_right"/>
+              </button>
+            </div>
+          </form>
+        </div>
+        {/* Social Links */}
+        <div className={classNames('tab', {'active': this.state.page === 1})}>
+          <form>
+            <div className={siteInputClass}>
+              <label className="form-label" htmlFor="club-site-input">Where should we put your new website?</label>
+              <div className="input-group">
+                <input type="text" className="form-input" maxLength="24" placeholder="kidz" id="club-site-input" onChange={this.clubSiteInputChange} />
+                <span className="input-group-addon">.{this.props.hostUrl}</span>
+              </div>
+              <span className="form-input-hint">{this.siteInputHint()}</span>
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="club-facebook-input">Do you have a facebook group? <small>(optional)</small></label>
+              <div className="input-group">
+                  <span className="input-group-addon">facebook.com/groups/</span>
+                  <input type="text" className="form-input" placeholder="group" id="club-facebook-input" onChange={this.clubFacebookInputChange} value={this.state.clubFacebookInput} />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="club-twitter-input">How about a Twitter account? <small>(optional)</small></label>
+              <div className="input-group">
+                  <span className="input-group-addon">twitter.com/</span>
+                  <input type="text" className="form-input" placeholder="account" id="club-twitter-input" onChange={this.clubTwitterInputChange} value={this.state.clubTwitterInput} />
+              </div>
+            </div>
+            <div className="form-group next-action">
+              <button type="button" className={classNames('btn', 'btn-primary', 'btn-block', {'disabled': this.state.siteInputState !== 'okay'}, {'loading': this.state.loading})} onClick={this.handleNext}>
+                Make my Club website!
               </button>
             </div>
           </form>

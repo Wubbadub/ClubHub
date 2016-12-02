@@ -1,6 +1,6 @@
 // Forms
 .form-group:not(:last-child) {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 .form-border {
   border: 0.1em solid @control-color;
@@ -76,7 +76,6 @@
 // Form element: Input note
 .form-input-hint {
   color: @core-meta-color;
-  display: inline-block;
   margin-top: .4rem;
 
   .has-success &,
@@ -96,6 +95,9 @@
   display: block;
   line-height: 1.6rem;
   margin-bottom: .5rem;
+  small {
+    color: lighten(@body-font-color, 20%);
+  }
 }
 
 // Form element: Select
@@ -133,6 +135,11 @@
     height: 4.2rem;
     line-height: 2rem;
     padding: 1rem 2.4rem 1rem .8rem;
+  }
+}
+.form-multi-select {
+  .form-select {
+    width: auto;
   }
 }
 // Form element: Checkbox and radio
