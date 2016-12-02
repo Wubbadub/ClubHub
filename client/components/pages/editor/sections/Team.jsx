@@ -1,17 +1,21 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 
 import ClubRepField from 'parts/ClubRepField'
+import Icon from 'parts/Icon'
 
 export default class Team extends Component{
   constructor(props){
     super(props)
   }
 
-  static Title = 'Team'
+  static Title = 'Club Organizers'
 
   static propTypes = {
     data: PropTypes.object,
-    setData: PropTypes.func
+    setData: PropTypes.func,
+    addElement: PropTypes.func.isRequired,
+    removeElement: PropTypes.func.isRequired
   }
 
   handleChange = (field, value) => {
@@ -20,9 +24,28 @@ export default class Team extends Component{
     this.props.setData('team', d)
   }
 
+  addTeamMember = () => {
+    let max = 0
+    Object.keys(this.props.data).forEach((k) => {
+      const cur = `${k.replace(/[^\d]*/, '')}`
+      if (cur > max) max = cur
+    })
+    const name = `person${+max+1}`
+    const copy = Object.assign({}, this.props.data[`person${+max}`])
+    this.props.addElement(name, copy, true)
+  }
+
   render(){
     return (
       <form className="club-reps">
+        <button type="button"
+          className={classNames('btn', 'btn-block')}
+          onClick={this.addTeamMember}>
+          <span>
+            <Icon icon="plus"
+              size={1} /> Add New Member
+          </span>
+        </button>
         {
           Object.keys(this.props.data).map((person) => {
             return (
@@ -30,7 +53,8 @@ export default class Team extends Component{
                 <ClubRepField label="Club Rep"
                               onChange={this.handleChange}
                               data={this.props.data[person]}
-                              name={person} />
+                              name={person}
+                              removeElement={this.props.removeElement} />
               </div>
 
             )
