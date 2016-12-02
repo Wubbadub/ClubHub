@@ -18,13 +18,20 @@ export default class Editor extends Component {
       showEditorBar: false,
       dirtyBit: false,
       site: this.props.site,
-      bodyScroll: true
+      bodyScroll: true,
+      editorToast: true
     }
   }
 
   static propTypes = {
     site: PropTypes.object,
     siteId: PropTypes.string
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({editorToast: false})
+    }, 100)
   }
 
   makeSiteSections = () => {
@@ -77,8 +84,12 @@ export default class Editor extends Component {
     document.body.style.overflow = ''
   }
 
-  help = () => {
-
+  getHelp = () => {
+    this.setState({editorToast: false})
+    this.setState({editorToast: true})
+    setTimeout(() => {
+      this.setState({editorToast: false})
+    }, 100)
   }
 
   render() {
@@ -86,7 +97,15 @@ export default class Editor extends Component {
       <div className="editor container">
         <div className="columns">
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
-            <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" /></button>
+            <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" />
+              <Toast
+                icon="arrow_left"
+                pushActive={this.state.editorToast}
+                timeout={5000}
+                class="editor-point"
+                text={!this.state.showEditorBar ? `Click to start editing` : `Edit your site content here`}
+                />
+            </button>
             <div className="editor-header">
               <a href={`http://${Config.host}`} target="_blank">
                 <Brand />
@@ -117,7 +136,7 @@ export default class Editor extends Component {
             <Site site={this.state.site} />
           </div>
           <div className={classNames('editor-help')}>
-            <button className={classNames('btn', 'btn-lg')} type="button" onClick={this.showHelp}>Help <Icon icon="white_question" /></button>
+            <button className={classNames('btn', 'btn-lg')} type="button" onClick={this.getHelp}>Help <Icon icon="white_question" /></button>
           </div>
         </div>
       </div>

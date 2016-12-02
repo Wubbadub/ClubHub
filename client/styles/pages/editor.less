@@ -84,6 +84,29 @@
     }
   }
 
+  .toast {
+    position: fixed;
+    display: none;
+    vertical-align: middle;
+
+    &.editor-point {
+      width: 100%;
+      top: 1rem;
+      right: -32rem;
+      background-color: lighten(@core-color, 40%);
+      border-color: lighten(@core-color, 30%);
+    }
+
+    &.visible {
+      display: block;
+    }
+
+    .icon {
+      float: left;
+
+    }
+  }
+
   .editor-help {
     position: fixed;
     width: 100%;
