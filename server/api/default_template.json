@@ -3,46 +3,19 @@
   "theme": "Classic",
   "sections": {
     "header": {
-      "links": [
-        {
-          "type": "facebook",
-          "text": "Join us on Facebook",
-          "href": "http://facebook.com/"
-        },
-        {
-          "type": "twitter",
-          "text": "Follow us on Twitter",
-          "href": "http://twitter.com/"
-        },
-        {
-          "type": "instagram",
-          "text": "Follow us on Instagram",
-          "href": "http://instagram.com/"
-        }
-      ]
+      "links": []
     },
     "hero": {
       "component": "Hero",
-      "title": "Our Club",
-      "description": "A commmunity of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.",
-      "buttons": [
-        {
-          "type": "email",
-          "text": "Contact Us",
-          "href": "mailto:canoe@uvic.ca"
-        },
-        {
-          "type": "facebook",
-          "text": "Join us on Facebook",
-          "href": "http://facebook.com/"
-        }
-      ]
+      "title": "Enter your club title",
+      "description": "↖️ Enter your club description over in the Editor.",
+      "buttons": []
     },
     "meeting": {
-      "description": "A community of canoe and water lovers to share and experiences of canoeing and help each other rivers and lakes and stuff haha we even like to knowledge.",
-      "place": "DTB A104",
-      "day": "Wednesday",
-      "time": "3:30pm"
+      "description": "↖️ Enter your meeting description over in the Editor.",
+      "place": "",
+      "day": "",
+      "time": ""
     },
     "team": {
       "person1": {
