@@ -33,7 +33,8 @@
       .btn;
       border-color: @core-border-color;
       border-radius: 0 @border-base @border-base 0;
-      color: darken(@core-border-color, 25%);
+      background-color: lighten(@core-color, 40%);
+      color: darken(@core-color, 15%);
       position: absolute;
       padding: 1rem 0.7rem;
       height: 3.8rem;
@@ -42,7 +43,7 @@
       top: 2rem;
 
       &:hover {
-        background-color: darken(@core-light-color, 5%);
+        background-color: lighten(@core-color, 20%);
       }
 
       .icon {
