@@ -39,11 +39,9 @@
 
     .toggle {
       .btn;
-      border-color: lighten(@core-color, 30%);
-      border-left-color: @core-border-color;
+      border-color: @core-border-color;
       border-radius: 0 @border-base @border-base 0;
-      background-color: lighten(@core-color, 40%);
-      color: darken(@core-color, 15%);
+      color: darken(@core-border-color, 25%);
       position: absolute;
       padding: 1rem 0.7rem;
       height: 4rem;
@@ -52,7 +50,7 @@
       top: 2rem;
 
       &:hover {
-        background-color: lighten(@core-color, 30%);
+        background-color: darken(@core-light-color, 5%);
       }
 
       .icon {
@@ -63,16 +61,10 @@
     }
     .editor-point {
       position: fixed;
-      display: none;
       margin: 0;
-
-      width: 20rem;
+      width: 22rem;
       top: 1.7rem;
-      right: -24rem;
-
-      &.visible {
-        display: block;
-      }
+      right: -26rem;
     }
     .editor-header {
       width: 100%;

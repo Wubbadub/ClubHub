@@ -6,7 +6,6 @@ import cookie from 'react-cookie'
 import Config from 'Config'
 import Icon from 'parts/Icon'
 import Brand from 'parts/Brand'
-import Toast from 'parts/Toast'
 
 import Site from 'pages/site/Site'
 import EditorSection from 'pages/editor/EditorSection'
@@ -114,7 +113,9 @@ export default class Editor extends Component {
         <div className="columns">
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" />
-              <Toast pushActive={this.state.editorToast} timeout={5000} class="editor-point toast-primary" text={!this.state.showEditorBar ? `Click to start editing` : `Edit your site content here`} />
+              <div className={classNames('toast', 'toast-primary', 'editor-point', {'hidden': this.state.showEditorBar})}>
+                <span><Icon icon="pen" />&nbsp; Click here to edit your site</span>
+              </div>
             </button>
             <div className="editor-header">
               <a href={`http://${Config.host}`} target="_blank">
