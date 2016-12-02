@@ -41,9 +41,7 @@ export default class ImageSearchField extends Component {
     )
     return Promise.resolve(fetch(request).then((response) => {
       return response.json().then((content) => {
-        console.log(content)
         return (content.results).map((imgObject) => {
-          console.log(imgObject.urls.raw)
           return {
             'thumbnail': imgObject.urls.thumb,
             'full': imgObject.urls.full
@@ -80,11 +78,11 @@ export default class ImageSearchField extends Component {
                                id={urls.full}
                                key={`img${index}`} />
                          )
-                       })
+                      })
                      }
                    </div>
                  )
-               }}>
+              }}>
             </Async>
           </div>
         </div>

@@ -27,19 +27,19 @@ export default class HeroImageField extends Component{
   }
 
   selectTab = (e) => {
-    const tabId = e.target.id
-    const tabStates = this.state.tabStates
-    if (tabStates[tabId].isActive) return
+    const tId = e.target.id
+    const tStates = this.state.tabStates
+    if (tStates[tId].isActive) return
 
-    const allTabs = Object.keys(tabStates)
+    const allTabs = Object.keys(tStates)
     for (let i = 0; i < allTabs.length; i++){
-      if (tabStates[allTabs[i]].isActive){
-        tabStates[allTabs[i]].isActive = false
+      if (tStates[allTabs[i]].isActive){
+        tStates[allTabs[i]].isActive = false
         break
       }
     }
-    tabStates[tabId].isActive = true
-    this.setState({'tabStates': tabStates})
+    tStates[tId].isActive = true
+    this.setState({tabStates: tStates})
   }
 
   updateHeroImage = (url) => {
@@ -54,7 +54,7 @@ export default class HeroImageField extends Component{
     }
     return (
       <div className={classNames('form-group')} >
-        <label className={classNames('form-label')}>Main Image</label>
+        <label className={classNames('form-label')}>Image</label>
         <ul className="tab tab-block pt-5">
           <li id="search"
               onClick={this.selectTab}

@@ -42,6 +42,7 @@ export default class Hero extends Component{
       <form>
         <ShortTextField label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
         <HeroImageField onChange={this.handleChange} />
+        <hr />
         <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
         <hr />
         {

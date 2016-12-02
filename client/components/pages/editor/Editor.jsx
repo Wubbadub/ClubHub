@@ -90,13 +90,13 @@ export default class Editor extends Component {
   }
 
   disableBodyScroll = () => {
-    this.setState({bodyScroll: false})
-    document.body.style.overflow = 'hidden'
+    // this.setState({bodyScroll: false})
+    // document.body.style.overflow = 'hidden'
   }
 
   enableBodyScroll = () => {
-    this.setState({bodyScroll: true})
-    document.body.style.overflow = ''
+    // this.setState({bodyScroll: true})
+    // document.body.style.overflow = ''
   }
 
   getHelp = () => {
