@@ -1,4 +1,20 @@
 .editor {
+  .hidden {
+    display: none;
+  }
+
+  .thumbnail {
+    margin: 0;
+    padding: 0.25*@layout-gutter;
+    width: 120px;
+    height: 75px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken(@core-light-color, 10%);
+    }
+  }
+
   .editor-bar {
     height: 100vh;
 

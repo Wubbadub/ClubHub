@@ -19,7 +19,7 @@ export default class Classic extends Component{
     return (
     <div className="theme-classic outer-container">
       <Header site={this.props.site}/>
-      <Hero site={this.props.site}/>
+      <Hero data={this.props.site.sections.hero}/>
       <div className="main-container">
         <Meeting data={this.props.site.sections.meeting} />
         <Team data={this.props.site.sections.team} />
