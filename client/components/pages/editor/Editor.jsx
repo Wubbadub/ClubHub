@@ -98,13 +98,7 @@ export default class Editor extends Component {
         <div className="columns">
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" />
-              <Toast
-                icon="arrow_left"
-                pushActive={this.state.editorToast}
-                timeout={5000}
-                class="editor-point"
-                text={!this.state.showEditorBar ? `Click to start editing` : `Edit your site content here`}
-                />
+              <Toast pushActive={this.state.editorToast} timeout={5000} class="editor-point toast-primary" text={!this.state.showEditorBar ? `Click to start editing` : `Edit your site content here`} />
             </button>
             <div className="editor-header">
               <a href={`http://${Config.host}`} target="_blank">
