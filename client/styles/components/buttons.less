@@ -108,6 +108,11 @@
   &.btn-block {
     display: block;
     width: 100%;
+
+    &:hover {
+      background: lighten(@core-border-color, 2%);
+      color: darken(@core-link-color, 15%);
+    }
   }
 
   // Button Clear
@@ -127,6 +132,20 @@
     &::before {
       content: '\00d7';
       font-size: 2rem;
+    }
+  }
+
+  &.btn-plain {
+    background: transparent;
+    border: 0;
+    color: #666;
+    height: 2rem;
+    margin-left: .3rem;
+    opacity: .45;
+    padding: 0;
+
+    &:hover {
+      opacity: .85;
     }
   }
 }
