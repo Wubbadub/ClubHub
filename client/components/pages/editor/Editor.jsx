@@ -15,7 +15,7 @@ export default class Editor extends Component {
     super(props)
     this.state = {
       sectionStates: this.makeSiteSections(),
-      showEditorBar: true,
+      showEditorBar: false,
       dirtyBit: false,
       site: this.props.site,
       bodyScroll: true
@@ -77,11 +77,14 @@ export default class Editor extends Component {
     document.body.style.overflow = ''
   }
 
+  help = () => {
+
+  }
+
   render() {
     return (
       <div className="editor container">
         <div className="columns">
-          <Toast text="Tastey Toast" type="success"/>
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" /></button>
             <div className="editor-header">
@@ -114,7 +117,7 @@ export default class Editor extends Component {
             <Site site={this.state.site} />
           </div>
           <div className={classNames('editor-help')}>
-            <button className={classNames('btn', 'btn-lg')} type="button">Help <Icon icon="white_question" /></button>
+            <button className={classNames('btn', 'btn-lg')} type="button" onClick={this.showHelp}>Help <Icon icon="white_question" /></button>
           </div>
         </div>
       </div>
