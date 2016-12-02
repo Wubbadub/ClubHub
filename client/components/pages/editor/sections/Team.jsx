@@ -9,7 +9,7 @@ export default class Team extends Component{
     super(props)
   }
 
-  static Title = 'Team'
+  static Title = 'Club Organizers'
 
   static propTypes = {
     data: PropTypes.object,

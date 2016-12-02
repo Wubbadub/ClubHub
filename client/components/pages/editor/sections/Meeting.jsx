@@ -8,7 +8,7 @@ export default class Meeting extends Component{
     super(props)
   }
 
-  static Title = 'Meeting Info'
+  static Title = 'Meeting When and Where'
 
   static propTypes = {
     data: PropTypes.object,

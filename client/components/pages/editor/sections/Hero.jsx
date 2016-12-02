@@ -12,7 +12,7 @@ export default class Hero extends Component{
     super(props)
   }
 
-  static Title = 'Landing'
+  static Title = 'Title, Description and Image'
 
   static propTypes = {
     data: PropTypes.object,
