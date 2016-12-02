@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import classNames from 'classnames'
+import cookie from 'react-cookie'
 
 import Config from 'Config'
 
@@ -41,11 +42,19 @@ export default class SignUpForm extends PureComponent {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'authorization': cookie.load('authorization')
       },
       body: JSON.stringify({'siteName': 'FIX ME'})
-    }).then(() => {
-      window.location.assign(`http://${this.state.siteInput}.${this.props.hostUrl}/edit`)
+    }).then((res) => {
+      res.json().then((content) => {
+        cookie.save('Temporary-Key', content['Temporary-Key'], {
+          domain: Config.cookie_path[0],
+          path: '/',
+          maxAge: 86400
+        })
+        window.location.assign(`http://${this.state.siteInput}.${this.props.hostUrl}/edit`)
+      })
     })
   }
 

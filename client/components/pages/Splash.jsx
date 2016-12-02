@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {Link} from 'react-router'
+import LoginButton from 'parts/LoginButton'
 
 import Config from 'Config'
 
@@ -44,7 +44,7 @@ export default class Splash extends PureComponent {
                 <a><Brand/></a>
               </div>
               <div>
-                <Link className="btn btn-link nav-link" to="/editor/create">Log in</Link>
+                <LoginButton className="btn btn-link nav-link">Log In</LoginButton>
                 <button type="button" className="btn btn-link nav-link" href="#" onClick={this.showSignUp}>Sign up</button>
                 <a className="btn btn-link nav-link" target="_blank" href={`mailto:contact@${Config.host}`}>Contact</a>
               </div>

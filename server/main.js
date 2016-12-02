@@ -213,7 +213,7 @@ app.get('/api/site_exists/*', function (req, res) {
 app.post('/api/site/*', function (req, res) {
   let url = req.path.substring(req.path.lastIndexOf('/') + 1)
   let site_temp_key = req.get('Temporary-Key')
-  if (req.payload && !site_temp_key) {
+  if (req.payload && (!site_temp_key || site_temp_key === 'undefined')) {
     db.getUserID(C.GOOGLE_SERVICE_ENUM, req.payload.sub, function (id) {
       db.updateSite(url, id, null, req.body, function (success) {
         res.send(success) // Just return success for now, later add error codes possibly
@@ -278,7 +278,7 @@ app.post('/api/newsite/*', function (req, res) {
                   // This should also never happen
                   res.json({'error' : 'Error assigning ownership to site "' + url + '"'})
                 } else {
-                  res.json(json) // Success
+                  res.json({'Status' : "Success"}) // Success
                 }
               })
             }
@@ -293,8 +293,7 @@ app.post('/api/newsite/*', function (req, res) {
         if (!json) {
           res.json({'error' : 'Error Creating Site'})
         } else {
-          res.append('Temporary-Key', temporary_key)
-          res.json(json)
+          res.json({'Temporary-Key': temporary_key})
         }
       })
     }
