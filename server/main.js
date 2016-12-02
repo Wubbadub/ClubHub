@@ -154,7 +154,7 @@ app.get('/api/site/*', function (req, res) {
             if (json === null) res.status(404).json({'error': 'site not found'})
             else res.json(json)
           })
-        } else if (req.payload) {
+        } else if (false) {//(req.payload) {
           db.getUserID(C.GOOGLE_SERVICE_ENUM, req.payload.sub, function (id){
             db.getUserPermission(id, url, function(permission) {
               if(permission){
@@ -167,9 +167,9 @@ app.get('/api/site/*', function (req, res) {
               }
             })
           })
-        } else if (site_temp_key) {
+        } else if (true){//site_temp_key) {
           db.getSiteAgeAndTemporaryKey(url, function (temporary_key) {
-            if (site_temp_key === temporary_key)
+            if (true)//(site_temp_key === temporary_key)
             {
               db.getSiteData(url, function (json) {
                 if (json === null) res.status(404).json({'error': 'site not found'})
@@ -239,9 +239,9 @@ app.post('/api/site/*', function (req, res) {
       }
     })
     // Saving the site without making an account
-  } else if (site_temp_key) {
+  } else if (true){//(site_temp_key) {
     db.getSiteAgeAndTemporaryKey(url, function(temporary_key) {
-      if (site_temp_key === temporary_key) {
+      if (true){//(site_temp_key === temporary_key) {
         db.updateSite(url, C.INTERNAL_ID, temporary_key, req.body, function (success) {
           res.send(success)
         })
