@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react'
-// import classNames from 'classnames'
+import classNames from 'classnames'
 
 import ButtonField from 'parts/ButtonField'
+import Icon from 'parts/Icon'
 
 export default class Hero extends Component{
   constructor(props){
@@ -20,7 +21,9 @@ export default class Hero extends Component{
 
   static propTypes = {
     data: PropTypes.object,
-    setData: PropTypes.func
+    setData: PropTypes.func,
+    addElement: PropTypes.func.isRequired,
+    removeElement: PropTypes.func.isRequired
   }
 
   handleChange = (field, value, index) => {
@@ -30,12 +33,34 @@ export default class Hero extends Component{
     this.props.setData('header', d)
   }
 
+  addSocialLink = () => {
+    const newData = Object.assign({}, this.props.data.links[this.props.data.links.length-1])
+    this.props.addElement(null, newData, false)
+  }
+
   render(){
     return (
       <form>
-        <ButtonField label="Social Link" types={this.getLinkTypes()} onChange={this.handleChange} value={this.props.data.links[0]} index={0} name="links"/>
-        <ButtonField label="Social Link" types={this.getLinkTypes()} onChange={this.handleChange} value={this.props.data.links[1]} index={1} name="links"/>
-        <ButtonField label="Social Link" types={this.getLinkTypes()} onChange={this.handleChange} value={this.props.data.links[2]} index={2} name="links"/>
+        <button type="button"
+          className={classNames('btn', 'btn-block')}
+          onClick={this.addSocialLink}>
+          <span>
+            <Icon icon="plus"
+              size={1} /> Add Social Link
+          </span>
+        </button>
+        {
+          this.props.data.links.map((d, i) => {
+            return (
+              <ButtonField label="SocialLink"
+                           types={this.getLinkTypes()}
+                           onChange={this.handleChange}
+                           removeElement={this.props.removeElement}
+                           value={d} name="links" index={i}
+                           key={this.props.data.links.indexOf(d)} />
+            )
+          })
+        }
       </form>
     )
   }

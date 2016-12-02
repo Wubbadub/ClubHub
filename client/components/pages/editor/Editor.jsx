@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import Config from 'Config'
 import Icon from 'parts/Icon'
 import Brand from 'parts/Brand'
+import Toast from 'parts/Toast'
 
 import Site from 'pages/site/Site'
 import EditorSection from 'pages/editor/EditorSection'
@@ -14,16 +15,23 @@ export default class Editor extends Component {
     super(props)
     this.state = {
       sectionStates: this.makeSiteSections(),
-      showEditorBar: true,
+      showEditorBar: false,
       dirtyBit: false,
       site: this.props.site,
-      bodyScroll: true
+      bodyScroll: true,
+      editorToast: true
     }
   }
 
   static propTypes = {
     site: PropTypes.object,
     siteId: PropTypes.string
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({editorToast: false})
+    }, 100)
   }
 
   makeSiteSections = () => {
@@ -76,12 +84,28 @@ export default class Editor extends Component {
     document.body.style.overflow = ''
   }
 
+  getHelp = () => {
+    this.setState({editorToast: false})
+    this.setState({editorToast: true})
+    setTimeout(() => {
+      this.setState({editorToast: false})
+    }, 100)
+  }
+
   render() {
     return (
       <div className="editor container">
         <div className="columns">
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
-            <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" /></button>
+            <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" />
+              <Toast
+                icon="arrow_left"
+                pushActive={this.state.editorToast}
+                timeout={5000}
+                class="editor-point"
+                text={!this.state.showEditorBar ? `Click to start editing` : `Edit your site content here`}
+                />
+            </button>
             <div className="editor-header">
               <a href={`http://${Config.host}`} target="_blank">
                 <Brand />
@@ -110,6 +134,9 @@ export default class Editor extends Component {
           </div>
           <div className="site-preview col-12">
             <Site site={this.state.site} />
+          </div>
+          <div className={classNames('editor-help')}>
+            <button className={classNames('btn', 'btn-lg')} type="button" onClick={this.getHelp}>Help <Icon icon="white_question" /></button>
           </div>
         </div>
       </div>
