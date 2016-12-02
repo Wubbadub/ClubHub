@@ -242,7 +242,7 @@ app.post('/api/site/*', function (req, res) {
   } else if (site_temp_key) {
     db.getSiteAgeAndTemporaryKey(url, function(temporary_key) {
       if (site_temp_key === temporary_key) {
-        db.updateSite(url, id, temporary_key, req.body, function (success) {
+        db.updateSite(url, C.INTERNAL_ID, temporary_key, req.body, function (success) {
           res.send(success)
         })
       } else {
@@ -285,8 +285,8 @@ app.post('/api/newsite/*', function (req, res) {
           })
         }
       })
-    } else if (req.auth_error){
-      res.json({'error' : 'Invalid Token'})
+    //} else if (req.auth_error){
+      //res.json({'error' : 'Invalid Token'})
     } else {
       let temporary_key = crypto.randomBytes(16).toString('hex')
       db.createNewSite(url, siteName, temporary_key, function (json) {
