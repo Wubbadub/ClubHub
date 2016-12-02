@@ -152,9 +152,6 @@ export default class Editor extends Component {
           <div className="site-preview col-12">
             <Site site={this.state.site} />
           </div>
-          <div className={classNames('editor-help')}>
-            <button className={classNames('btn', 'btn-lg')} type="button" onClick={this.getHelp}>Help <Icon icon="white_question" /></button>
-          </div>
         </div>
       </div>
     )
