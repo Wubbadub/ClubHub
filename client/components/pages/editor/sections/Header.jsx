@@ -50,13 +50,13 @@ export default class Hero extends Component{
           </span>
         </button>
         {
-          this.props.data.links.map((d) => {
+          this.props.data.links.map((d, i) => {
             return (
               <ButtonField label="SocialLink"
                            types={this.getLinkTypes()}
                            onChange={this.handleChange}
                            removeElement={this.props.removeElement}
-                           value={d} name="links"
+                           value={d} name="links" index={i}
                            key={this.props.data.links.indexOf(d)} />
             )
           })

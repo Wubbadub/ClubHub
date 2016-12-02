@@ -108,11 +108,6 @@
   &.btn-block {
     display: block;
     width: 100%;
-
-    &:hover {
-      background: lighten(@core-border-color, 2%);
-      color: darken(@core-link-color, 15%);
-    }
   }
 
   // Button Clear
@@ -135,6 +130,17 @@
     }
   }
 
+  &.btn-radio {
+    input {
+      display: none;
+    }
+    label {
+      cursor: pointer;
+    }
+    input:checked + label {
+      border-bottom: 0.2rem solid @core-color;
+    }
+  }
   &.btn-plain {
     background: transparent;
     border: 0;
