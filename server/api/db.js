@@ -43,9 +43,8 @@ const getDirectory = function (subhost, active, next) {
 // Also updates the modified_date timestamp to reflect this update.
 // Passes on true on success, false if the user didn't have access,
 // the site doesn't exist, or there was a database error.
-const updateSite = function(url, userID, temporary_key, site_data, next){
-  pool.query('SELECT * FROM permissions WHERE user_id = $1::int AND club_id = (SELECT id FROM clubs WHERE url=$2::text)', [userID, url], function(err, res){
-   if(err || res.rowCount === 0)
+const updateSite = function(url, userID, temporary_key, site_data, next){  pool.query('SELECT * FROM permissions WHERE user_id = $1::int AND club_id = (SELECT id FROM clubs WHERE url=$2::text)', [userID, url], function(err, res){
+   if(userID != 0 && (err || res.rowCount === 0))
    {
      next(false)
    } else {
