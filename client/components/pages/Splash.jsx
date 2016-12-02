@@ -76,7 +76,7 @@ export default class Splash extends PureComponent {
           <section>
             <ul>
               <div className="feature5 template">
-                <div className="container-sml text-center">
+                <div className="container-sml text-center col-12">
                   <h3>Your website is live and ready to share the moment you start creating.</h3>
                 </div>
                 <div className="container-lrg flex">
