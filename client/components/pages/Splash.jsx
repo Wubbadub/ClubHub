@@ -50,7 +50,7 @@ export default class Splash extends PureComponent {
                   </div>
                 </div>
                 <div className="col-8">
-                  <h1 className="header-heading">Take ten minutes to tell us about your universty club, and we'll give you a website.</h1>
+                  <h1 className="header-heading">You take ten minutes to tell us about your universty club. We give you a website.</h1>
                   <div className="ctas">
                     <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>
                   </div>
