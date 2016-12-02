@@ -43,7 +43,7 @@ export default class ButtonField extends Component{
     this.props.onChange(this.props.name, val, this.props.index)
   }
 
-  removeSocialIcon = () => {
+  removeButton = () => {
     this.props.removeElement(this.props.value, false)
   }
 
@@ -52,7 +52,7 @@ export default class ButtonField extends Component{
       <div className="form-group">
         <button className={classNames('btn', 'btn-plain')}
           type="button"
-          onClick={this.removeSocialIcon}>
+          onClick={this.removeButton}>
           <Icon icon="trash_can"
                 size={1} />
         </button>

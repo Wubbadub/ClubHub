@@ -20,19 +20,19 @@ export default class EditorSection extends Component{
     this.props.toggleSection(this.props.section)
   }
 
-  addElement = (key, data, isObject) => {
+  addElement = (key, data, isObject, arrayName = 'links') => {
     const newData = this.props.data
     if (isObject) newData[key] = data
-    else newData.links.push(data)
+    else newData[arrayName].push(data)
     this.props.setData(this.props.section, newData)
   }
 
-  removeElement = (key, isObject) => {
+  removeElement = (key, isObject, arrayName = 'links') => {
     const newData = this.props.data
     if (isObject) delete newData[key]
     else {
-      const index = this.props.data.links.indexOf(key)
-      if (index > -1) this.props.data.links.splice(index, 1)
+      const index = this.props.data[arrayName].indexOf(key)
+      if (index > -1) this.props.data[arrayName].splice(index, 1)
     }
     this.props.setData(this.props.section, newData)
   }
