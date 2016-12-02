@@ -72,8 +72,8 @@ export default class Editor extends Component {
         'Temporary-Key': cookie.load('Temporary-Key')
       },
       body: JSON.stringify(this.state.site)
-    }).then(() => {
-      this.setState({dirtyBit: false})
+    }).then((res) => {
+      if (res.ok) this.setState({dirtyBit: false})
 
       // TODO: Replace this with a button or checkbox or some other intuitive method instead of forcing the site active on every save
       fetch(`http://${Config.server}/api/active/${this.props.siteId}`, {
@@ -146,7 +146,13 @@ export default class Editor extends Component {
             </div>
             <div className="editor-footer">
               <Link className={classNames('btn', 'btn-link')} to={`/`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
-              <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', {disabled: !this.state.dirtyBit})} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
+              {(() => {
+                if (this.state.dirtyBit) {
+                  return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save')} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
+                } else {
+                  return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', 'disabled')} ><Icon icon="check"/>&nbsp;&nbsp;Saved</button>
+                }
+              })()}
             </div>
           </div>
           <div className="site-preview col-12">
