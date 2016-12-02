@@ -129,6 +129,18 @@
       font-size: 2rem;
     }
   }
+
+  &.btn-radio {
+    input {
+      display: none;
+    }
+    label {
+      cursor: pointer;
+    }
+    input:checked + label {
+      border-bottom: 0.2rem solid @core-color;
+    }
+  }
 }
 
 // Button groups

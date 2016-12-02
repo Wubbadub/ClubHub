@@ -3,12 +3,15 @@ import classNames from 'classnames'
 
 import Config from 'Config'
 
+import Icon from 'parts/Icon'
+
 // use when state and lifecycle functions are needed
 export default class SignUpForm extends PureComponent {
 
   constructor(props) {
     super(props)
     this.state = {
+      page: 0,
       siteInputState: 'empty',
       /*
       Site Input States:
@@ -35,18 +38,22 @@ export default class SignUpForm extends PureComponent {
     hostUrl: Config.subhosts[0]
   }
 
-  handleSubmit = () => {
-    this.setState({loading: true})
-    fetch(`http://${Config.server}/api/newsite/${this.state.siteInput}`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({'siteName': 'FIX ME'})
-    }).then(() => {
-      window.location.assign(`http://${this.state.siteInput}.${this.props.hostUrl}/edit`)
-    })
+  handleNext = () => {
+    const p = this.state.page
+    if (p !== 2) {
+      this.setState({page: p + 1})
+    }
+    // this.setState({loading: true})
+    // fetch(`http://${Config.server}/api/newsite/${this.state.siteInput}`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({'siteName': 'FIX ME'})
+    // }).then(() => {
+    //   window.location.assign(`http://${this.state.siteInput}.${this.props.hostUrl}/edit`)
+    // })
   }
 
   siteChange = (e) => {
@@ -54,7 +61,7 @@ export default class SignUpForm extends PureComponent {
     const site = e.target.value.toLowerCase()
 
     this.setState({siteInput: site, siteInputState: 'testing'})
-    this.validateSite(site, function(s){ self.setState({siteInputState: s}) })
+    this.validateSite(site, function(s) { self.setState({siteInputState: s}) })
   }
 
   validateSite = (site, callback) => {
@@ -93,9 +100,10 @@ export default class SignUpForm extends PureComponent {
     }
   }
 
+
   render() {
-    const siteInputClasses = classNames(
-      'form-group',
+    const siteInputClass = classNames(
+    'form-group',
       {'has-success': this.state.siteInputState === 'okay'},
       {
         'has-danger':
@@ -104,42 +112,77 @@ export default class SignUpForm extends PureComponent {
       }
     )
 
+    const days = ['mon', 'tue', 'wed', 'thu', 'fri']
+
     return (
-      <form>
-        <div className="form-group">
-          <label className="form-label" htmlFor="club-name-input">Club Name</label>
-          <input className="form-input"
-                 type="text"
-                 maxLength="128"
-                 id="club-name-input"
-                 placeholder="UVic Kool Kidz Club" />
+      <div className="tabs">
+        {/* Name and Url */}
+        <div className={classNames('tab', {'active': this.state.page === 0})}>
+          <form>
+            <div className="form-group">
+              <label className="form-label" htmlFor="club-name-input">What's your Club name?</label>
+              <input className="form-input"
+                type="text"
+                maxLength="128"
+                id="club-name-input"
+                placeholder="UVic Kool Kidz Club" />
+            </div>
+            <div className={siteInputClass}>
+              <label className="form-label" htmlFor="club-site-input">Where should we put your new website?</label>
+              <div className="input-group">
+                <input type="text"
+                  className="form-input"
+                  maxLength="24"
+                  placeholder="kidz"
+                  id="club-site-input"
+                  onChange={this.siteChange} />
+                <span className="input-group-addon">.{this.props.hostUrl}</span>
+              </div>
+              <span className="form-input-hint">{this.siteInputHint()}</span>
+            </div>
+            <div className="form-group">
+              <button type="button"
+                className={classNames(
+                  'btn', 'btn-default', 'btn-block',
+                  {'disabled': this.state.siteInputState !== 'okay'},
+                  {'loading': this.state.loading}
+                )}
+                onClick={this.handleNext}
+                >
+                Next thing&nbsp;&nbsp;<Icon icon="arrow_right"/>
+              </button>
+            </div>
+          </form>
         </div>
-        <div className={siteInputClasses}>
-          <label className="form-label" htmlFor="club-site-input">Club Address</label>
-          <div className="input-group">
-              <input type="text"
-                     className="form-input"
-                     maxLength="24"
-                     placeholder="kidz"
-                     id="club-site-input"
-                     onChange={this.siteChange}/>
-              <span className="input-group-addon">.{this.props.hostUrl}</span>
-          </div>
-          <span className="form-input-hint">{this.siteInputHint()}</span>
+        {/* Day of Week */}
+        <div className={classNames('tab', {'active': this.state.page === 1})}>
+          <form>
+            <div className="form-group">
+              <label className="form-label" htmlFor="club-name-input">What day does your club meet?</label>
+              <label className="btn-group btn-group-block">
+                {days.map((day) =>
+                  <label key={day} className="btn btn-link btn-radio">
+                    <input type="radio" name="options" id={`day-${day}`}/>
+                    <label htmlFor={`day-${day}`}>{day.charAt(0).toUpperCase() + day.slice(1)}</label>
+                  </label>
+                )}
+              </label>
+            </div>
+            <div className="form-group">
+              <button type="button"
+                className={classNames(
+                  'btn', 'btn-default', 'btn-block',
+                  {'disabled': this.state.siteInputState !== 'okay'},
+                  {'loading': this.state.loading}
+                )}
+                onClick={this.handleNext}
+                >
+                Almost done!&nbsp;&nbsp;<Icon icon="arrow_right"/>
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="form-group">
-          <button type="button"
-                  className={classNames(
-                      'btn', 'btn-primary', 'btn-block', 'btn-lg',
-                      {'disabled': this.state.siteInputState !== 'okay'},
-                      {'loading': this.state.loading}
-                  )}
-                  onClick={this.handleSubmit}
-                  >
-            Create Site
-          </button>
-        </div>
-      </form>
+      </div>
     )
   }
 }
