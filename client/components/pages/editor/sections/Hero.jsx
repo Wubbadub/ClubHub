@@ -43,14 +43,6 @@ export default class Hero extends Component{
         <ShortTextField label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
         <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
         <hr />
-        <button type="button"
-          className={classNames('btn', 'btn-block')}
-          onClick={this.addHeroLink}>
-          <span>
-            <Icon icon="plus"
-              size={1} /> Add Hero Link
-          </span>
-        </button>
         {
           this.props.data.buttons.map((d, i) => {
             return (
@@ -62,6 +54,14 @@ export default class Hero extends Component{
             )
           })
         }
+        <button type="button"
+          className={classNames('btn', 'btn-block')}
+          onClick={this.addHeroLink}>
+          <span>
+            <Icon icon="plus"
+              size={1} /> Add Hero Link
+          </span>
+        </button>
       </form>
     )
   }

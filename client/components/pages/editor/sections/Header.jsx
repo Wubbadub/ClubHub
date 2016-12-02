@@ -41,14 +41,6 @@ export default class Hero extends Component{
   render(){
     return (
       <form>
-        <button type="button"
-          className={classNames('btn', 'btn-block')}
-          onClick={this.addSocialLink}>
-          <span>
-            <Icon icon="plus"
-              size={1} /> Add Social Link
-          </span>
-        </button>
         {
           this.props.data.links.map((d, i) => {
             return (
@@ -61,6 +53,14 @@ export default class Hero extends Component{
             )
           })
         }
+        <button type="button"
+          className={classNames('btn', 'btn-block')}
+          onClick={this.addSocialLink}>
+          <span>
+            <Icon icon="plus"
+              size={1} /> Add Social Link
+          </span>
+        </button>
       </form>
     )
   }
