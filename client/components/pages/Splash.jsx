@@ -130,7 +130,7 @@ export default class Splash extends PureComponent {
                           <div>
                             <h5>The UVic Art Hive</h5>
                             <br/>
-                            <a target="_blank" href="http://webdev.uvic.club">arthive.uvic.club</a>
+                            <a target="_blank" href="http://arthive.uvic.club">arthive.uvic.club</a>
                           </div>
                         </div>
                         <div className="sp-tweets-content">
