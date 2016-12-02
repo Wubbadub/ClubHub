@@ -66,6 +66,7 @@ export default class SignUpForm extends PureComponent {
         )
         Promise.resolve(fetch(request).then((response) => response.json().then((site) => {
           site.title = this.state.clubNameInput
+          site.sections.hero.title = this.state.clubNameInput
 
           const links = []
           if (this.state.clubFacebookInput !== '') links.push({
@@ -171,7 +172,7 @@ export default class SignUpForm extends PureComponent {
           <form>
             <div className="form-group">
               <label className="form-label" htmlFor="club-name-input">What is your club called?</label>
-              <input className="form-input" type="text" maxLength="8" id="club-name-input" placeholder="Super cool club name" onChange={this.clubNameInputChange} value={this.state.clubNameInput} />
+              <input className="form-input" type="text" maxLength="128" id="club-name-input" placeholder="Super cool club name" onChange={this.clubNameInputChange} value={this.state.clubNameInput} />
             </div>
             <div className="form-group">
               <label className="form-label" htmlFor="club-day-input">What day does your club meet? <small>(optional)</small></label>
