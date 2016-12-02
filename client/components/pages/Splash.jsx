@@ -6,7 +6,8 @@ import Config from 'Config'
 import SignUp from 'parts/SignUp'
 import Brand from 'parts/Brand'
 
-const browserview = require('../../img/browser-view.png')
+const browserview = require('../../img/browser-view-2.png')
+const computerview = require('../../img/browser-view-3.png')
 const mobileview = require('../../img/mobile-view.png')
 const seo = require('../../img/seo-optimize.svg')
 const transfer = require('../../img/transfer.svg')
@@ -49,32 +50,25 @@ export default class Splash extends PureComponent {
                   </div>
                 </div>
                 <div className="col-8">
-                  <h1 className="header-heading">Take ten minutes to tell us about your universty club.</h1>
-                  <h2 className="header-subheading">We'll generate your club a beautiful website for you that's ready to share.</h2>
+                  <h1 className="header-heading">Take ten minutes to tell us about your universty club, and we'll give you a website.</h1>
                   <div className="ctas">
-                    <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Create my club website</a></div>
+                    <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>
                   </div>
                 </div>
               </div>
               <div className="container-lrg">
                 <div className="col-12">
                   <div className="header-images">
-                    <div className="header-images">
-                      <div className="centerdevices">
-                        <div className="iphoneipad2">
                           <div className="iphone">
                             <div className="mask">
                               <img className="mask-img" src={mobileview}/>
                             </div>
                           </div>
-                          <div className="ipad">
+                          <div className="browser">
                             <div className="mask">
                               <img className="mask-img" src={browserview}/>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -83,7 +77,7 @@ export default class Splash extends PureComponent {
             <ul>
               <div className="feature5 template">
                 <div className="container-sml text-center">
-                  <h3>It's very simple. Here's all you have to do:</h3>
+                  <h3>Your website is live and ready to share the moment you start creating.</h3>
                 </div>
                 <div className="container-lrg flex">
                   <div className="col-6 centervertical">
@@ -111,7 +105,7 @@ export default class Splash extends PureComponent {
                         <div className="sidedevices">
                           <div className="computerwrapper">
                             <div className="computer">
-                              <div className="mask"><img className="mask-img" src={browserview}/></div>
+                              <div className="mask"><img className="mask-img" src={computerview}/></div>
                             </div>
                           </div>
                         </div>
@@ -136,9 +130,9 @@ export default class Splash extends PureComponent {
                       <div className="sp-tweets">
                         <div className="flex flexvert">
                           <div>
-                            <b>The UVic Art Hive</b>
+                            <h5>The UVic Art Hive</h5>
                             <br/>
-                            <a target="_blank" href="http://webdev.uvic.club">hybrid.uvic.club</a>
+                            <a target="_blank" href="http://webdev.uvic.club">arthive.uvic.club</a>
                           </div>
                         </div>
                         <div className="sp-tweets-content">
@@ -150,9 +144,9 @@ export default class Splash extends PureComponent {
                       <div className="sp-tweets">
                         <div className="flex flexvert">
                           <div>
-                            <b>UVic Web Dev Club</b>
+                            <h5>UVic Dogwood Initiative</h5>
                             <br/>
-                            <a target="_blank" href="http://webdev.uvic.club">webdev.uvic.club</a>
+                            <a target="_blank" href="http://dogwood.uvic.club">dogwood.uvic.club</a>
                           </div>
                         </div>
                         <div className="sp-tweets-content">
@@ -164,9 +158,9 @@ export default class Splash extends PureComponent {
                       <div className="sp-tweets">
                         <div className="flex flexvert">
                           <div>
-                            <b>UVic Formula Hybrid</b>
+                            <h5>UVic Formula Hybrid</h5>
                             <br/>
-                            <a target="_blank" href="http://webdev.uvic.club">hybrid.uvic.club</a>
+                            <a target="_blank" href="http://formulahybrid.uvic.club">formulahybrid.uvic.club</a>
                           </div>
                         </div>
                         <div className="sp-tweets-content">
@@ -185,7 +179,7 @@ export default class Splash extends PureComponent {
                       <div className="col-12">
                           <h3>Stop sweating the details and spend more time enjoying your club.</h3>
                           <div className="ctas">
-                                <a className="ctas-button" onClick={this.showSignUp}>Create my club website</a>
+                                <a className="ctas-button" onClick={this.showSignUp}>Get started</a>
                           </div>
                       </div>
                   </div>
