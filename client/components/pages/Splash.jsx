@@ -9,8 +9,6 @@ import Brand from 'parts/Brand'
 const browserview = require('../../img/browser-view-2.png')
 const computerview = require('../../img/browser-view-3.png')
 const mobileview = require('../../img/mobile-view.png')
-const seo = require('../../img/seo-optimize.svg')
-const transfer = require('../../img/transfer.svg')
 
 export default class Splash extends PureComponent {
   constructor(props) {
