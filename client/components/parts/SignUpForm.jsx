@@ -69,7 +69,12 @@ export default class SignUpForm extends PureComponent {
             maxAge: 86400
           })
           const request = new Request(
-            `http://${Config.server}/api/site/${this.state.clubSiteInput}`
+            `http://${Config.server}/api/site/${this.state.clubSiteInput}`, {
+              headers: {
+                'authorization': cookie.load('authorization'),
+                'Temporary-Key': cookie.load('Temporary-Key')
+              }
+            }
           )
           Promise.resolve(fetch(request).then((response) => response.json().then((site) => {
             site.title = this.state.clubNameInput
