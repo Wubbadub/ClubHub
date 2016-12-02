@@ -1,7 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import classNames from 'classnames'
-
-import Icon from 'parts/Icon'
 
 export default class ClubRepField extends Component{
   constructor(props){
