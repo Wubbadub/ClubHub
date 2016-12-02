@@ -6,7 +6,6 @@ import cookie from 'react-cookie'
 import Config from 'Config'
 import Icon from 'parts/Icon'
 import Brand from 'parts/Brand'
-import Toast from 'parts/Toast'
 
 import Site from 'pages/site/Site'
 import EditorSection from 'pages/editor/EditorSection'
@@ -73,8 +72,8 @@ export default class Editor extends Component {
         'Temporary-Key': cookie.load('Temporary-Key')
       },
       body: JSON.stringify(this.state.site)
-    }).then(() => {
-      this.setState({dirtyBit: false})
+    }).then((res) => {
+      if (res.ok) this.setState({dirtyBit: false})
 
       // TODO: Replace this with a button or checkbox or some other intuitive method instead of forcing the site active on every save
       fetch(`http://${Config.server}/api/active/${this.props.siteId}`, {
@@ -120,7 +119,9 @@ export default class Editor extends Component {
         <div className="columns">
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" />
-              <Toast pushActive={this.state.editorToast} timeout={5000} class="editor-point toast-primary" text={!this.state.showEditorBar ? `Click to start editing` : `Edit your site content here`} />
+              <div className={classNames('toast', 'toast-primary', 'editor-point', {'hidden': this.state.showEditorBar})}>
+                <span><Icon icon="pen" />&nbsp; Click here to edit your site</span>
+              </div>
             </button>
             <div className="editor-header">
               <a href={`http://${Config.host}`} target="_blank">
@@ -145,14 +146,17 @@ export default class Editor extends Component {
             </div>
             <div className="editor-footer">
               <Link className={classNames('btn', 'btn-link')} to={`/`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
-              <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', {disabled: !this.state.dirtyBit})} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
+              {(() => {
+                if (this.state.dirtyBit) {
+                  return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save')} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
+                } else {
+                  return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', 'disabled')} ><Icon icon="check"/>&nbsp;&nbsp;Saved</button>
+                }
+              })()}
             </div>
           </div>
           <div className="site-preview col-12">
             <Site site={this.state.site} />
-          </div>
-          <div className={classNames('editor-help')}>
-            <button className={classNames('btn', 'btn-lg')} type="button" onClick={this.getHelp}>Help <Icon icon="white_question" /></button>
           </div>
         </div>
       </div>

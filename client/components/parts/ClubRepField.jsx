@@ -1,7 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import classNames from 'classnames'
-
-import Icon from 'parts/Icon'
 
 export default class ClubRepField extends Component{
   constructor(props){
@@ -34,12 +31,6 @@ export default class ClubRepField extends Component{
   render(){
     return (
       <div className="form-group">
-        <button className={classNames('btn', 'btn-plain')}
-          type="button"
-          onClick={this.removeMember}>
-          <Icon icon="trash_can"
-                size={1} />
-        </button>
         <label className="form-label">{this.props.label}</label>
         <div className="form-border">
           <div className="form-group">
