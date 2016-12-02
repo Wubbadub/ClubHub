@@ -193,8 +193,8 @@ export default class SignUpForm extends PureComponent {
               <input className="form-input" type="text" maxLength="64" id="club-location-input" placeholder="The roof of ECS" onChange={this.clubLocationInputChange} value={this.state.clubLocationInput} />
             </div>
             <div className="form-group next-action">
-              <button type="button" className={classNames('btn', 'btn-primary', 'btn-block')} onClick={this.handleNext} >
-                Almost done!&nbsp;&nbsp;<Icon icon="arrow_right"/>
+              <button type="button" className={classNames('btn', 'btn-primary', 'btn-block', {'disabled': this.state.clubNameInput === ''})} onClick={this.handleNext} >
+                Next thing <Icon icon="arrow_right"/>
               </button>
             </div>
           </form>
