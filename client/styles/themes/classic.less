@@ -9,6 +9,7 @@
   color: @theme-core-color;
 
   h1 {
+    line-height: 1.4;
     color: @theme-secondary-color;
     font-weight: 500;
   }
@@ -96,7 +97,7 @@
       font-size: 42px;
     }
     p {
-      line-height: 37px;
+      line-height: 35px;
       margin: 40px 0 30px;
       min-width: 100%;
     }
@@ -170,10 +171,14 @@
 
   .main-container section .main-container-text p {
     margin-bottom: 20px;
+    line-height: 35px;
   }
 
   .main-container section p.stats {
     margin-top: 5px;
+    i {
+      padding-right: 5px;
+    }
   }
 
   .main-container section p img.icon {
@@ -189,7 +194,9 @@
     flex-wrap: wrap;
   }
   .person {
+    font-size: 18px;
     width: 33.33%;
+    min-width: 180px;
     margin-bottom: 50px;
   }
 
@@ -202,7 +209,7 @@
   }
 
   .person span {
-    font-weight: bold;
+    font-weight: 300;
     margin-bottom: 15px;
     display: block;
   }

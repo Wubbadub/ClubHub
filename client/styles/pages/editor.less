@@ -27,22 +27,33 @@
         transition: max-height 0.5s;
         animation: infinite
       }
+
+      .form-group {
+        margin-top: 1rem;
+      }
+
+      .btn-plain {
+        display: inline;
+        float: right;
+      }
     }
 
     .toggle {
       .btn;
-      border-color: @core-border-color;
+      border-color: lighten(@core-color, 30%);
+      border-left-color: @core-border-color;
       border-radius: 0 @border-base @border-base 0;
-      color: darken(@core-border-color, 25%);
+      background-color: lighten(@core-color, 40%);
+      color: darken(@core-color, 15%);
       position: absolute;
       padding: 1rem 0.7rem;
-      height: 3.8rem;
+      height: 5rem;
       width: 3rem;
       right: -3rem;
       top: 2rem;
 
       &:hover {
-        background-color: darken(@core-light-color, 5%);
+        background-color: lighten(@core-color, 30%);
       }
 
       .icon {
@@ -79,6 +90,44 @@
           border-color: lighten(@core-meta-color, 15%);
         }
       }
+    }
+  }
+
+  .toast {
+    position: fixed;
+    display: none;
+    vertical-align: middle;
+
+    &.editor-point {
+      width: 100%;
+      top: 1rem;
+      right: -32rem;
+      background-color: lighten(@core-color, 40%);
+      border-color: lighten(@core-color, 30%);
+    }
+
+    &.visible {
+      display: block;
+    }
+
+    .icon {
+      float: left;
+
+    }
+  }
+
+  .editor-help {
+    position: fixed;
+    width: 100%;
+    padding: @layout-gutter;
+
+    .btn {
+      float: right;
+
+      &:hover {
+        background-color: darken(@core-light-color, 5%);
+      }
+
     }
   }
 }
