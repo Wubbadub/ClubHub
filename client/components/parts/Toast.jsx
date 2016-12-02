@@ -1,6 +1,5 @@
 import React, {PureComponent, PropTypes} from 'react'
 import classNames from 'classnames'
-import Icon from 'parts/Icon'
 
 export default class Toast extends PureComponent {
   constructor(props) {
@@ -11,7 +10,6 @@ export default class Toast extends PureComponent {
   }
 
   static propTypes = {
-    icon: PropTypes.string,
     text: PropTypes.string,
     type: PropTypes.string,
     timeout: PropTypes.number,
@@ -52,7 +50,6 @@ export default class Toast extends PureComponent {
                                  this.props.type ? `toast-${this.props.type}` : '',
                                  this.state.active ? 'visible': '')}
            onClick={this.dismiss}>
-        <Icon icon={this.props.icon} size={1.5} />
         <span>{this.props.text}</span>
       </div>
     )

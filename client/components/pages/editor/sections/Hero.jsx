@@ -42,6 +42,7 @@ export default class Hero extends Component{
       <form>
         <ShortTextField label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
         <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
+        <hr />
         <button type="button"
           className={classNames('btn', 'btn-block')}
           onClick={this.addHeroLink}>
@@ -51,12 +52,12 @@ export default class Hero extends Component{
           </span>
         </button>
         {
-          this.props.data.buttons.map((d) => {
+          this.props.data.buttons.map((d, i) => {
             return (
               <ButtonField label="Button"
                            onChange={this.handleChange}
                            removeElement={this.removeElementSpecial}
-                           value={d} name="buttons"
+                           value={d} name="buttons" index={i}
                            key={this.props.data.buttons.indexOf(d)} />
             )
           })

@@ -1,6 +1,7 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {Router, Route, browserHistory} from 'react-router'
 import Async from 'react-promise'
+import cookie from 'react-cookie'
 
 import Config from 'Config'
 
@@ -87,7 +88,13 @@ export default class App extends PureComponent{
   static getSite = (siteId) => {
     const request = new Request(
       `http://${Config.server}/api/site/${siteId}`,
-      {method: 'GET'}
+      {
+        method: 'GET',
+        headers: {
+          'authorization': cookie.load('authorization'),
+          'Temporary-Key': cookie.load('Temporary-Key')
+        }
+      }
     )
     return Promise.resolve(fetch(request).then((response) => {
       return response.json().then((content) => {

@@ -13,7 +13,7 @@ export default class ButtonField extends Component{
       label: PropTypes.string,
       placeholder: PropTypes.string,
       name: PropTypes.string.isRequired,
-      index: PropTypes.string,
+      index: PropTypes.string.isRequired,
       types: PropTypes.array,
       value: PropTypes.shape({
         type: PropTypes.string,
