@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {Link} from 'react-router'
+import LoginButton from 'parts/LoginButton'
 
 import Config from 'Config'
 
@@ -9,8 +9,6 @@ import Brand from 'parts/Brand'
 const browserview = require('../../img/browser-view-2.png')
 const computerview = require('../../img/browser-view-3.png')
 const mobileview = require('../../img/mobile-view.png')
-const seo = require('../../img/seo-optimize.svg')
-const transfer = require('../../img/transfer.svg')
 
 export default class Splash extends PureComponent {
   constructor(props) {
@@ -44,7 +42,7 @@ export default class Splash extends PureComponent {
                 <div className="col-4">
                   <a><Brand/></a>
                   <div>
-                    <Link className="nav-link" to="/editor/create">Log in</Link>
+                    <LoginButton className="nav-link">Log In</LoginButton>
                     <a className="nav-link" href="#" onClick={this.showSignUp}>Sign up</a>
                     <a className="nav-link" target="_blank" href={`mailto:contact@${Config.host}`}>Contact</a>
                   </div>

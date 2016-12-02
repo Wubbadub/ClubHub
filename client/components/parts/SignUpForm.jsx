@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import classNames from 'classnames'
+import cookie from 'react-cookie'
 
 import Config from 'Config'
 
@@ -54,48 +55,57 @@ export default class SignUpForm extends PureComponent {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'authorization': cookie.load('authorization')
         },
         body: JSON.stringify({
           'siteName': this.state.clubNameInput
         })
-      }).then(() => {
-
-        const request = new Request(
-          `http://${Config.server}/api/site/${this.state.clubSiteInput}`
-        )
-        Promise.resolve(fetch(request).then((response) => response.json().then((site) => {
-          site.title = this.state.clubNameInput
-          site.sections.hero.title = this.state.clubNameInput
-
-          const links = []
-          if (this.state.clubFacebookInput !== '') links.push({
-            'type': 'facebook',
-            'text': 'Join us on Facebook',
-            'href': `http://facebook.com/groups/${this.state.clubFacebookInput}`
+      }).then((res) => {
+        res.json().then((content) => {
+          cookie.save('Temporary-Key', content['Temporary-Key'], {
+            domain: Config.cookie_path[0],
+            path: '/',
+            maxAge: 86400
           })
-          if (this.state.clubTwitterInput !== '') links.push({
-            'type': 'twitter',
-            'text': 'Follow us on Twitter',
-            'href': `http://twitter.com/${this.state.clubTwitterInput}`
-          })
+          const request = new Request(
+            `http://${Config.server}/api/site/${this.state.clubSiteInput}`
+          )
+          Promise.resolve(fetch(request).then((response) => response.json().then((site) => {
+            site.title = this.state.clubNameInput
+            site.sections.hero.title = this.state.clubNameInput
 
-          site.sections.header.links = links
-          site.sections.hero.buttons = links
+            const links = []
+            if (this.state.clubFacebookInput !== '') links.push({
+              'type': 'facebook',
+              'text': 'Join us on Facebook',
+              'href': `http://facebook.com/groups/${this.state.clubFacebookInput}`
+            })
+            if (this.state.clubTwitterInput !== '') links.push({
+              'type': 'twitter',
+              'text': 'Follow us on Twitter',
+              'href': `http://twitter.com/${this.state.clubTwitterInput}`
+            })
 
-          site.sections.meeting.time = this.state.clubTimeInput
-          site.sections.meeting.day = this.state.clubDayInput
-          site.sections.meeting.place = this.state.clubLocationInput
+            site.sections.header.links = links
+            site.sections.hero.buttons = links
 
-          fetch(`http://${Config.server}/api/site/${this.state.clubSiteInput}`, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(site)
-          }).then(() => { window.location.assign(`http://${this.state.clubSiteInput}.${this.props.hostUrl}/edit`) })
-        })))
+            site.sections.meeting.time = this.state.clubTimeInput
+            site.sections.meeting.day = this.state.clubDayInput
+            site.sections.meeting.place = this.state.clubLocationInput
+
+            fetch(`http://${Config.server}/api/site/${this.state.clubSiteInput}`, {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': cookie.load('authorization'),
+                'Temporary-Key': cookie.load('Temporary-Key')
+              },
+              body: JSON.stringify(site)
+            }).then(() => { window.location.assign(`http://${this.state.clubSiteInput}.${this.props.hostUrl}/edit`) })
+          })))
+        })
       })
     }
   }

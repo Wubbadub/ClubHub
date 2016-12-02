@@ -159,15 +159,17 @@
   .nav-link {
     color: @splash-font-color;
     text-decoration: none;
+    cursor: pointer;
+    padding: 0;
     font-size: 16px;
     line-height: 30px;
     display: inline-block;
     margin-top: 3px;
+    margin-right: 20px;
+    background: none;
+    border: none;
     &:hover {
       color: lighten(@splash-font-color, 20%);
-    }
-    &:not(:first-of-type) {
-      margin-left: 20px;
     }
   }
 
