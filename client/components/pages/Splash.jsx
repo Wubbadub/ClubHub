@@ -39,7 +39,6 @@ export default class Splash extends PureComponent {
         <SignUp active={this.state.signup} close={this.hideSignUp}/>
         <div className="template">
           <div className="header">
-            <header className="header">
               <div className="container-lrg flex">
                 <div className="col-4">
                   <a><Brand/></a>
@@ -51,7 +50,7 @@ export default class Splash extends PureComponent {
                 </div>
                 <div className="col-8">
                   <h1 className="header-heading">Take ten minutes to tell us about your universty club.</h1>
-                  <h2 className="header-subheading">In return, we'll generate a beautiful website for you that's ready to share.</h2>
+                  <h2 className="header-subheading">We'll generate your club a beautiful website for you that's ready to share.</h2>
                   <div className="ctas">
                     <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Create my club website</a></div>
                   </div>
@@ -79,7 +78,6 @@ export default class Splash extends PureComponent {
                   </div>
                 </div>
               </div>
-            </header>
           </div>
           <section>
             <ul>
