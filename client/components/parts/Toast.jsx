@@ -1,6 +1,5 @@
 import React, {PureComponent, PropTypes} from 'react'
 import classNames from 'classnames'
-import Icon from 'parts/Icon'
 
 export default class Toast extends PureComponent {
   constructor(props) {
