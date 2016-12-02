@@ -1,11 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-
 import classNames from 'classnames'
 import Icon from 'parts/Icon'
 
 import ShortTextField from 'parts/ShortTextField'
 import LongTextField from 'parts/LongTextField'
 import ButtonField from 'parts/ButtonField'
+import HeroImageField from 'parts/HeroImageField'
 
 export default class Hero extends Component{
   constructor(props){
@@ -41,6 +41,7 @@ export default class Hero extends Component{
     return (
       <form>
         <ShortTextField label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
+        <HeroImageField onChange={this.handleChange} />
         <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
         <hr />
         {

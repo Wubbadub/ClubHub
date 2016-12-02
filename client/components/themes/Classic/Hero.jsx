@@ -10,7 +10,7 @@ export default class Hero extends Component{
   }
 
   static propTypes = {
-    site: PropTypes.object
+    data: PropTypes.object
   }
 
   getButtonIcon = (type) => {
@@ -29,14 +29,21 @@ export default class Hero extends Component{
   }
 
   render() {
+    let heroImage = null
+    if (this.props.data.heroImage === null || this.props.data.heroImage === undefined){
+      heroImage = bg
+    } else {
+      heroImage = this.props.data.heroImage
+    }
+
     return (
       <div className="hero-container">
-          <div className="hero-image" style={{backgroundImage: `url(${bg})`}}>
+          <div className="hero-image" style={{backgroundImage: `url(${heroImage})`}}>
           </div>
           <div className="hero-content center">
-              <h1>{this.props.site.sections.hero.title}</h1>
-              <p>{this.props.site.sections.hero.description}</p>
-              {this.props.site.sections.hero.buttons.map((b, i) => {
+              <h1>{this.props.data.title}</h1>
+              <p>{this.props.data.description}</p>
+              {(this.props.data.buttons).map((b, i) => {
                 return (
                   <a target="blank" key={i} href={b.href}>{this.getButtonIcon(b.type)}&nbsp;&nbsp;{b.text}</a>
                 )

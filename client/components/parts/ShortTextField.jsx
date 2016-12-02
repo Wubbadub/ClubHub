@@ -18,9 +18,6 @@ export default class ShortTextField extends PureComponent{
     this.props.onChange(this.props.name, val)
   }
 
-  static defaultProps = {
-  }
-
   render(){
     return (
       <div className="form-group">
