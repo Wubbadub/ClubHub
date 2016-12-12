@@ -48,7 +48,7 @@ export default class Hero extends Component{
         {
           this.props.data.buttons.map((d, i) => {
             return (
-              <ButtonField label="Button"
+              <ButtonField label={`Button #${i+1}`}
                            onChange={this.handleChange}
                            removeElement={this.removeElementSpecial}
                            value={d} name="buttons" index={i}
@@ -57,11 +57,10 @@ export default class Hero extends Component{
           })
         }
         <button type="button"
-          className={classNames('btn', 'btn-block')}
+          className={classNames('btn', 'btn-default', 'btn-block')}
           onClick={this.addHeroLink}>
           <span>
-            <Icon icon="plus"
-              size={1} /> Add Hero Link
+            <Icon icon="plus" size={1} /> Add a Button
           </span>
         </button>
       </form>
