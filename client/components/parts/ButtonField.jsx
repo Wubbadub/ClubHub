@@ -50,13 +50,13 @@ export default class ButtonField extends Component{
   render(){
     return (
       <div className="form-group">
-        <label className="form-label">
-          <span>{this.props.label}</span>
+        <div className="form-label">
+          <label>{this.props.label}</label>
           &nbsp;
           <button className={classNames('btn', 'btn-link', 'btn-sm')} type="button" onClick={this.removeButton}>
             <Icon icon="cross_mark" /> Remove
           </button>
-        </label>
+        </div>
         <div className="form-border">
           <div className="form-group">
             <select className="form-select text-capitalize" data-kind="type" onChange={this.handleChange} value={this.props.value.type}>
