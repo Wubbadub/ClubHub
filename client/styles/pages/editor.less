@@ -16,6 +16,9 @@
   }
 
   .editor-bar {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
     height: 100vh;
 
     border: solid @core-border-color;
@@ -42,9 +45,8 @@
     }
 
     .editor-viewbox {
+      flex-grow: 100;
       overflow-y: scroll;
-      max-height: 100%;
-      padding-bottom: 15rem; //Todo: fix hacked hack
 
       .accordion-section .accordion-content {
         transition: max-height 0.5s;
@@ -104,9 +106,6 @@
     }
 
     .editor-footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
       border-top: 0.1em solid @core-border-color;
       background-color: @core-light-color;
       padding: 0.5*@layout-gutter;
@@ -117,20 +116,6 @@
           border-color: lighten(@core-meta-color, 15%);
         }
       }
-    }
-  }
-  .editor-help {
-    position: fixed;
-    width: 100%;
-    padding: @layout-gutter;
-
-    .btn {
-      float: right;
-
-      &:hover {
-        background-color: darken(@core-light-color, 5%);
-      }
-
     }
   }
 }
