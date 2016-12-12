@@ -41,8 +41,6 @@ export default class Hero extends Component{
     return (
       <form>
         <ShortTextField label="Title" onChange={this.handleChange} value={this.props.data.title} name="title"/>
-        <HeroImageField onChange={this.handleChange} />
-        <hr />
         <LongTextField label="Description" onChange={this.handleChange} value={this.props.data.description} name="description"/>
         <hr />
         {
@@ -63,6 +61,8 @@ export default class Hero extends Component{
             <Icon icon="plus" size={1} /> Add a Button
           </span>
         </button>
+        <hr />
+        <HeroImageField onChange={this.handleChange} />
       </form>
     )
   }
