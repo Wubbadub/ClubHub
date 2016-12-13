@@ -44,7 +44,7 @@ export default class Hero extends Component{
         {
           this.props.data.links.map((d, i) => {
             return (
-              <ButtonField label="SocialLink"
+              <ButtonField label={`Social Link #${i+1}`}
                            types={this.getLinkTypes()}
                            onChange={this.handleChange}
                            removeElement={this.props.removeElement}
@@ -54,11 +54,11 @@ export default class Hero extends Component{
           })
         }
         <button type="button"
-          className={classNames('btn', 'btn-block')}
+          className={classNames('btn', 'btn-default', 'btn-block')}
           onClick={this.addSocialLink}>
           <span>
             <Icon icon="plus"
-              size={1} /> Add Social Link
+              size={1} /> Add a Social Link
           </span>
         </button>
       </form>
