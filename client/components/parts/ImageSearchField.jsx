@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import classNames from 'classnames'
 import Async from 'react-promise'
 
+import Icon from 'parts/Icon'
+
 export default class ImageSearchField extends Component {
   constructor(props){
     super(props)
@@ -9,6 +11,8 @@ export default class ImageSearchField extends Component {
       searchKeywords: ['nature', 'water', 'sun'],
       searchRawString: ''
     }
+
+    this.searchTimer
   }
 
   static propTypes = {
@@ -31,59 +35,65 @@ export default class ImageSearchField extends Component {
     this.props.updateImage(e.target.id)
   }
 
-  searchByKeyword = () => {
-    const unsplashClientId = 'd9ac3268ec6e896a2f2655d25b135b0d22dab5762719fbe4fbc25864860ab8e0'
-    // const unsplashClientId = 'ef9e27a50e4d36d08c24bb35f362974c36420854e6924ad0e4b79c4c6dd8b041'
-    const unsplashSearchByKeywordUrl = `https://api.unsplash.com/search/photos/?client_id=${unsplashClientId}&query=${this.state.searchKeywords}`
-    const request = new Request(
-      unsplashSearchByKeywordUrl,
-      {method: 'GET'}
-    )
-    return Promise.resolve(fetch(request).then((response) => {
-      return response.json().then((content) => {
-        return (content.results).map((imgObject) => {
-          return {
-            'thumbnail': imgObject.urls.thumb,
-            'full': imgObject.urls.full
-          }
-        })
+
+  static unsplashClientId = 'd9ac3268ec6e896a2f2655d25b135b0d22dab5762719fbe4fbc25864860ab8e0'
+  // static unsplashClientId = 'ef9e27a50e4d36d08c24bb35f362974c36420854e6924ad0e4b79c4c6dd8b041'
+
+  searchByKeyword = () => new Promise((resolve, reject) => {
+    clearTimeout(this.searchTimer)
+    this.searchTimer = setTimeout(() => {
+      // Send search request
+      fetch(`https://api.unsplash.com/search/photos/?client_id=${this.unsplashClientId}&query=${this.state.searchKeywords}`)
+      .then((response) => {
+        if (response.okay){
+          resolve(response.json().then((json) => (json.results).map((imgObject) =>
+            ({
+              'thumbnail': imgObject.urls.thumb,
+              'full': imgObject.urls.full
+            })
+          )))
+        } else {
+          reject(response.status)
+        }
       })
-    }))
-  }
+    }, 5000) // <- Wait 200ms before querying
+  })
 
   render() {
     // ToDo: create a style file & port 'height', 'width', etc. attributes to it
     return (
       <div className={classNames({'hidden': !this.props.isActive})} id="heroImageSearch" >
         <label className={classNames('form-label')}>{this.props.label}</label>
-        <input onChange={this.updateKeywords}
-               maxLength="64"
-               className="form-input"
-               type="url"
-               value={this.state.searchRawString}
-               placeholder={this.props.placeholder} />
-        <div className={classNames('columns')} id="thumbnails">
-          <div className={classNames('column', 'col-md-3')}>
+        <input onChange={this.updateKeywords} maxLength="64" className="form-input" type="url" value={this.state.searchRawString} placeholder={this.props.placeholder} />
+        <div className="thumbnails">
+          <div>
             <Async
               promise={this.searchByKeyword()}
-              then={(imgUrls) => {
-                return (
-                  <div>
-                    {
-                      imgUrls.map((urls, index) => {
-                        return (
-                          <img onClick={this.handleChange}
-                               className={classNames('thumbnail')}
-                               src={urls.thumbnail}
-                               id={urls.full}
-                               key={`img${index}`} />
-                         )
-                      })
-                     }
-                   </div>
-                 )
-              }}>
-            </Async>
+              then={(imgUrls) =>
+                <div>
+                  {imgUrls.map((urls, index) =>
+                    <img
+                      onClick={this.handleChange}
+                      className="thumbnail"
+                      src={urls.thumbnail}
+                      data-full={urls.full}
+                      key={`thumbnail-${index}`} />
+                    )}
+                </div>
+              }
+              pendingRender={
+                <div className="empty empty-small">
+                  <div className="loading" />
+                  <p className="empty-title">Searching</p>
+                </div>
+              }
+              catch={(error) =>
+                <div className="empty empty-small">
+                  <Icon icon="warning" size={2} />
+                  <p className="empty-title">Request Error</p>
+                  <p className="empty-meta" data-tooltip={`Server returned ${error}`}>Uh oh.</p>
+                </div>
+              }/>
           </div>
         </div>
       </div>
