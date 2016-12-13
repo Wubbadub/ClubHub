@@ -56,45 +56,42 @@ export default class ImageSearchField extends Component {
           reject(response.status)
         }
       })
-    }, 5000) // <- Wait 200ms before querying
+    }, 500) // <- Wait 500ms before querying
   })
 
   render() {
-    // ToDo: create a style file & port 'height', 'width', etc. attributes to it
     return (
-      <div className={classNames({'hidden': !this.props.isActive})} id="heroImageSearch" >
+      <div className={classNames('form-image-search', {'hidden': !this.props.isActive})}>
         <label className={classNames('form-label')}>{this.props.label}</label>
         <input onChange={this.updateKeywords} maxLength="64" className="form-input" type="url" value={this.state.searchRawString} placeholder={this.props.placeholder} />
         <div className="thumbnails">
-          <div>
-            <Async
-              promise={this.searchByKeyword()}
-              then={(imgUrls) =>
-                <div>
-                  {imgUrls.map((urls, index) =>
-                    <img
-                      onClick={this.handleChange}
-                      className="thumbnail"
-                      src={urls.thumbnail}
-                      data-full={urls.full}
-                      key={`thumbnail-${index}`} />
-                    )}
-                </div>
-              }
-              pendingRender={
-                <div className="empty empty-small">
-                  <div className="loading" />
-                  <p className="empty-title">Searching</p>
-                </div>
-              }
-              catch={(error) =>
-                <div className="empty empty-small">
-                  <Icon icon="warning" size={2} />
-                  <p className="empty-title">Request Error</p>
-                  <p className="empty-meta" data-tooltip={`Server returned ${error}`}>Uh oh.</p>
-                </div>
-              }/>
-          </div>
+          <Async
+            promise={this.searchByKeyword()}
+            then={(imgUrls) =>
+              <div className="columns">
+                {imgUrls.map((urls, index) =>
+                  <img
+                    onClick={this.handleChange}
+                    className="thumbnail img-responsive rounded column col-6"
+                    src={urls.thumbnail}
+                    data-full={urls.full}
+                    key={`thumbnail-${index}`} />
+                  )}
+              </div>
+            }
+            pendingRender={
+              <div className="empty empty-small">
+                <div className="loading" />
+                <p className="empty-title">Searching</p>
+              </div>
+            }
+            catch={(error) =>
+              <div className="empty empty-small">
+                <Icon icon="warning" size={2} />
+                <p className="empty-title">Request Error</p>
+                <p className="empty-meta" data-tooltip={`Server returned ${error}`}>Uh oh.</p>
+              </div>
+            }/>
         </div>
       </div>
     )
