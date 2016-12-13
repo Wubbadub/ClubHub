@@ -48,8 +48,8 @@ export default class ButtonField extends Component{
       facebook: {
         label: 'Facebook URL',
         placeholder: 'group/something',
-        preprefix: 'http://',
-        prefix: 'facebook.com/'
+        preprefix: 'http://', // Not displayed
+        prefix: 'facebook.com/' // Displayed
       },
       twitter: {
         label: 'Twitter Handle',
@@ -73,7 +73,9 @@ export default class ButtonField extends Component{
       // Swap prefixes
       const oldtemplate = this.props.typeTemplates[val.type]
       const newtemplate = this.props.typeTemplates[e.target.value]
+      // Clean old prefixs
       val.href = val.href.replace(new RegExp(`^(${oldtemplate.preprefix}|${oldtemplate.prefix})+`), '')
+      // Add new prefixes
       if (newtemplate.prefix) val.href = newtemplate.prefix + val.href
       if (newtemplate.preprefix) val.href = newtemplate.preprefix + val.href
 
