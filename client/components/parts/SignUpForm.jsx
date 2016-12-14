@@ -181,9 +181,9 @@ export default class SignUpForm extends PureComponent {
     const days = ['mon', 'tue', 'wed', 'thu', 'fri']
 
     return (
-      <div className="tabs">
+      <div className="tabs-content">
         {/* Day of Week */}
-        <div className={classNames('tab', {'active': this.state.page === 0})}>
+        <div className={classNames('tab-content', {'active': this.state.page === 0})}>
           <form>
             <div className="form-group">
               <label className="form-label" htmlFor="club-name-input">What is your club called?</label>
@@ -216,7 +216,7 @@ export default class SignUpForm extends PureComponent {
           </form>
         </div>
         {/* Social Links */}
-        <div className={classNames('tab', {'active': this.state.page === 1})}>
+        <div className={classNames('tab-content', {'active': this.state.page === 1})}>
           <form>
             <div className={siteInputClass}>
               <label className="form-label" htmlFor="club-site-input">Where should we put your new website?</label>
