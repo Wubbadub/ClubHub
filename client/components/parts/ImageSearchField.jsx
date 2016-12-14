@@ -1,19 +1,20 @@
 import React, {Component, PropTypes} from 'react'
 import classNames from 'classnames'
-import Async from 'react-promise'
 
 export default class ImageSearchField extends Component {
   constructor(props){
     super(props)
     this.state = {
-      searchKeywords: ['nature', 'water', 'sun'],
-      searchRawString: ''
+      searchKeywords: [],
+      searchRawString: '',
+      photographerInfo: {},
+      searchResults: []
     }
   }
 
   static propTypes = {
     placeholder: PropTypes.string.isRequired,
-    updateImage: PropTypes.func.isRequired,
+    handleChange: PropTypes.func.isRequired,
     label: PropTypes.string,
     isActive: PropTypes.bool
   }
@@ -27,8 +28,8 @@ export default class ImageSearchField extends Component {
     this.setState({searchKeywords: newKeywords, searchRawString: [e.target.value] })
   }
 
-  handleChange = (e) => {
-    this.props.updateImage(e.target.id)
+  updateImage = (e) => {
+    this.props.handleChange(e.target.id)
   }
 
   searchByKeyword = () => {
@@ -39,53 +40,65 @@ export default class ImageSearchField extends Component {
       unsplashSearchByKeywordUrl,
       {method: 'GET'}
     )
-    return Promise.resolve(fetch(request).then((response) => {
-      return response.json().then((content) => {
-        return (content.results).map((imgObject) => {
-          return {
-            'thumbnail': imgObject.urls.thumb,
-            'full': imgObject.urls.full
+    this.setState({'searchResults': [] })
+    Promise.resolve(fetch(request).then((response) => {
+      response.json().then((content) => {
+        (content.results).map((imgObject) => {
+          const newThumbnails = this.state.searchResults
+          let photographerName = `${imgObject.user.first_name}`
+          if (imgObject.user.last_name !== null && imgObject.user.last_name !== undefined) {
+            photographerName += ` ${imgObject.user.last_name}`
           }
+          newThumbnails.push({
+            'thumbUrl': imgObject.urls.thumb,
+            'fullUrl': imgObject.urls.full,
+            'photographer': {
+              'name': photographerName,
+              'unsplashPage': imgObject.user.links.html
+            }
+          })
+          this.setState({'searchResults': newThumbnails})
         })
       })
     }))
   }
 
   render() {
-    // ToDo: create a style file & port 'height', 'width', etc. attributes to it
     return (
       <div className={classNames({'hidden': !this.props.isActive})} id="heroImageSearch" >
         <label className={classNames('form-label')}>{this.props.label}</label>
-        <input onChange={this.updateKeywords}
-               maxLength="64"
-               className="form-input"
-               type="url"
-               value={this.state.searchRawString}
-               placeholder={this.props.placeholder} />
+        <div className={classNames('input-group')}>
+          <input onChange={this.updateKeywords}
+                 maxLength="64"
+                 className="form-input"
+                 type="url"
+                 value={this.state.searchRawString}
+                 placeholder={this.props.placeholder}/>
+          <button onClick={this.searchByKeyword} className={classNames('btn', 'btn-primary', 'input-group-btn')}>Search</button>
+        </div>
         <div className={classNames('columns')} id="thumbnails">
           <div className={classNames('column', 'col-md-3')}>
-            <Async
-              promise={this.searchByKeyword()}
-              then={(imgUrls) => {
+            {
+              (this.state.searchResults).map((img, index) => {
                 return (
-                  <div>
-                    {
-                      imgUrls.map((urls, index) => {
-                        return (
-                          <img onClick={this.handleChange}
-                               className={classNames('thumbnail')}
-                               src={urls.thumbnail}
-                               id={urls.full}
-                               key={`img${index}`} />
-                         )
-                      })
-                     }
-                   </div>
+                  <img onClick={this.updateImage}
+                       onMouseOver={() => {
+                         this.setState({'photographerInfo': img.photographer})
+                       }}
+                       className={classNames('thumbnail')}
+                       src={img.thumbUrl}
+                       id={img.fullUrl}
+                       key={`img-${index}`} />
                  )
-              }}>
-            </Async>
+              })
+             }
           </div>
         </div>
+        <footer className={classNames('centered')}>
+          <p>
+            <a href="https://www.unsplash.com">Unsplash</a> photo by: <a href={this.state.photographerInfo.unsplashPage}>{this.state.photographerInfo.name}</a>
+          </p>
+        </footer>
       </div>
     )
   }

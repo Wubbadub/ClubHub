@@ -27,19 +27,19 @@ export default class HeroImageField extends Component{
   }
 
   selectTab = (e) => {
-    const tId = e.target.id
-    const tStates = this.state.tabStates
-    if (tStates[tId].isActive) return
+    const tabId = e.target.id
+    const newTabStates = this.state.tabStates
+    if (newTabStates[tabId].isActive) return
 
-    const allTabs = Object.keys(tStates)
+    const allTabs = Object.keys(newTabStates)
     for (let i = 0; i < allTabs.length; i++){
-      if (tStates[allTabs[i]].isActive){
-        tStates[allTabs[i]].isActive = false
+      if (newTabStates[allTabs[i]].isActive){
+        newTabStates[allTabs[i]].isActive = false
         break
       }
     }
-    tStates[tId].isActive = true
-    this.setState({tabStates: tStates})
+    newTabStates[tabId].isActive = true
+    this.setState({'tabStates': newTabStates})
   }
 
   updateHeroImage = (url) => {
@@ -70,7 +70,7 @@ export default class HeroImageField extends Component{
           </li>
         </ul>
         <ImageSearchField isActive={this.state.tabStates['search'].isActive}
-                          updateImage={this.updateHeroImage}
+                          handleChange={this.updateHeroImage}
                           label="Free High-Res Photos"
                           placeholder={'e.g. \"sunset city\"'} />
         <ImageUploadField isActive={this.state.tabStates['url'].isActive}
