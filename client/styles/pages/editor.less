@@ -23,8 +23,6 @@
     align-items: stretch;
     height: 100vh;
 
-    border: solid @core-border-color;
-    border-width: 0 .1rem 0 0;
     background-color: @core-light-color;
 
     position: fixed;
@@ -37,6 +35,10 @@
       .toggle .icon {
         transform: rotate(180deg);
       }
+    }
+
+    > [class^="editor-"] {
+      border-right: .1rem solid @core-border-color;
     }
 
     hr {
@@ -62,18 +64,22 @@
 
     .toggle {
       .btn;
-      border-color: @core-border-color;
+      border-color: darken(@core-color, 5%);
+      border-left-color: @core-color;
       border-radius: 0 @border-base @border-base 0;
-      color: darken(@core-border-color, 25%);
+
+      color: @core-light-color;
+      background-color: @core-color;
       position: absolute;
       padding: 1rem 0.7rem;
       height: 4rem;
       width: 3rem;
-      right: -3rem;
+      right: -3rem + .1rem;
       top: 1.1rem;
 
       &:hover {
-        background-color: darken(@core-light-color, 5%);
+        border-left-color: darken(@core-color, 5%);
+        background-color: darken(@core-color, 5%);
       }
 
       .icon {
@@ -93,6 +99,7 @@
       width: 100%;
       flex-shrink: 0;
       border-bottom: 0.1em solid darken(@core-color, 5%);
+      border-right: 0.1em solid darken(@core-color, 5%);
       background-color: @core-color;
       padding: @layout-gutter 0.5*@layout-gutter;
       overflow: hidden;
@@ -116,6 +123,11 @@
           height: 1.5*@body-font-size;
           width: auto;
           fill: @core-light-color;
+        }
+        &:hover {
+          svg {
+            fill: darken(@core-light-color, 3%);
+          }
         }
       }
     }
