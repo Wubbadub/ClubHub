@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 
 import Icon from 'parts/Icon'
 
-const bg = require('img/canoe.png')
+const bg = require('img/default.png')
 
 export default class Hero extends Component{
   constructor(props){
