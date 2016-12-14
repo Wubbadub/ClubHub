@@ -1,7 +1,10 @@
 import React, {PureComponent, PropTypes} from 'react'
+import classNames from 'classnames'
+
+import Icon from 'parts/Icon'
+
 import ImageSearchField from 'parts/ImageSearchField'
 import ImageUploadField from 'parts/ImageUploadField'
-import classNames from 'classnames'
 
 export default class HeroImageField extends PureComponent{
   constructor(props){
@@ -26,11 +29,11 @@ export default class HeroImageField extends PureComponent{
   render() {
     const tabs = [
       {
-        label: <span>Search</span>,
+        label: <span><Icon icon="magnifying" /> Search</span>,
         content: <ImageSearchField updateImage={this.updateHeroImage} placeholder={'e.g. \"sunset city\"'} />
       },
       {
-        label: <span>Link</span>,
+        label: <span><Icon icon="link" /> Link</span>,
         content: <ImageUploadField updateImage={this.updateHeroImage} label="URL" placeholder="http://www.example.com/pretty.jpg" />
       }
     ]
