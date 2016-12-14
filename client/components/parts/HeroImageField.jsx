@@ -30,17 +30,17 @@ export default class HeroImageField extends PureComponent{
     const tabs = [
       {
         label: <span><Icon icon="magnifying" /> Search</span>,
-        content: <ImageSearchField updateImage={this.updateHeroImage} placeholder={'e.g. \"sunset city\"'} />
+        content: <ImageSearchField updateImage={this.updateHeroImage} placeholder={'e.g. sunset city'} />
       },
       {
         label: <span><Icon icon="link" /> Link</span>,
-        content: <ImageUploadField updateImage={this.updateHeroImage} label="URL" placeholder="http://www.example.com/pretty.jpg" />
+        content: <ImageUploadField updateImage={this.updateHeroImage} label="Image URL" placeholder="http://www.example.com/pretty.jpg" />
       }
     ]
     return (
       <div className="form-group">
         <div className="form-label">
-          <label>Big Image</label>
+          <label>Main Image</label>
           &nbsp;
           <div className="tabs-toggle btn-group">
           { tabs.map((tab, i) =>
