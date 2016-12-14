@@ -20,7 +20,6 @@ export default class ImageSearchField extends Component {
   static propTypes = {
     placeholder: PropTypes.string.isRequired,
     updateImage: PropTypes.func.isRequired,
-    label: PropTypes.string,
     isActive: PropTypes.bool
   }
 
@@ -64,7 +63,6 @@ export default class ImageSearchField extends Component {
   render() {
     return (
       <div className={classNames('form-image-search', {'hidden': !this.props.isActive})}>
-        <label className={classNames('form-label')}>{this.props.label}</label>
         <input onChange={this.updateKeywords} maxLength="64" className="form-input" type="url" value={this.state.searchRawString} placeholder={this.props.placeholder} />
         <div className="thumbnails">
           <Async

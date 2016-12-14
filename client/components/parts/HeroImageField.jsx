@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
 import ImageSearchField from 'parts/ImageSearchField'
 import ImageUploadField from 'parts/ImageUploadField'
 import classNames from 'classnames'
 
-export default class HeroImageField extends Component{
+export default class HeroImageField extends PureComponent{
   constructor(props){
     super(props)
     this.state = {
@@ -71,7 +71,6 @@ export default class HeroImageField extends Component{
         </ul>
         <ImageSearchField isActive={this.state.tabStates['search'].isActive}
                           updateImage={this.updateHeroImage}
-                          label="Free High-Res Photos"
                           placeholder={'e.g. \"sunset city\"'} />
         <ImageUploadField isActive={this.state.tabStates['url'].isActive}
                           updateImage={this.updateHeroImage}
