@@ -34,7 +34,7 @@ export default class ImageSearchField extends Component {
   }
 
   handleChange = (e) => {
-    this.props.updateImage(e.target.id)
+    this.props.updateImage(e.target.dataset['url'])
   }
 
 
@@ -73,8 +73,8 @@ export default class ImageSearchField extends Component {
               <div className="columns col-gapless">
                 {imgUrls.slice(0, 4).map((urls, index) =>
                   <div className="column col-6 thumbnail" key={`thumbnail-${index}`}>
-                    <button type="button" className="btn btn-link btn-thumbnail" onClick={this.handleChange} data-full={urls.full}>
-                      <img className="img-responsive rounded" src={urls.thumbnail} />
+                    <button type="button" className="btn btn-link btn-thumbnail" onClick={this.handleChange}>
+                      <img className="img-responsive rounded" src={urls.thumbnail} data-url={urls.full} />
                     </button>
                   </div>
                   )}
