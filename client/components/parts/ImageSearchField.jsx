@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import classNames from 'classnames'
 import Async from 'react-promise'
 
+import Config from 'Config'
+
 import Icon from 'parts/Icon'
 
 export default class ImageSearchField extends Component {
@@ -36,16 +38,16 @@ export default class ImageSearchField extends Component {
   }
 
 
-  static unsplashClientId = 'd9ac3268ec6e896a2f2655d25b135b0d22dab5762719fbe4fbc25864860ab8e0'
-  // static unsplashClientId = 'ef9e27a50e4d36d08c24bb35f362974c36420854e6924ad0e4b79c4c6dd8b041'
+  // Clubhub Client ID: d9ac3268ec6e896a2f2655d25b135b0d22dab5762719fbe4fbc25864860ab8e0
+  // Juan's  Client ID: ef9e27a50e4d36d08c24bb35f362974c36420854e6924ad0e4b79c4c6dd8b041
 
   searchByKeyword = () => new Promise((resolve, reject) => {
     clearTimeout(this.searchTimer)
     this.searchTimer = setTimeout(() => {
       // Send search request
-      fetch(`https://api.unsplash.com/search/photos/?client_id=${this.unsplashClientId}&query=${this.state.searchKeywords}`)
+      fetch(`https://api.unsplash.com/search/photos/?client_id=${Config.unsplash_client_id}&query=${this.state.searchKeywords}`)
       .then((response) => {
-        if (response.okay){
+        if (response.ok){
           resolve(response.json().then((json) => (json.results).map((imgObject) =>
             ({
               'thumbnail': imgObject.urls.thumb,
@@ -68,14 +70,13 @@ export default class ImageSearchField extends Component {
           <Async
             promise={this.searchByKeyword()}
             then={(imgUrls) =>
-              <div className="columns">
-                {imgUrls.map((urls, index) =>
-                  <img
-                    onClick={this.handleChange}
-                    className="thumbnail img-responsive rounded column col-6"
-                    src={urls.thumbnail}
-                    data-full={urls.full}
-                    key={`thumbnail-${index}`} />
+              <div className="columns col-gapless">
+                {imgUrls.slice(0, 4).map((urls, index) =>
+                  <div className="column col-6 thumbnail" key={`thumbnail-${index}`}>
+                    <button type="button" className="btn btn-link btn-thumbnail" onClick={this.handleChange} data-full={urls.full}>
+                      <img className="img-responsive rounded" src={urls.thumbnail} />
+                    </button>
+                  </div>
                   )}
               </div>
             }
