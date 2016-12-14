@@ -70,7 +70,7 @@
       height: 4rem;
       width: 3rem;
       right: -3rem;
-      top: 2rem;
+      top: 1.1rem;
 
       &:hover {
         background-color: darken(@core-light-color, 5%);
@@ -86,19 +86,36 @@
       position: fixed;
       margin: 0;
       width: 22rem;
-      top: 1.7rem;
+      top: .8rem;
       right: -26rem;
     }
     .editor-header {
       width: 100%;
-      border-bottom: 0.1em solid @core-border-color;
-      background-color: @core-light-color;
-      padding: @layout-gutter;
+      flex-shrink: 0;
+      border-bottom: 0.1em solid darken(@core-color, 5%);
+      background-color: @core-color;
+      padding: @layout-gutter 0.5*@layout-gutter;
+      overflow: hidden;
+
+      h1 {
+        text-align: center;
+        margin: 0;
+        line-height: 0;
+        small {
+          display: inline-block;
+          font-size: 1.2*@body-font-size;
+          position: relative;
+          top: -.3rem;
+          color: @core-light-color;
+        }
+      }
       .brand {
-        height: 2em;
+        display: inline;
+        margin-right: .8rem;
         svg {
-          max-height: 100%;
-          fill: @core-meta-color;
+          height: 1.5*@body-font-size;
+          width: auto;
+          fill: @core-light-color;
         }
       }
     }
@@ -107,6 +124,7 @@
       border-top: 0.1em solid @core-border-color;
       background-color: @core-light-color;
       padding: 0.5*@layout-gutter;
+      flex-shrink: 0;
       .btn-save {
         float: right;
         &.disabled {
