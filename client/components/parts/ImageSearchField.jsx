@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import classNames from 'classnames'
 import Async from 'react-promise'
 
 import Config from 'Config'
