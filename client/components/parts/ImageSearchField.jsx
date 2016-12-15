@@ -27,7 +27,7 @@ export default class ImageSearchField extends Component {
   }
 
   handleChange = (e) => {
-    this.props.updateImage(e.target.dataset['url'])
+    this.props.updateImage(e.target.dataset.url)
   }
 
 
