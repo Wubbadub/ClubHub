@@ -2,6 +2,8 @@ import React, {PureComponent, PropTypes} from 'react'
 import {Router, Route, browserHistory} from 'react-router'
 import Async from 'react-promise'
 import cookie from 'react-cookie'
+import ReactGA from 'react-ga'
+import Analytics from 'AnalyticTools'
 
 import Config from 'Config'
 
@@ -62,6 +64,9 @@ class SiteContainer extends PureComponent {
 export default class App extends PureComponent{
   constructor(props){
     super(props)
+    ReactGA.initialize('UA-89083060-1', {
+      'cookieDomain': 'none'
+    })
   }
 
   getRouter = () => {
@@ -71,7 +76,7 @@ export default class App extends PureComponent{
     if (Config.subhosts.indexOf(names.slice(1).join('.')) >= 0)
       // Sub host (club site)
       return (
-        <Router history={browserHistory}>
+        <Router history={browserHistory} onUpdate={Analytics.logPageView}>
           <Route siteId={names[0]} component={SiteContainer} path="/" />
           <Route siteId={names[0]} component={EditorContainer} path="/edit"/>
         </Router>
@@ -79,7 +84,7 @@ export default class App extends PureComponent{
     else
       // Main host (clubhub site)
       return (
-        <Router history={browserHistory}>
+        <Router history={browserHistory} onUpdate={Analytics.logPageView}>
           <Route component={Splash} path="/"/>
         </Router>
       )
