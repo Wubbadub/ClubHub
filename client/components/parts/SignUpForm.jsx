@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react'
 import classNames from 'classnames'
-import cookie from 'react-cookie'
 
 import Config from 'Config'
 
@@ -51,66 +50,55 @@ export default class SignUpForm extends PureComponent {
       this.setState({page: p + 1})
     } else {
       this.setState({loading: true})
-      fetch(`http://${Config.server}/api/newsite/${this.state.clubSiteInput}`, {
+      fetch(`api/newsite/${this.state.clubSiteInput}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'authorization': cookie.load('authorization')
+          'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({
           'siteName': this.state.clubNameInput
         })
-      }).then((res) => {
-        res.json().then((content) => {
-          cookie.save('Temporary-Key', content['Temporary-Key'], {
-            domain: Config.cookie_path[0],
-            path: '/',
-            maxAge: 86400
+      }).then(() => {
+        const request = new Request(
+          `api/site/${this.state.clubSiteInput}`, {
+            credentials: 'include'
+          }
+        )
+        Promise.resolve(fetch(request).then((response) => response.json().then((site) => {
+          site.title = this.state.clubNameInput
+          site.sections.hero.title = this.state.clubNameInput
+
+          const links = []
+          if (this.state.clubFacebookInput !== '') links.push({
+            'type': 'facebook',
+            'text': 'Join us on Facebook',
+            'href': `http://facebook.com/groups/${this.state.clubFacebookInput}`
           })
-          const request = new Request(
-            `http://${Config.server}/api/site/${this.state.clubSiteInput}`, {
-              headers: {
-                'authorization': cookie.load('authorization'),
-                'Temporary-Key': cookie.load('Temporary-Key')
-              }
-            }
-          )
-          Promise.resolve(fetch(request).then((response) => response.json().then((site) => {
-            site.title = this.state.clubNameInput
-            site.sections.hero.title = this.state.clubNameInput
+          if (this.state.clubTwitterInput !== '') links.push({
+            'type': 'twitter',
+            'text': 'Follow us on Twitter',
+            'href': `http://twitter.com/${this.state.clubTwitterInput}`
+          })
 
-            const links = []
-            if (this.state.clubFacebookInput !== '') links.push({
-              'type': 'facebook',
-              'text': 'Join us on Facebook',
-              'href': `http://facebook.com/groups/${this.state.clubFacebookInput}`
-            })
-            if (this.state.clubTwitterInput !== '') links.push({
-              'type': 'twitter',
-              'text': 'Follow us on Twitter',
-              'href': `http://twitter.com/${this.state.clubTwitterInput}`
-            })
+          site.sections.header.links = links
+          site.sections.hero.buttons = links
 
-            site.sections.header.links = links
-            site.sections.hero.buttons = links
+          site.sections.meeting.time = this.state.clubTimeInput
+          site.sections.meeting.day = this.state.clubDayInput
+          site.sections.meeting.place = this.state.clubLocationInput
 
-            site.sections.meeting.time = this.state.clubTimeInput
-            site.sections.meeting.day = this.state.clubDayInput
-            site.sections.meeting.place = this.state.clubLocationInput
-
-            fetch(`http://${Config.server}/api/site/${this.state.clubSiteInput}`, {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'authorization': cookie.load('authorization'),
-                'Temporary-Key': cookie.load('Temporary-Key')
-              },
-              body: JSON.stringify(site)
-            }).then(() => { window.location.assign(`http://${this.state.clubSiteInput}.${this.props.hostUrl}/edit`) })
-          })))
-        })
+          fetch(`api/site/${this.state.clubSiteInput}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(site)
+          }).then(() => { window.location.assign(`http://${window.location.host}/edit/${this.state.clubSiteInput}.${this.props.hostUrl}`) })
+        })))
       })
     }
   }
@@ -137,8 +125,9 @@ export default class SignUpForm extends PureComponent {
     else if (!/^[a-zA-Z0-9-]+$/.test(site)) return callback('invalid')
 
     this.timer = setTimeout(function() {
-      Promise.resolve(fetch(`http://${Config.server}/api/site_exists/${self.state.clubSiteInput}`, {
-        method: 'GET'
+      Promise.resolve(fetch(`api/site_exists/${self.state.clubSiteInput}`, {
+        method: 'GET',
+        credentials: 'include'
       })).then((res) => {
         res.text().then((t) => {
           callback(t === 'true' ? 'unavailable' : 'okay')

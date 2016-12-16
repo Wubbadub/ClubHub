@@ -5,5 +5,8 @@ module.exports = {
   INTERNAL_ID: 0,
   PERMISSION_OWNER:1,
   PERMISSION_EDITOR: 2,
-  MAX_TEMP_KEY_SECONDS: 86400
+  MAX_TEMP_KEY_SECONDS: 86400,
+  ALLOWED_ORIGINS: ["http://tryclubhub.com", "http://www.tryclubhub.com", "http://tryclubhub.com.localhost:8000", /\.uvic\.club$/, /\.uvic\.club\.localhost:8000$/],
+  COOKIE_TEMP_KEY: "Temporary-Key",
+  COOKIE_AUTH: "authorization"
 }

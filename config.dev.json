@@ -4,8 +4,5 @@
     "subhosts": [
         "uvic.club.localhost:8000"
     ],
-    "cookie_path": [
-        ".uvic.club.localhost"
-    ],
     "google_client_id": "501796428781-uolre6ch61rk31p0gc9tgcqdcv3n22ar.apps.googleusercontent.com"
 }
