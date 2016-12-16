@@ -3,17 +3,19 @@
     display: none;
   }
 
-  .thumbnail {
-    margin: 0;
-    padding: 0.25*@layout-gutter;
-    width: 120px;
-    height: 75px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: darken(@core-light-color, 10%);
-    }
+  .thumbnails {
+    overflow-y: auto;
+      .thumbnail {
+        padding: 0;
+      }
+      .btn-thumbnail {
+        height: auto;
+        padding: .7rem;
+        margin: 0 auto;
+      }
   }
+
+
 
   .editor-bar {
     display: flex;
@@ -21,8 +23,6 @@
     align-items: stretch;
     height: 100vh;
 
-    border: solid @core-border-color;
-    border-width: 0 .1rem 0 0;
     background-color: @core-light-color;
 
     position: fixed;
@@ -35,6 +35,10 @@
       .toggle .icon {
         transform: rotate(180deg);
       }
+    }
+
+    > [class^="editor-"] {
+      border-right: .1rem solid @core-border-color;
     }
 
     hr {
@@ -56,26 +60,26 @@
       .form-group {
         margin-top: 1rem;
       }
-
-      .btn-plain {
-        float: right;
-      }
     }
 
     .toggle {
       .btn;
-      border-color: @core-border-color;
+      border-color: darken(@core-color, 5%);
+      border-left-color: @core-color;
       border-radius: 0 @border-base @border-base 0;
-      color: darken(@core-border-color, 25%);
+
+      color: @core-light-color;
+      background-color: @core-color;
       position: absolute;
       padding: 1rem 0.7rem;
       height: 4rem;
       width: 3rem;
-      right: -3rem;
-      top: 2rem;
+      right: -3rem + .1rem;
+      top: 1.1rem;
 
       &:hover {
-        background-color: darken(@core-light-color, 5%);
+        border-left-color: darken(@core-color, 5%);
+        background-color: darken(@core-color, 5%);
       }
 
       .icon {
@@ -88,19 +92,42 @@
       position: fixed;
       margin: 0;
       width: 22rem;
-      top: 1.7rem;
+      top: .8rem;
       right: -26rem;
     }
     .editor-header {
       width: 100%;
-      border-bottom: 0.1em solid @core-border-color;
-      background-color: @core-light-color;
-      padding: @layout-gutter;
+      flex-shrink: 0;
+      border-bottom: 0.1em solid darken(@core-color, 5%);
+      border-right: 0.1em solid darken(@core-color, 5%);
+      background-color: @core-color;
+      padding: @layout-gutter 0.5*@layout-gutter;
+      overflow: hidden;
+
+      h1 {
+        text-align: center;
+        margin: 0;
+        line-height: 0;
+        small {
+          display: inline-block;
+          font-size: 1.2*@body-font-size;
+          position: relative;
+          top: -.3rem;
+          color: @core-light-color;
+        }
+      }
       .brand {
-        height: 2em;
+        display: inline;
+        margin-right: .8rem;
         svg {
-          max-height: 100%;
-          fill: @core-meta-color;
+          height: 1.5*@body-font-size;
+          width: auto;
+          fill: @core-light-color;
+        }
+        &:hover {
+          svg {
+            fill: darken(@core-light-color, 3%);
+          }
         }
       }
     }
@@ -109,6 +136,7 @@
       border-top: 0.1em solid @core-border-color;
       background-color: @core-light-color;
       padding: 0.5*@layout-gutter;
+      flex-shrink: 0;
       .btn-save {
         float: right;
         &.disabled {

@@ -9,8 +9,7 @@ export default class ImageUploadField extends Component {
   static propTypes = {
     updateImage: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
-    label: PropTypes.string,
-    isActive: PropTypes.bool
+    label: PropTypes.string
   }
 
   static defaultProps = {
@@ -23,12 +22,9 @@ export default class ImageUploadField extends Component {
 
   render() {
     return (
-      <div className={classNames({'hidden': !this.props.isActive})} id="imageUpload">
+      <div className="image-upload-field">
         <label className={classNames('form-label')}>{this.props.label}</label>
-        <input className={classNames('form-input')}
-               type="url"
-               placeholder={this.props.placeholder}
-               onChange={this.handleChange} />
+        <input className="form-input" type="url" placeholder={this.props.placeholder} onChange={this.handleChange} />
       </div>
     )
   }

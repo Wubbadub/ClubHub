@@ -103,6 +103,13 @@ export default class SignUpForm extends PureComponent {
     }
   }
 
+  handlePrevious = () => {
+    const p = this.state.page
+    if (p !== 0) {
+      this.setState({page: p - 1})
+    }
+  }
+
   clubSiteInputChange = (e) => {
     const self = this
     const site = e.target.value.toLowerCase()
@@ -170,10 +177,13 @@ export default class SignUpForm extends PureComponent {
     const days = ['mon', 'tue', 'wed', 'thu', 'fri']
 
     return (
-      <div className="tabs">
+      <div className="tabs-content">
         {/* Day of Week */}
-        <div className={classNames('tab', {'active': this.state.page === 0})}>
+        <div className={classNames('tab-content', {'active': this.state.page === 0})}>
           <form>
+            <div className="form-group">
+              <b>Sign Up for ClubHub</b>
+            </div>
             <div className="form-group">
               <label className="form-label" htmlFor="club-name-input">What is your club called?</label>
               <input className="form-input" type="text" maxLength="128" id="club-name-input" placeholder="Super cool club name" onChange={this.clubNameInputChange} value={this.state.clubNameInput} />
@@ -205,8 +215,13 @@ export default class SignUpForm extends PureComponent {
           </form>
         </div>
         {/* Social Links */}
-        <div className={classNames('tab', {'active': this.state.page === 1})}>
+        <div className={classNames('tab-content', {'active': this.state.page === 1})}>
           <form>
+            <div className="form-group">
+              <button type="button" className={classNames('centered', 'btn', 'btn-link', 'btn-sm', {'disabled': this.state.loading})} onClick={this.handlePrevious}>
+                <Icon icon="arrow_left" /> Go back
+              </button>
+            </div>
             <div className={siteInputClass}>
               <label className="form-label" htmlFor="club-site-input">Where should we put your new website?</label>
               <div className="input-group">

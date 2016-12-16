@@ -123,9 +123,10 @@ export default class Editor extends Component {
               </div>
             </button>
             <div className="editor-header">
-              <a href={`http://${Config.host}`} target="_blank">
-                <Brand />
-              </a>
+              <h1>
+                <a href={`http://${Config.host}`} target="_blank"><Brand /></a>
+                <small>Editor</small>
+              </h1>
             </div>
             <div className="editor-viewbox">
               <div className="accordion">
