@@ -1,13 +1,13 @@
 export const header = {
   href: '',
   text: '',
-  type: ''
+  type: 'link'
 }
 
 export const hero = {
   href: '',
   text: '',
-  type: ''
+  type: 'link'
 }
 
 export const team = {
