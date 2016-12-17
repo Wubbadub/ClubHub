@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import Icon from 'parts/Icon'
 
-const Iframe = require("react-iframe")
+import Iframe from 'react-iframe'
 
 export default class Meeting extends Component{
   constructor(props){
