@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import Icon from 'parts/Icon'
 
-const map = require('img/map.png')
+const Iframe = require("react-iframe")
 
 export default class Meeting extends Component{
   constructor(props){
@@ -27,7 +27,10 @@ export default class Meeting extends Component{
                   {this.props.data.place}
               </p>
           </div>
-          <div className="main-container-img" style={{backgroundImage: `url(${map})`}}></div>
+          <div className="maps-iframe">
+            <Iframe url="https://www.google.com/maps/embed/v1/place?key=AIzaSyDsSOODUekhjT2z-6fBVJ-_3HltKbnKfy4&q=uvic"
+              width="100%" height="100%" frameborder="0"/>
+          </div>
       </section>
     )
   }

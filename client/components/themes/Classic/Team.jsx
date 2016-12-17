@@ -12,7 +12,7 @@ export default class Team extends Component{
   render() {
     return (
       <section>
-        <div>
+        <div className="team">
           <h1>Who</h1>
           <div className="people">
 

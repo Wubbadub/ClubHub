@@ -130,6 +130,18 @@
     border: none;
   }
 
+  .maps-iframe {
+    width: 60%;
+    @media (max-width: 1000px) {
+      width: 100%;
+    }
+  }
+
+// Override mysterious inline style applied to maps iframe
+  .maps-iframe iframe {
+      position: static !important;
+  }
+
   .main-container {
     padding: 90px 50px;
     position: relative;
@@ -188,6 +200,11 @@
     top: 3px;
     margin-right: 10px;
   }
+
+  .team {
+    width: 100%;
+  }
+
   .people {
     display: -webkit-flex; /* Safari */
     display: flex;
@@ -196,7 +213,6 @@
   .person {
     font-size: 18px;
     width: 33.33%;
-    min-width: 180px;
     margin-bottom: 50px;
   }
 
