@@ -49,7 +49,7 @@ export default class Hero extends Component{
                            onChange={this.handleChange}
                            removeElement={this.removeHeroButton}
                            value={d} name="buttons" index={i}
-                           key={this.props.data.buttons.indexOf(d)} />
+                           key={i} />
             )
           })
         }

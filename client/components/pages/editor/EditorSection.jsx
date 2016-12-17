@@ -25,7 +25,7 @@ export default class EditorSection extends Component{
     // deep copy section data
     const newData = Object.assign({}, this.props.data)
     // push new default data item onto list
-    newData[arrayName].push(defaults[this.props.section])
+    newData[arrayName].push(Object.assign({}, defaults[this.props.section]))
     // call setData with new data
     this.props.setData(this.props.section, newData)
   }
