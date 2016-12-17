@@ -21,11 +21,11 @@ export default class EditorSection extends Component{
     this.props.toggleSection(this.props.section)
   }
 
-  addElement = (arrayName) => {
+  addElement = () => {
     // deep copy section data
     const newData = Object.assign({}, this.props.data)
     // push new default data item onto list
-    newData[arrayName].push(defaults[this.props.section])
+    newData.iterables.push(defaults[this.props.section])
     // call set data with new data
     this.props.setData(this.props.section, newData)
   }
@@ -38,15 +38,24 @@ export default class EditorSection extends Component{
   //   this.props.setData(this.props.section, newData)
   // }
 
-  removeElement = (key, isObject, arrayName = 'links') => {
-    const newData = this.props.data
-    if (isObject) delete newData[key]
-    else {
-      const index = this.props.data[arrayName].indexOf(key)
-      if (index > -1) this.props.data[arrayName].splice(index, 1)
-    }
-    this.props.setData(this.props.section, newData)
+  removeElement = (key) => {
+    // deep copy section data
+    const newData = Object.assign({}, this.props.data)
+    // get index of element to remove
+    const index = this.props.data.iterables.indexOf(key)
+    // splice out element if it exists
+    if (index > -1) this.props.data.iterables.splice(index, 1)
   }
+
+  // removeElement = (key, isObject, arrayName = 'links') => {
+  //   const newData = this.props.data
+  //   if (isObject) delete newData[key]
+  //   else {
+  //     const index = this.props.data[arrayName].indexOf(key)
+  //     if (index > -1) this.props.data[arrayName].splice(index, 1)
+  //   }
+  //   this.props.setData(this.props.section, newData)
+  // }
 
   render(){
     if (!Sections[this.props.section]) return null
