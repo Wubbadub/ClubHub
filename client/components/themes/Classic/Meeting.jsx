@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import Icon from 'parts/Icon'
-
 import Iframe from 'react-iframe'
+
+import Config from 'Config'
+
+import Icon from 'parts/Icon'
 
 export default class Meeting extends Component{
   constructor(props){
@@ -28,7 +30,8 @@ export default class Meeting extends Component{
               </p>
           </div>
           <div className="maps-iframe">
-            <Iframe url="https://www.google.com/maps/embed/v1/place?key=AIzaSyDsSOODUekhjT2z-6fBVJ-_3HltKbnKfy4&q=uvic"
+            <Iframe
+            url={`https://www.google.com/maps/embed/v1/place?key=${Config.google_maps_client_id}&q=${this.props.data.place.replace(' ', '+')}`}
               width="100%" height="100%" frameborder="0"/>
           </div>
       </section>
