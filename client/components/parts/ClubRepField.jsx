@@ -7,7 +7,7 @@ export default class ClubRepField extends Component{
 
   static propTypes = {
     label: PropTypes.string,
-    name: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
     data: PropTypes.shape({
       name: PropTypes.string,
       position: PropTypes.string,
@@ -21,11 +21,11 @@ export default class ClubRepField extends Component{
     const field = e.target.dataset.kind
     const val = this.props.data
     val[field] = e.target.value
-    this.props.onChange(this.props.name, val)
+    this.props.onChange(this.props.index, val)
   }
 
   removeMember = () => {
-    this.props.removeElement(this.props.name, true)
+    this.props.removeElement(this.props.index, true)
   }
 
   render(){

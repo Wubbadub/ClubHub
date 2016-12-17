@@ -10,6 +10,16 @@ import Splash from 'pages/Splash'
 import Editor from 'pages/editor/Editor'
 import Site from 'pages/site/Site'
 
+// for now convert team object data to array
+const adaptLegacyData = (data) => {
+  if (!Array.isArray(data.sections.team)) {
+    console.log('meeting team is and object')
+    data.sections.team = {members: Object.keys(data.sections.team).map((k) => {
+      return data.sections.team[k]
+    })}
+    return data
+  }
+}
 
 class EditorContainer extends PureComponent {
   constructor(props) {
@@ -98,7 +108,7 @@ export default class App extends PureComponent{
     )
     return Promise.resolve(fetch(request).then((response) => {
       return response.json().then((content) => {
-        return content
+        return adaptLegacyData(content)
       })
     }))
   }
