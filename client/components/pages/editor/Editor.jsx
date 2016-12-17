@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
+import cookie from 'react-cookie'
 import classNames from 'classnames'
 
 import Config from 'Config'
@@ -8,6 +9,7 @@ import Brand from 'parts/Brand'
 
 import Site from 'pages/site/Site'
 import EditorSection from 'pages/editor/EditorSection'
+import LoginModal from 'parts/LoginModal'
 
 export default class Editor extends Component {
   constructor(props) {
@@ -18,7 +20,8 @@ export default class Editor extends Component {
       dirtyBit: false,
       site: this.props.site,
       bodyScroll: true,
-      editorToast: true
+      editorToast: true,
+      showLoginModal: false
     }
   }
 
@@ -61,31 +64,36 @@ export default class Editor extends Component {
     this.setState({site: s, dirtyBit: true})
   }
 
-  handleSubmit = () => {
-    fetch(`http://${Config.server}/api/site/${this.props.siteId}`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(this.state.site)
-    }).then((res) => {
-      if (res.ok) this.setState({dirtyBit: false})
-
-      // TODO: Replace this with a button or checkbox or some other intuitive method instead of forcing the site active on every save
-      // NOTE: This will get a 403 response if they're only using a Temporary-Key, that is to say, the site won't become active
-      // until they log in (To be resolved by a future commit)
-      fetch(`http://${Config.server}/api/active/${this.props.siteId}`, {
+  sendSiteData = (response) => {
+    if (response) {
+      fetch(`http://${Config.server}/api/site/${this.props.siteId}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         credentials: 'include',
-        body: JSON.stringify({active: true})
+        body: JSON.stringify(this.state.site)
+      }).then((res) => {
+        if (res.ok) {
+          this.setState({
+            dirtyBit: false,
+            showLoginModal: false
+          })
+
+          // TODO: Replace this with a button or checkbox or some other intuitive method instead of forcing the site active on every save
+          fetch(`http://${Config.server}/api/active/${this.props.siteId}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({active: true})
+          })
+        }
       })
-    })
+    }
   }
 
   disableBodyScroll = () => {
@@ -106,6 +114,20 @@ export default class Editor extends Component {
     }, 100)
   }
 
+  // Check if a user is already logged in. Show the login modal if they aren't.
+  handleSubmit = () => {
+    const auth = cookie.load('authorization')
+    if (auth && auth !== '') {
+      this.sendSiteData(true)
+    } else {
+      this.setState({showLoginModal: true})
+    }
+  }
+
+  hideLogin = () => {
+    this.setState({showLoginModal: false})
+  }
+
   render() {
     const sections = [
       'hero',
@@ -115,6 +137,7 @@ export default class Editor extends Component {
     ]
     return (
       <div className="editor container">
+        <LoginModal active={this.state.showLoginModal} close={this.hideLogin} callback={this.sendSiteData}/>
         <div className="columns">
           <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
             <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" />
