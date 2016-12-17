@@ -24,11 +24,14 @@ export default class Meeting extends Component{
                   <Icon icon="clock"/>&nbsp;
                   {this.props.data.day} at {this.props.data.time}
               </p>
+              {this.props.data.place ?
               <p className="stats">
                   <Icon icon="placepin"/>&nbsp;
                   {this.props.data.place}
               </p>
+              : null}
           </div>
+          {this.props.data.place ?
           <div className="meeting-map">
             <div className="maps-iframe">
               <Iframe
@@ -36,6 +39,7 @@ export default class Meeting extends Component{
                 width="100%" height="100%" frameborder="0"/>
               </div>
           </div>
+          : null}
       </section>
     )
   }
