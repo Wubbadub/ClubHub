@@ -28,7 +28,7 @@ export default class Hero extends Component{
     this.props.setData('hero', d)
   }
 
-  addHeroLink = () => {
+  addHeroButton = () => {
     this.props.addElement('buttons')
   }
 
@@ -55,7 +55,7 @@ export default class Hero extends Component{
         }
         <button type="button"
           className={classNames('btn', 'btn-default', 'btn-block')}
-          onClick={this.addHeroLink}>
+          onClick={this.addHeroButton}>
           <span>
             <Icon icon="plus" size={1} /> Add a Button
           </span>

@@ -34,8 +34,11 @@ export default class Hero extends Component{
   }
 
   addSocialLink = () => {
-    const newData = Object.assign({}, this.props.data.links[this.props.data.links.length-1])
-    this.props.addElement(null, newData, false)
+    this.props.addElement('links')
+  }
+
+  removeHeaderLink = (key) => {
+    this.props.removeElement(key, 'links')
   }
 
   render(){
@@ -47,9 +50,9 @@ export default class Hero extends Component{
               <ButtonField label={`Social Link #${i+1}`}
                            types={this.getLinkTypes()}
                            onChange={this.handleChange}
-                           removeElement={this.props.removeElement}
+                           removeElement={this.removeHeaderLink}
                            value={d} name="links" index={i}
-                           key={this.props.data.links.indexOf(d)} />
+                           key={i} />
             )
           })
         }

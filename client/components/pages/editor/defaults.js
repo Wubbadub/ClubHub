@@ -1,7 +1,7 @@
 export const header = {
   href: '',
   text: '',
-  type: 'link'
+  type: 'facebook'
 }
 
 export const hero = {
