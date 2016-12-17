@@ -29,10 +29,12 @@ export default class Meeting extends Component{
                   {this.props.data.place}
               </p>
           </div>
-          <div className="maps-iframe">
-            <Iframe
-            url={`https://www.google.com/maps/embed/v1/place?key=${Config.google_maps_client_id}&q=${this.props.data.place.replace(' ', '+')}`}
-              width="100%" height="100%" frameborder="0"/>
+          <div className="meeting-map">
+            <div className="maps-iframe">
+              <Iframe
+                url={`https://www.google.com/maps/embed/v1/place?key=${Config.google_maps_client_id}&q=${this.props.data.place.replace(' ', '+')}`}
+                width="100%" height="100%" frameborder="0"/>
+              </div>
           </div>
       </section>
     )

@@ -130,11 +130,23 @@
     border: none;
   }
 
-  .maps-iframe {
+  .meeting-map {
+    border: .1rem solid #E4E4DF;
+    padding: @layout-gutter/4;
     width: 60%;
     @media (max-width: 1000px) {
       width: 100%;
+      height: 32rem;
     }
+  }
+
+  .maps-iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: .1rem;
+    border: .3rem solid #E4E4DF;
+    background-color: #E4E4DF;
+    overflow: hidden;
   }
 
 // Override mysterious inline style applied to maps iframe
