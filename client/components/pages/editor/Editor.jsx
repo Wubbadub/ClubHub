@@ -57,7 +57,7 @@ export default class Editor extends Component {
   }
 
   setData = (section, data) => {
-    const s = this.state.site
+    const s = Object.assign({}, this.state.site)
     s.sections[section] = data
     this.setState({site: s, dirtyBit: true})
   }

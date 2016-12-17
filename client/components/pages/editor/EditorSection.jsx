@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import classNames from 'classnames'
 
+import * as defaults from './defaults'
 import * as Sections from './sections'
 
 export default class EditorSection extends Component{
@@ -20,12 +21,22 @@ export default class EditorSection extends Component{
     this.props.toggleSection(this.props.section)
   }
 
-  addElement = (key, data, isObject, arrayName = 'links') => {
-    const newData = this.props.data
-    if (isObject) newData[key] = data
-    else newData[arrayName].push(data)
+  addElement = (arrayName) => {
+    // deep copy section data
+    const newData = Object.assign({}, this.props.data)
+    // push new default data item onto list
+    newData[arrayName].push(defaults[this.props.section])
+    // call set data with new data
     this.props.setData(this.props.section, newData)
   }
+
+  // addElement = (key, data, isObject, arrayName = 'links') => {
+  //   const newData = Object.assign({}, this.props.data)
+  //   console.log(newData === this.props.data)
+  //   if (isObject) newData[key] = data
+  //   else newData[arrayName].push(data)
+  //   this.props.setData(this.props.section, newData)
+  // }
 
   removeElement = (key, isObject, arrayName = 'links') => {
     const newData = this.props.data
