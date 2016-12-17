@@ -21,12 +21,12 @@ export default class EditorSection extends Component{
     this.props.toggleSection(this.props.section)
   }
 
-  addElement = () => {
+  addElement = (arrayName) => {
     // deep copy section data
     const newData = Object.assign({}, this.props.data)
     // push new default data item onto list
-    newData.iterables.push(defaults[this.props.section])
-    // call set data with new data
+    newData[arrayName].push(defaults[this.props.section])
+    // call setData with new data
     this.props.setData(this.props.section, newData)
   }
 
@@ -38,13 +38,15 @@ export default class EditorSection extends Component{
   //   this.props.setData(this.props.section, newData)
   // }
 
-  removeElement = (key) => {
+  removeElement = (key, arrayName) => {
     // deep copy section data
     const newData = Object.assign({}, this.props.data)
     // get index of element to remove
-    const index = this.props.data.iterables.indexOf(key)
+    const index = newData[arrayName].indexOf(key)
     // splice out element if it exists
-    if (index > -1) this.props.data.iterables.splice(index, 1)
+    if (index > -1) newData[arrayName].splice(index, 1)
+    // call setData with new data
+    this.props.setData(this.props.section, newData)
   }
 
   // removeElement = (key, isObject, arrayName = 'links') => {
