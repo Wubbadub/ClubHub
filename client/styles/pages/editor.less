@@ -17,50 +17,17 @@
 
 
 
-  .editor-bar {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: stretch;
-    height: 100vh;
+  .editor-toolbox {
+    .shadow;
 
+    border-radius: @border-base;
+    overflow: hidden;
     background-color: @core-light-color;
 
+    top: @layout-gutter;
+    left: @layout-gutter;
     position: fixed;
     z-index: 100;
-    transform: translateX(-100%);
-    transition: transform 0.5s;
-
-    &.active {
-    transform: translateX(0);
-      .toggle .icon {
-        transform: rotate(180deg);
-      }
-    }
-
-    > [class^="editor-"] {
-      border-right: .1rem solid @core-border-color;
-    }
-
-    hr {
-      border: none;
-      border-bottom: .1rem solid @core-border-color;
-      width: 90%;
-      margin: @layout-gutter auto;
-    }
-
-    .editor-viewbox {
-      flex-grow: 100;
-      overflow-y: scroll;
-
-      .accordion-section .accordion-content {
-        transition: max-height 0.5s;
-        animation: infinite
-      }
-
-      .form-group {
-        margin-top: 1rem;
-      }
-    }
 
     .toggle {
       .btn;
@@ -88,19 +55,13 @@
         transform: rotate(0deg);
       }
     }
-    .editor-point {
-      position: fixed;
-      margin: 0;
-      width: 22rem;
-      top: .8rem;
-      right: -26rem;
-    }
     .editor-header {
       width: 100%;
-      flex-shrink: 0;
-      border-bottom: 0.1em solid darken(@core-color, 5%);
-      border-right: 0.1em solid darken(@core-color, 5%);
+
+      border: 0.1em solid darken(@core-color, 5%);
+      border-radius: @border-base @border-base 0 0;
       background-color: @core-color;
+
       padding: @layout-gutter 0.5*@layout-gutter;
       overflow: hidden;
 
@@ -133,10 +94,14 @@
     }
 
     .editor-footer {
-      border-top: 0.1em solid @core-border-color;
+      border-radius: 0 0 @border-base @border-base;
+      border: 0.1em solid @core-border-color;
+      border-top: none;
       background-color: @core-light-color;
+      overflow: hidden;
+
       padding: 0.5*@layout-gutter;
-      flex-shrink: 0;
+
       .btn-save {
         float: right;
         &.disabled {
