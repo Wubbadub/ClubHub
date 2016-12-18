@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
 import cookie from 'react-cookie'
 import classNames from 'classnames'
 
@@ -168,7 +167,7 @@ export default class Editor extends Component {
               </div>
             </div>
             <div className="editor-footer">
-              <Link className={classNames('btn', 'btn-link')} to={`../preview/${this.props.siteId}`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
+              <a className={classNames('btn', 'btn-link')} href={`http://${this.props.siteId}.${Config.subhosts[0]}`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</a>
               {(() => {
                 if (this.state.dirtyBit) {
                   return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save')} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
