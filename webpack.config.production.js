@@ -3,6 +3,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var failPlugin = require('webpack-fail-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -22,6 +23,7 @@ module.exports = {
       inject: 'body',
       filename: 'index.html'
     }),
+    new ExtractTextPlugin("assets/styles.css"),
     failPlugin,
     new webpack.DefinePlugin({
       'process.env': {
@@ -54,7 +56,9 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loaders: ['style', 'css', 'less']
+        loader: ExtractTextPlugin.extract(
+          'css?!less?compress'
+        )
       },
       {
         test: /font[\\|\/][^\.]+\.(eot|svg|ttf|woff|woff2)$/,

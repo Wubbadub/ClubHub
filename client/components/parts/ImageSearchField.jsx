@@ -30,10 +30,6 @@ export default class ImageSearchField extends Component {
     this.props.updateImage(e.target.dataset.url)
   }
 
-
-  // Clubhub Client ID: d9ac3268ec6e896a2f2655d25b135b0d22dab5762719fbe4fbc25864860ab8e0
-  // Juan's  Client ID: ef9e27a50e4d36d08c24bb35f362974c36420854e6924ad0e4b79c4c6dd8b041
-
   searchByKeyword = () => new Promise((resolve, reject) => {
     clearTimeout(this.searchTimer)
     this.searchTimer = setTimeout(() => {
