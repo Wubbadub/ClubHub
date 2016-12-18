@@ -19,7 +19,6 @@ export default class Editor extends Component {
       dirtyBit: false,
       site: this.props.site,
       bodyScroll: true,
-      editorToast: true,
       showLoginModal: false
     }
   }
@@ -27,12 +26,6 @@ export default class Editor extends Component {
   static propTypes = {
     site: PropTypes.object,
     siteId: PropTypes.string
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({editorToast: false})
-    }, 100)
   }
 
   makeSiteSections = () => {
@@ -95,23 +88,6 @@ export default class Editor extends Component {
     }
   }
 
-  disableBodyScroll = () => {
-    // this.setState({bodyScroll: false})
-    // document.body.style.overflow = 'hidden'
-  }
-
-  enableBodyScroll = () => {
-    // this.setState({bodyScroll: true})
-    // document.body.style.overflow = ''
-  }
-
-  getHelp = () => {
-    this.setState({editorToast: false})
-    this.setState({editorToast: true})
-    setTimeout(() => {
-      this.setState({editorToast: false})
-    }, 100)
-  }
 
   // Check if a user is already logged in. Show the login modal if they aren't.
   handleSubmit = () => {
