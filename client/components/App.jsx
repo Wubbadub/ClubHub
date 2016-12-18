@@ -9,16 +9,6 @@ import Splash from 'pages/Splash'
 import Editor from 'pages/editor/Editor'
 import Site from 'pages/site/Site'
 
-// for now convert team object data to array
-const adaptLegacyData = (data) => {
-  if (!Array.isArray(data.sections.team)) {
-    data.sections.team = {members: Object.keys(data.sections.team).map((k) => {
-      return data.sections.team[k]
-    })}
-    return data
-  }
-}
-
 // Legacy support for old bookmarks using "siteId.subhost/edit"
 class EditorRedirect extends PureComponent {
   render() {
@@ -115,7 +105,7 @@ export default class App extends PureComponent{
     )
     return Promise.resolve(fetch(request).then((response) => {
       return response.json().then((content) => {
-        return adaptLegacyData(content)
+        return content
       })
     }))
   }
