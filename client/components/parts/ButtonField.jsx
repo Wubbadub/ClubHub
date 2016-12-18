@@ -90,7 +90,7 @@ export default class ButtonField extends Component{
   }
 
   removeButton = () => {
-    this.props.removeElement(this.props.value)
+    this.props.removeElement(this.props.index)
   }
 
   render(){

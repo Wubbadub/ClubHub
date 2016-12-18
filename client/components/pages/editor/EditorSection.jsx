@@ -30,11 +30,9 @@ export default class EditorSection extends Component{
     this.props.setData(this.props.section, newData)
   }
 
-  removeElement = (key, arrayName) => {
+  removeElement = (index, arrayName) => {
     // deep copy section data
     const newData = Object.assign({}, this.props.data)
-    // get index of element to remove
-    const index = newData[arrayName].indexOf(key)
     // splice out element if it exists
     if (index > -1) newData[arrayName].splice(index, 1)
     // call setData with new data
