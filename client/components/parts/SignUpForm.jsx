@@ -50,7 +50,7 @@ export default class SignUpForm extends PureComponent {
       this.setState({page: p + 1})
     } else {
       this.setState({loading: true})
-      fetch(`api/newsite/${this.state.clubSiteInput}`, {
+      fetch(`http://${Config.server}/api/newsite/${this.state.clubSiteInput}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -62,7 +62,7 @@ export default class SignUpForm extends PureComponent {
         })
       }).then(() => {
         const request = new Request(
-          `api/site/${this.state.clubSiteInput}`, {
+          `http://${Config.server}/api/site/${this.state.clubSiteInput}`, {
             credentials: 'include'
           }
         )
@@ -89,7 +89,7 @@ export default class SignUpForm extends PureComponent {
           site.sections.meeting.day = this.state.clubDayInput
           site.sections.meeting.place = this.state.clubLocationInput
 
-          fetch(`api/site/${this.state.clubSiteInput}`, {
+          fetch(`http://${Config.server}/api/site/${this.state.clubSiteInput}`, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -97,7 +97,7 @@ export default class SignUpForm extends PureComponent {
             },
             credentials: 'include',
             body: JSON.stringify(site)
-          }).then(() => { window.location.assign(`http://${window.location.host}/edit/${this.state.clubSiteInput}.${this.props.hostUrl}`) })
+          }).then(() => { window.location.assign(`http://${Config.host}/edit/${this.state.clubSiteInput}.${this.props.hostUrl}`) })
         })))
       })
     }
@@ -132,7 +132,7 @@ export default class SignUpForm extends PureComponent {
     else if (!/^[a-zA-Z0-9-]+$/.test(site)) return callback('invalid')
 
     this.timer = setTimeout(function() {
-      Promise.resolve(fetch(`api/site_exists/${self.state.clubSiteInput}`, {
+      Promise.resolve(fetch(`http://${Config.server}/api/site_exists/${self.state.clubSiteInput}`, {
         method: 'GET',
         credentials: 'include'
       })).then((res) => {
