@@ -13,7 +13,6 @@ import Site from 'pages/site/Site'
 // for now convert team object data to array
 const adaptLegacyData = (data) => {
   if (!Array.isArray(data.sections.team)) {
-    console.log('meeting team is and object')
     data.sections.team = {members: Object.keys(data.sections.team).map((k) => {
       return data.sections.team[k]
     })}
