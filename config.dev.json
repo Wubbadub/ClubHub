@@ -1,12 +1,10 @@
 {
     "host": "tryclubhub.com.localhost:8000",
-    "server": "tryclubhub.com",
+    "server": "tryclubhub.com:8080",
     "subhosts": [
         "uvic.club.localhost:8000"
     ],
-    "cookie_path": [
-        ".uvic.club.localhost"
-    ],
     "unsplash_client_id": "ef9e27a50e4d36d08c24bb35f362974c36420854e6924ad0e4b79c4c6dd8b041",
+    "google_maps_client_id": "AIzaSyDsSOODUekhjT2z-6fBVJ-_3HltKbnKfy4",
     "google_client_id": "501796428781-uolre6ch61rk31p0gc9tgcqdcv3n22ar.apps.googleusercontent.com"
 }

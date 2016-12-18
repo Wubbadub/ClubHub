@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import Icon from 'parts/Icon'
+import Iframe from 'react-iframe'
 
-const map = require('img/map.png')
+import Config from 'Config'
+
+import Icon from 'parts/Icon'
 
 export default class Meeting extends Component{
   constructor(props){
@@ -22,12 +24,22 @@ export default class Meeting extends Component{
                   <Icon icon="clock"/>&nbsp;
                   {this.props.data.day} at {this.props.data.time}
               </p>
+              {this.props.data.place ?
               <p className="stats">
                   <Icon icon="placepin"/>&nbsp;
                   {this.props.data.place}
               </p>
+              : null}
           </div>
-          <div className="main-container-img" style={{backgroundImage: `url(${map})`}}></div>
+          {this.props.data.place ?
+          <div className="meeting-map">
+            <div className="maps-iframe">
+              <Iframe
+                url={`https://www.google.com/maps/embed/v1/place?key=${Config.google_maps_client_id}&q=${this.props.data.place.replace(' ', '+')}`}
+                width="100%" height="100%" frameborder="0"/>
+              </div>
+          </div>
+          : null}
       </section>
     )
   }

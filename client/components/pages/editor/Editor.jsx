@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
 import classNames from 'classnames'
-import cookie from 'react-cookie'
 
 import Config from 'Config'
 import Icon from 'parts/Icon'
@@ -67,23 +66,23 @@ export default class Editor extends Component {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'authorization': cookie.load('authorization'),
-        'Temporary-Key': cookie.load('Temporary-Key')
+        'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify(this.state.site)
     }).then((res) => {
       if (res.ok) this.setState({dirtyBit: false})
 
       // TODO: Replace this with a button or checkbox or some other intuitive method instead of forcing the site active on every save
+      // NOTE: This will get a 403 response if they're only using a Temporary-Key, that is to say, the site won't become active
+      // until they log in (To be resolved by a future commit)
       fetch(`http://${Config.server}/api/active/${this.props.siteId}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'authorization': cookie.load('authorization'),
-          'Temporary-Key': cookie.load('Temporary-Key')
+          'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({active: true})
       })
     })
@@ -146,7 +145,7 @@ export default class Editor extends Component {
               </div>
             </div>
             <div className="editor-footer">
-              <Link className={classNames('btn', 'btn-link')} to={`/`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
+              <Link className={classNames('btn', 'btn-link')} to={`../preview/${this.props.siteId}`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</Link>
               {(() => {
                 if (this.state.dirtyBit) {
                   return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save')} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
