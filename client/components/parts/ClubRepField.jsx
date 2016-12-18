@@ -1,4 +1,7 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
+
+import Icon from 'parts/Icon'
 
 export default class ClubRepField extends Component{
   constructor(props){
@@ -7,7 +10,7 @@ export default class ClubRepField extends Component{
 
   static propTypes = {
     label: PropTypes.string,
-    name: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
     data: PropTypes.shape({
       name: PropTypes.string,
       position: PropTypes.string,
@@ -21,17 +24,23 @@ export default class ClubRepField extends Component{
     const field = e.target.dataset.kind
     const val = this.props.data
     val[field] = e.target.value
-    this.props.onChange(this.props.name, val)
+    this.props.onChange(this.props.index, val)
   }
 
   removeMember = () => {
-    this.props.removeElement(this.props.name, true)
+    this.props.removeElement(this.props.index)
   }
 
   render(){
     return (
       <div className="form-group">
-        <label className="form-label">{this.props.label}</label>
+        <div className="form-label">
+          <label>{this.props.label}</label>
+          &nbsp;
+          <button className={classNames('btn', 'btn-link', 'btn-sm')} type="button" onClick={this.removeMember}>
+            <Icon icon="cross_mark" /> Remove
+          </button>
+        </div>
         <div className="form-border">
           <div className="form-group">
             <label className="form-label">Name</label>

@@ -28,13 +28,12 @@ export default class Hero extends Component{
     this.props.setData('hero', d)
   }
 
-  addHeroLink = () => {
-    const newData = Object.assign({}, this.props.data.buttons[this.props.data.buttons.length-1])
-    this.props.addElement(null, newData, false, 'buttons')
+  addHeroButton = () => {
+    this.props.addElement('buttons')
   }
 
-  removeElementSpecial = (key, isObject) => {
-    this.props.removeElement(key, isObject, 'buttons')
+  removeHeroButton = (key) => {
+    this.props.removeElement(key, 'buttons')
   }
 
   render(){
@@ -48,15 +47,15 @@ export default class Hero extends Component{
             return (
               <ButtonField label={`Button #${i+1}`}
                            onChange={this.handleChange}
-                           removeElement={this.removeElementSpecial}
+                           removeElement={this.removeHeroButton}
                            value={d} name="buttons" index={i}
-                           key={this.props.data.buttons.indexOf(d)} />
+                           key={i} />
             )
           })
         }
         <button type="button"
           className={classNames('btn', 'btn-default', 'btn-block')}
-          onClick={this.addHeroLink}>
+          onClick={this.addHeroButton}>
           <span>
             <Icon icon="plus" size={1} /> Add a Button
           </span>

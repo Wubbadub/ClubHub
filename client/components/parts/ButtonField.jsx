@@ -10,7 +10,7 @@ export default class ButtonField extends Component{
 
   static propTypes = () => {
     return {
-      label: PropTypes.string,
+      label: PropTypes.string.isRequired,
       placeholder: PropTypes.string,
       name: PropTypes.string.isRequired,
       index: PropTypes.string.isRequired,
@@ -90,7 +90,7 @@ export default class ButtonField extends Component{
   }
 
   removeButton = () => {
-    this.props.removeElement(this.props.value, false)
+    this.props.removeElement(this.props.index)
   }
 
   render(){

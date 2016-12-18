@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 
+import Icon from 'parts/Icon'
 import ClubRepField from 'parts/ClubRepField'
 
 export default class Team extends Component{
@@ -22,34 +24,38 @@ export default class Team extends Component{
     this.props.setData('team', d)
   }
 
-  addTeamMember = () => {
-    let max = 0
-    Object.keys(this.props.data).forEach((k) => {
-      const cur = `${k.replace(/[^\d]*/, '')}`
-      if (cur > max) max = cur
-    })
-    const name = `person${+max+1}`
-    const copy = Object.assign({}, this.props.data[`person${+max}`])
-    this.props.addElement(name, copy, true)
+  addMember = () => {
+    this.props.addElement('members')
+  }
+
+  removeMember = (key) => {
+    this.props.removeElement(key, 'members')
   }
 
   render(){
     return (
       <form className="club-reps">
         {
-          Object.keys(this.props.data).map((person) => {
+          this.props.data.members.map((d, i) => {
             return (
-              <div key={person} className="form-group" >
+              <div key={i} className="form-group" >
                 <ClubRepField label="Club Rep"
                               onChange={this.handleChange}
-                              data={this.props.data[person]}
-                              name={person}
-                              removeElement={this.props.removeElement} />
+                              removeElement={this.removeMember}
+                              data={d} index={i}
+                              />
               </div>
 
             )
           })
         }
+        <button type="button"
+          className={classNames('btn', 'btn-default', 'btn-block')}
+          onClick={this.addMember}>
+          <span>
+            <Icon icon="plus" size={1} /> Add a Member
+          </span>
+        </button>
       </form>
     )
   }
