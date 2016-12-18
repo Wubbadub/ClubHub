@@ -12,7 +12,7 @@ const pool = new pg.Pool({
 // #######################
 
 // Get the site data given its url
-const getSiteData = function (url, next) {
+exports.getSiteData = function (url, next) {
   pool.query('SELECT site_data FROM clubs WHERE url=$1::text', [url], function (err, res) {
     if (err || res.rowCount === 0) {
       next(null)
@@ -26,7 +26,7 @@ const getSiteData = function (url, next) {
 // Inside a json object in the format:
 // { sites: [ { name: 'Canoe Club', url: 'canoe' }, { name: 'Webdev Club', url: 'webdev' } ] }
 // TODO: Potentially serve more information than just name, url
-const getDirectory = function (subhost, active, next) {
+exports.getDirectory = function (subhost, active, next) {
   pool.query('SELECT name, url from clubs WHERE subhost=$1::text AND active=$2::boolean ORDER BY name', [subhost, active], function (err, res) {
     if (err || res.rowCount === 0)
     {
@@ -43,7 +43,7 @@ const getDirectory = function (subhost, active, next) {
 // Also updates the modified_date timestamp to reflect this update.
 // Passes on true on success, false if the user didn't have access,
 // the site doesn't exist, or there was a database error.
-const updateSite = function(url, userID, temporary_key, site_data, next){  pool.query('SELECT * FROM permissions WHERE user_id = $1::int AND club_id = (SELECT id FROM clubs WHERE url=$2::text)', [userID, url], function(err, res){
+exports.updateSite = function(url, userID, temporary_key, site_data, next){  pool.query('SELECT * FROM permissions WHERE user_id = $1::int AND club_id = (SELECT id FROM clubs WHERE url=$2::text)', [userID, url], function(err, res){
    if(userID != 0 && (err || res.rowCount === 0))
    {
      next(false)
@@ -63,9 +63,9 @@ const updateSite = function(url, userID, temporary_key, site_data, next){  pool.
 // and if it isn't, create the new site.
 // Passes on true on success, false if it already exists
 // or the database encounters an error
-const createNewSite = function(url, name, temporary_key, next){
+exports.createNewSite = function(url, name, temporary_key, next){
   url = url.toLowerCase()
-  checkSiteExists(url, function(exists){
+  exports.checkSiteExists(url, function(exists){
     if(exists){
       next(false)
     } else {
@@ -84,7 +84,7 @@ const createNewSite = function(url, name, temporary_key, next){
 
 // Gives true or false depending on whether the site with the given url is in the database
 // Does not check if it's active.
-const checkSiteExists = function(url, next){
+exports.checkSiteExists = function(url, next){
   pool.query('SELECT site_data FROM clubs WHERE url=$1::text', [url], function (err, res) {
     if (err)
       next(null) // If the db fails, we don't know if the site exists or not
@@ -94,7 +94,7 @@ const checkSiteExists = function(url, next){
 }
 
 // Gives true or false depending on whether the site with the given url is active
-const checkSiteActive = function(url, next) {
+exports.checkSiteActive = function(url, next) {
   pool.query('SELECT active FROM clubs WHERE url=$1::text', [url], function (err, res){
     if (err || res.rowCount === 0)
       next(null)
@@ -105,7 +105,7 @@ const checkSiteActive = function(url, next) {
 
 // Verify the user has owner access to the site and then update its active status if they do
 // ATTENTION: Only user_ids from fresh validated tokens should be passed into this function.
-const updateSiteActive = function(state, url, user_id, next){
+exports.updateSiteActive = function(state, url, user_id, next){
   pool.query('UPDATE clubs SET active=$1::boolean WHERE id=(SELECT club_id FROM permissions WHERE user_id=$2::int AND permission=1 AND club_id=(SELECT id FROM clubs WHERE url=$3::text))', [state, user_id, url], function (err, res){
     if (err) {
       next(null)
@@ -118,7 +118,7 @@ const updateSiteActive = function(state, url, user_id, next){
 }
 
 // Get the temporary key and the age of the site in seconds
-const getSiteAgeAndTemporaryKey = function(url, next){
+exports.getSiteAgeAndTemporaryKey = function(url, next){
   pool.query('SELECT temporary_key, EXTRACT(EPOCH FROM (current_timestamp - creation_date)) AS age FROM clubs WHERE url=$1::text', [url], function (err, res) {
     if (err || res.rowCount === 0)
     {
@@ -129,7 +129,7 @@ const getSiteAgeAndTemporaryKey = function(url, next){
   })
 }
 
-const removeSite = function(url, next) {
+exports.removeSite = function(url, next) {
   pool.query('DELETE FROM clubs WHERE url=$1::text', [url], function (err, res) {
     if (err)
       console.log(err)
@@ -143,22 +143,23 @@ const removeSite = function(url, next) {
 // #######################
 
 // Create a new user (assumed to be verified data in main.js)
-const createUser = function (name, service, user_id, email, next) {
-  pool.query('INSERT INTO users (name, service, user_id, email) VALUES ($1::text, $2::int, $3::text, $4::text)', [name, service, user_id, email], function (err, res) {
+exports.createUser = function (name, service, user_id, email, next) {
+  pool.query('INSERT INTO users (name, service, user_id, email) VALUES ($1::text, $2::int, $3::text, $4::text) RETURNING id', [name, service, user_id, email], function (err, res) {
     if (err) {
       next(false)
     } else {
-      next(true)
+      next(res.rows[0].id)
     }
   })
 }
 
 // Given the service and user_id pair, return the actual database id for the user
-const getUserID = function (service, user_id, next) {
+exports.getUserID = function (service, user_id, next) {
   pool.query('SELECT id FROM users WHERE service=$1::int AND user_id=$2::text', [service, user_id], function (err, res) {
     if (err || res.rowCount === 0) {
       next(null)
     } else {
+      pool.query('UPDATE users SET login_date=now() WHERE id=$1::int', [res.rows[0].id])
       next(res.rows[0].id)
     }
   })
@@ -166,7 +167,7 @@ const getUserID = function (service, user_id, next) {
 
 
 // Get a list of every site the user has permissions on
-const getUserSitePermissions = function (id, next) {
+exports.getUserSitePermissions = function (id, next) {
   pool.query('SELECT clubs.name, clubs.url, permissions.permission FROM clubs JOIN permissions ON permissions.club_id=clubs.id WHERE permissions.user_id=$1::int ORDER BY clubs.name', [id], function (err, res) {
     if (err || res.rowCount === 0)
     {
@@ -180,7 +181,7 @@ const getUserSitePermissions = function (id, next) {
 // Verify the user has owner access to the site and then update the user's permission for
 // that site if they do. A user can modify their own permission downwards this way (Which would be foolish)
 // ATTENTION: Only owner_ids from fresh validated tokens should be passed into this function
-const updateUserPermission = function (owner_id, user_id, url, permission, next) {
+exports.updateUserPermission = function (owner_id, user_id, url, permission, next) {
 
   if (owner_id === 0) // For adding the admin in new site creation
   {
@@ -205,7 +206,7 @@ const updateUserPermission = function (owner_id, user_id, url, permission, next)
 }
 
 // Remove a user's permission entry for a given club, with a given owner attempting removal.
-const removeUserPermission = function (owner_id, user_id, url, permission, next) {
+exports.removeUserPermission = function (owner_id, user_id, url, permission, next) {
   if (owner_id === 0) // For adding the admin in new site creation
   {
     pool.query('DELETE FROM permissions WHERE user_id=$2::int AND club_id=(SELECT id FROM clubs WHERE url=$2::text)', [permission, user_id, url], function (err, res) {
@@ -231,7 +232,7 @@ const removeUserPermission = function (owner_id, user_id, url, permission, next)
 // Get a user's permission level for a given club
 // Returning null if they don't have permissions
 // Also return the club_id for use in future queries
-const getUserPermission = function (user_id, url, next) {
+exports.getUserPermission = function (user_id, url, next) {
   pool.query('SELECT permission, club_id FROM permissions WHERE user_id=$1::int AND club_id=(SELECT id FROM clubs WHERE url=$2::text)', [user_id, url], function (err, res) {
     if (err || res.rowCount === 0) {
       next(null)
@@ -244,7 +245,7 @@ const getUserPermission = function (user_id, url, next) {
 // Add permissions for a user to a club if they didn't already
 // have any permission. Use owner_id 0 for internally adding
 // the first admin or any other methods of adding permissions internally
-const addUserPermission = function (owner_id, user_id, url, permission, next) {
+exports.addUserPermission = function (owner_id, user_id, url, permission, next) {
   if (owner_id === 0) // For adding the admin in new site creation
   {
     pool.query('INSERT INTO permissions VALUES ($1::int, (SELECT id FROM clubs WHERE url=$2::text), $3::int)', [user_id, url, permission], function (err, res) {
@@ -255,7 +256,7 @@ const addUserPermission = function (owner_id, user_id, url, permission, next) {
       }
     })
   }  else {
-    getUserPermission(owner_id, url, function (owner_permission, club_id) {
+    exports.getUserPermission(owner_id, url, function (owner_permission, club_id) {
       if (owner_permission != 1) {
         next("Access Denied")
       } else {
@@ -272,10 +273,6 @@ const addUserPermission = function (owner_id, user_id, url, permission, next) {
 }
 
 // Internal testing only
-const rawQuery = function(query, next){
+exports.rawQuery = function(query, next){
   pool.query(query, next)
 }
-
-module.exports = {checkSiteExists, createNewSite, getSiteData, updateSite, rawQuery, getDirectory, updateSiteActive,
-  updateUserPermission, getUserPermission, addUserPermission, createUser, getUserID, getUserSitePermissions,
-  removeUserPermission, checkSiteActive, getSiteAgeAndTemporaryKey, removeSite}
