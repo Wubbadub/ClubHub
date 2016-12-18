@@ -1,4 +1,7 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
+
+import Icon from 'parts/Icon'
 
 export default class ClubRepField extends Component{
   constructor(props){
@@ -25,13 +28,19 @@ export default class ClubRepField extends Component{
   }
 
   removeMember = () => {
-    this.props.removeElement(this.props.index, true)
+    this.props.removeElement(this.props.data)
   }
 
   render(){
     return (
       <div className="form-group">
-        <label className="form-label">{this.props.label}</label>
+        <div className="form-label">
+          <label>{this.props.label}</label>
+          &nbsp;
+          <button className={classNames('btn', 'btn-link', 'btn-sm')} type="button" onClick={this.removeMember}>
+            <Icon icon="cross_mark" /> Remove
+          </button>
+        </div>
         <div className="form-border">
           <div className="form-group">
             <label className="form-label">Name</label>

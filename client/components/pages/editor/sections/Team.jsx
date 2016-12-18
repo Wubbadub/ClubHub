@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react'
+import classNames from 'classnames'
 
+import Icon from 'parts/Icon'
 import ClubRepField from 'parts/ClubRepField'
 
 export default class Team extends Component{
@@ -39,13 +41,21 @@ export default class Team extends Component{
               <div key={i} className="form-group" >
                 <ClubRepField label="Club Rep"
                               onChange={this.handleChange}
+                              removeElement={this.removeMember}
                               data={d} index={i}
-                              removeElement={this.props.removeElement} />
+                              />
               </div>
 
             )
           })
         }
+        <button type="button"
+          className={classNames('btn', 'btn-default', 'btn-block')}
+          onClick={this.addMember}>
+          <span>
+            <Icon icon="plus" size={1} /> Add a Member
+          </span>
+        </button>
       </form>
     )
   }
