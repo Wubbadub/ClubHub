@@ -18,21 +18,23 @@
       "time": ""
     },
     "team": {
-      "person1": {
-        "name": "Christopher Plummer",
-        "position": "Prez",
-        "email": "chrissy_plum@uvic.ca"
-      },
-      "person2": {
-        "name": "Michael Scarn",
-        "position": "Regional Manager",
-        "email": "michael@uvic.ca"
-      },
-      "person3": {
-        "name": "Dwight Schrute",
-        "position": "Assistant (to the) Regional Manager",
-        "email": "turnupwithturnips@uvic.ca"
-      }
+      "members": [
+        {
+          "name": "Christopher Plummer",
+          "position": "Prez",
+          "email": "chrissy_plum@uvic.ca"
+        },
+        {
+          "name": "Michael Scarn",
+          "position": "Regional Manager",
+          "email": "michael@uvic.ca"
+        },
+        {
+          "name": "Dwight Schrute",
+          "position": "Assistant (to the) Regional Manager",
+          "email": "turnupwithturnips@uvic.ca"
+        }
+      ]
     }
   }
 }
