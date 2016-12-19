@@ -42,23 +42,24 @@ export default class Hero extends Component {
     }
 
     const {editor, data} = this.props
+    const edit = editor !== null
     return (
       <div className="hero-container">
         <div className="hero-image" style={{backgroundImage: `url(${heroImage})`}}>
         </div>
         <div className="hero-content center">
           <h1>
-            <Editable form={<TextForm label="Title" editor={editor} section="hero" name="title"/>}>
+            <Editable edit={edit} form={<TextForm label="Title" editor={editor} section="hero" name="title"/>}>
               {data.title ? data.title : '\u00a0'}
             </Editable>
           </h1>
           <div className="hero-description">
-            <Editable form={<TextForm label="Description" editor={editor} section="hero" name="description" long={true}/>}>
+            <Editable edit={edit} form={<TextForm label="Description" editor={editor} section="hero" name="description" long={true}/>}>
               <p>{data.description ? data.description : '\u00a0'}</p>
             </Editable>
           </div>
           <div className="hero-buttons">
-            <Editable form={<LinksForm label="Buttons" editor={editor} section="hero" name="buttons"/>}>
+            <Editable edit={edit} form={<LinksForm label="Buttons" editor={editor} section="hero" name="buttons"/>} place="left">
             {(this.props.data.buttons).map((b, i) => {
               return (
                 <a target="blank" key={i} href={b.href}>{this.getButtonIcon(b.type)}&nbsp;&nbsp;{b.text}</a>

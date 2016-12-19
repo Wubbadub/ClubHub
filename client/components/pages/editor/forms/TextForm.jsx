@@ -9,7 +9,7 @@ export default class TextForm extends Component{
   }
 
   static propTypes = {
-    editor: PropTypes.object.isRequired,
+    editor: PropTypes.object,
     section: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string,

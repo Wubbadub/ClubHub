@@ -11,7 +11,7 @@ export default class LinksForm extends Component{
   }
 
   static propTypes = {
-    editor: PropTypes.object.isRequired,
+    editor: PropTypes.object,
     section: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string
