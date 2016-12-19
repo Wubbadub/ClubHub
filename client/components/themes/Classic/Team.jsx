@@ -28,7 +28,7 @@ export default class Team extends Component{
                   return (
                     <div key={i} className="person">
                       <span>{member.name} - {member.position}</span>
-                      <a href="#" target="_blank">{member.email}</a>
+                      <a href={`mailto:${member.email}`} target="_blank">{member.email}</a>
                     </div>
                   )
                 })
