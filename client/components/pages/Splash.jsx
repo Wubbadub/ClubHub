@@ -17,7 +17,8 @@ export default class Splash extends PureComponent {
     this.state = {
       signup: false,
       signedIn: false,
-      userData: null
+      userData: null,
+      sites: []
     }
   }
 
@@ -31,10 +32,21 @@ export default class Splash extends PureComponent {
 
   signIn = (userData) => {
     this.setState({signedIn: true, userData})
+
+    const request = new Request(
+      `http://${Config.server}/api/permissions`,
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    )
+    fetch(request)
+      .then((response) => response.json())
+      .then((content) => { this.setState({sites: content.sites}) })
   }
 
   signOut = () => {
-    this.setState({signedIn: false, userData: null})
+    this.setState({signedIn: false, userData: null, sites: [] })
   }
 
   setUserData = (response) => {
@@ -74,9 +86,11 @@ export default class Splash extends PureComponent {
                         <div className="onecta dropdown">
                           <a className="ctas-button" href="#">Edit<Icon icon="chevron_down"/></a>
                           <div className="dropdown-menu">
-                            <a href="#">The Art Hive</a>
-                            <a href="#">Formula One</a>
-                            <a href="#">The UVic Dogwood Initiative</a>
+                            {
+                              this.state.sites.map((s, i) => {
+                                return <a href={s.url} key={i}>{s.name}</a>
+                              })
+                            }
                           </div>
                         </div>
                         <div className="onecta"><a className="ctas-button create-new-site" href="#" onClick={this.showSignUp}>+ Create New Site</a></div>
