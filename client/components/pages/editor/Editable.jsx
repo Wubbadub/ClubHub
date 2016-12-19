@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Popover from 'react-popover'
+import classNames from 'classnames'
 
 export default class Editable extends Component{
   constructor(props){
@@ -29,7 +30,7 @@ export default class Editable extends Component{
     const {popover} = this.state
     return (
       <Popover className="editable-popover" isOpen={popover} preferPlace="below" body={form} onOuterAction={this.hidePopover}>
-          <div className="editable" onClick={this.togglePopover}>
+          <div className={classNames('editable', {'editing': popover})} onClick={this.togglePopover}>
             {children}
           </div>
       </Popover>
