@@ -13,11 +13,8 @@ export default class Editor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      sectionStates: this.makeSiteSections(),
-      showEditorBar: false,
       dirtyBit: false,
       site: this.props.site,
-      bodyScroll: true,
       showLoginModal: false
     }
   }
@@ -25,28 +22,6 @@ export default class Editor extends Component {
   static propTypes = {
     site: PropTypes.object,
     siteId: PropTypes.string
-  }
-
-  makeSiteSections = () => {
-    const sections = {}
-    for (const sectionTitle in this.props.site.sections) {
-      sections[sectionTitle] = false
-    }
-    return sections
-  }
-
-  toggleEditorBar = () => {
-    this.setState({showEditorBar: !this.state.showEditorBar})
-  }
-
-  toggleSection = (s) => {
-    const sections = this.state.sectionStates
-    if (sections[s] === true) sections[s] = !sections[s]
-    else {
-      Object.keys(sections).forEach((section) => { sections[section] = false })
-      sections[s] = true
-    }
-    this.setState({sectionStates: sections})
   }
 
   setData = (section, data) => {
@@ -124,7 +99,7 @@ export default class Editor extends Component {
             })()}
           </div>
         </div>
-        <Site site={this.state.site} />
+        <Site site={this.state.site} editor={({setData: this.setData})} />
       </div>
     )
   }

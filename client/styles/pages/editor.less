@@ -15,8 +15,6 @@
       }
   }
 
-
-
   .editor-toolbox {
     .shadow;
 
@@ -28,33 +26,6 @@
     left: @layout-gutter;
     position: fixed;
     z-index: 100;
-
-    .toggle {
-      .btn;
-      border-color: darken(@core-color, 5%);
-      border-left-color: @core-color;
-      border-radius: 0 @border-base @border-base 0;
-
-      color: @core-light-color;
-      background-color: @core-color;
-      position: absolute;
-      padding: 1rem 0.7rem;
-      height: 4rem;
-      width: 3rem;
-      right: -3rem + .1rem;
-      top: 1.1rem;
-
-      &:hover {
-        border-left-color: darken(@core-color, 5%);
-        background-color: darken(@core-color, 5%);
-      }
-
-      .icon {
-        display: inline-block;
-        transition: transform 0.5s;
-        transform: rotate(0deg);
-      }
-    }
     .editor-header {
       width: 100%;
 
@@ -109,6 +80,12 @@
           border-color: lighten(@core-meta-color, 15%);
         }
       }
+    }
+  }
+
+  .site {
+    .editable {
+      border: .3rem solid @core-color;
     }
   }
 }
