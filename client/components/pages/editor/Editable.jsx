@@ -1,55 +1,38 @@
 import React, {Component, PropTypes} from 'react'
-import classNames from 'classnames'
-
-import * as defaults from './defaults'
-import * as Sections from './sections'
+import Popover from 'react-popover'
 
 export default class Editable extends Component{
   constructor(props){
     super(props)
+    this.state = {
+      popover: false
+    }
   }
 
   static propTypes = {
-    section: PropTypes.string.isRequired,
-    form: PropTypes.string.isRequired,
-    data: PropTypes.object.isRequired,
-    setData: PropTypes.func.isRequired,
-    active: PropTypes.bool
+    form: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired
   }
 
   static defaultProps = {
-    active: false
+    active: false,
+    editor: null
   }
 
-  addElement = (arrayName) => {
-    // deep copy section data
-    const newData = Object.assign({}, this.props.data)
-    // push new default data item onto list
-    newData[arrayName].push(Object.assign({}, defaults[this.props.section]))
-    // call setData with new data
-    this.props.setData(this.props.section, newData)
-  }
+  togglePopover = () => { this.setState({popover: !this.state.popover}) }
 
-  removeElement = (index, arrayName) => {
-    // deep copy section data
-    const newData = Object.assign({}, this.props.data)
-    // splice out element if it exists
-    if (index > -1) newData[arrayName].splice(index, 1)
-    // call setData with new data
-    this.props.setData(this.props.section, newData)
-  }
+  showPopover = () => { this.setState({popover: true}) }
+  hidePopover = () => { this.setState({popover: false}) }
 
   render(){
-    if (!Sections[this.props.section]) return null
-    const Section = Sections[this.props.section]
+    const {children, form} = this.props
+    const {popover} = this.state
     return (
-      <div className={classNames('accordion-section', {'active': this.props.active})}>
-        <div className="accordion-content">
-          <div>
-            <Section data={this.props.data} setData={this.props.setData} addElement={this.addElement} removeElement={this.removeElement}/>
+      <Popover className="editable-popover" isOpen={popover} preferPlace="below" body={form} onOuterAction={this.hidePopover}>
+          <div className="editable" onClick={this.togglePopover}>
+            {children}
           </div>
-        </div>
-      </div>
+      </Popover>
     )
   }
 }

@@ -84,8 +84,49 @@
   }
 
   .site {
+
     .editable {
+      width: 100%;
+      height: 100%;
       border: .3rem solid @core-color;
+      border-radius: 2*@border-base;
+      cursor: pointer;
     }
+  }
+}
+
+.editable-popover {
+  .shadow;
+
+  overflow: hidden;
+  border-radius: @border-base;
+  background: @core-light-color;
+
+  min-width: 24rem;
+
+  .editable-form {
+    min-width: 32rem;
+
+    .editable-form-header {
+      border: 0.1em solid darken(@core-color, 5%);
+      border-radius: @border-base @border-base 0 0;
+      background-color: @core-color;
+
+      color: @core-light-color;
+      font-weight: bold;
+
+      padding: @layout-gutter/4 @layout-gutter/2;
+    }
+    .editable-form-content {
+      border: .1rem solid @core-border-color;
+      border-top: none;
+      border-radius: 0 0 @border-base @border-base;
+
+      padding: @layout-gutter/2;
+    }
+  }
+
+  .Popover-tip {
+    display: none;
   }
 }

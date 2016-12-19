@@ -9,6 +9,8 @@ import Brand from 'parts/Brand'
 import Site from 'pages/site/Site'
 import LoginModal from 'parts/LoginModal'
 
+import * as defaults from './defaults'
+
 export default class Editor extends Component {
   constructor(props) {
     super(props)
@@ -28,6 +30,24 @@ export default class Editor extends Component {
     const s = Object.assign({}, this.state.site)
     s.sections[section] = data
     this.setState({site: s, dirtyBit: true})
+  }
+
+  addElement = (section, arrayName) => {
+    // deep copy section data
+    const newData = Object.assign({}, this.state.site)
+    // push new default data item onto list
+    newData[arrayName].push(Object.assign({}, defaults[section]))
+    // call setData with new data
+    this.setData(section, newData)
+  }
+
+  removeElement = (section, index, arrayName) => {
+    // deep copy section data
+    const newData = Object.assign({}, this.state.site)
+    // splice out element if it exists
+    if (index > -1) newData[arrayName].splice(index, 1)
+    // call setData with new data
+    this.setData(section, newData)
   }
 
   sendSiteData = (response) => {
@@ -78,8 +98,14 @@ export default class Editor extends Component {
   }
 
   render() {
+    const editor = {
+      data: this.state.site,
+      setData: this.setData,
+      addElement: this.addElement,
+      removeElement: this.removeElement
+    }
     return (
-      <div className="editor container">
+      <div className="editor">
         <LoginModal active={this.state.showLoginModal} close={this.hideLogin} callback={this.sendSiteData}/>
         <div className="editor-toolbox" onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
           <div className="editor-header">
@@ -99,7 +125,7 @@ export default class Editor extends Component {
             })()}
           </div>
         </div>
-        <Site site={this.state.site} editor={({setData: this.setData})} />
+        <Site site={this.state.site} editor={editor} />
       </div>
     )
   }
