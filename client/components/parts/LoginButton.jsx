@@ -33,7 +33,6 @@ export default class LoginButton extends PureComponent {
       localStorage.removeItem('LoginButton')
       cookie.remove('authorization')
     }
-    console.log(this.state.loginData)
     this.props.callback(this.state.loginData)
   }
 

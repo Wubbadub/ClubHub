@@ -65,7 +65,6 @@ export default class Splash extends PureComponent {
                 <a><Brand/></a>
                 <div>
                   <LoginButton className="nav-link" callback={this.setUserData}>Log In</LoginButton>
-                  {/*<a className="nav-link" href="#" onClick={this.showSignUp}>Sign up</a>*/}
                   <a className="nav-link" target="_blank" href={`mailto:contact@${Config.host}`}>Contact</a>
                 </div>
               </div>
@@ -84,11 +83,11 @@ export default class Splash extends PureComponent {
                     ) : (
                       <div>
                         <div className="onecta dropdown">
-                          <a className="ctas-button" href="#">Edit<Icon icon="chevron_down"/></a>
+                          <a className="ctas-button">Edit<Icon icon="chevron_down"/></a>
                           <div className="dropdown-menu">
                             {
                               this.state.sites.map((s, i) => {
-                                return <a href={s.url} key={i}>{s.name}</a>
+                                return <a href={`/edit/${s.url}`} key={i}>{s.name}</a>
                               })
                             }
                           </div>
