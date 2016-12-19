@@ -38,38 +38,38 @@ export default class Splash extends PureComponent {
         <SignUp active={this.state.signup} close={this.hideSignUp}/>
         <div className="template">
           <div className="header">
-              <div className="container-lrg flex">
-                <div className="col-4">
-                  <a><Brand/></a>
-                  <div>
-                    <LoginButton className="nav-link">Log In</LoginButton>
-                    <a className="nav-link" href="#" onClick={this.showSignUp}>Sign up</a>
-                    <a className="nav-link" target="_blank" href={`mailto:contact@${Config.host}`}>Contact</a>
-                  </div>
+            <div className="container-lrg flex">
+              <div className="col-4">
+                <a><Brand/></a>
+                <div>
+                  <LoginButton className="nav-link">Log In</LoginButton>
+                  <a className="nav-link" href="#" onClick={this.showSignUp}>Sign up</a>
+                  <a className="nav-link" target="_blank" href={`mailto:contact@${Config.host}`}>Contact</a>
                 </div>
-                <div className="col-8">
-                  <h1 className="header-heading">You take ten minutes to tell us about your university club. We give you a website.</h1>
-                  <div className="ctas">
-                    <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>
+              </div>
+              <div className="col-8">
+                <h1 className="header-heading">You take ten minutes to tell us about your university club. We give you a website.</h1>
+                <div className="ctas">
+                  <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>
+                </div>
+              </div>
+            </div>
+            <div className="container-lrg">
+              <div className="col-12">
+                <div className="header-images">
+                  <div className="iphone">
+                    <div className="mask">
+                      <img className="mask-img" src={mobileview}/>
+                    </div>
+                  </div>
+                  <div className="browser">
+                    <div className="mask">
+                      <img className="mask-img" src={browserview}/>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="container-lrg">
-                <div className="col-12">
-                  <div className="header-images">
-                          <div className="iphone">
-                            <div className="mask">
-                              <img className="mask-img" src={mobileview}/>
-                            </div>
-                          </div>
-                          <div className="browser">
-                            <div className="mask">
-                              <img className="mask-img" src={browserview}/>
-                            </div>
-                          </div>
-                  </div>
-                </div>
-              </div>
+            </div>
           </div>
           <section>
             <ul>
