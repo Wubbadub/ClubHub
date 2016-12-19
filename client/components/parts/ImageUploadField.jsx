@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import classNames from 'classnames'
 
 export default class ImageUploadField extends Component {
   constructor(props) {
@@ -8,12 +7,8 @@ export default class ImageUploadField extends Component {
 
   static propTypes = {
     updateImage: PropTypes.func.isRequired,
-    placeholder: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     label: PropTypes.string
-  }
-
-  static defaultProps = {
-    isActive: true
   }
 
   handleChange = (e) => {
@@ -23,7 +18,7 @@ export default class ImageUploadField extends Component {
   render() {
     return (
       <div className="image-upload-field">
-        <label className={classNames('form-label')}>{this.props.label}</label>
+        <label className="form-label">{this.props.label}</label>
         <input className="form-input" type="url" placeholder={this.props.placeholder} onChange={this.handleChange} />
       </div>
     )

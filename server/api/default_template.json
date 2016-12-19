@@ -8,11 +8,11 @@
     "hero": {
       "component": "Hero",
       "title": "Enter your club title",
-      "description": "↖️ Enter your club description over in the Editor.",
+      "description": "Enter your club description.",
       "buttons": []
     },
     "meeting": {
-      "description": "↖️ Enter your meeting description over in the Editor.",
+      "description": "Enter your meeting description.",
       "place": "",
       "day": "",
       "time": ""
