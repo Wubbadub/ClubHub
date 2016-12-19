@@ -51,7 +51,11 @@ export default class Hero extends Component {
               {data.title ? data.title : '\u00a0'}
             </Editable>
           </h1>
-          <p>{this.props.data.description}</p>
+          <div className="hero-description">
+            <Editable form={<TextForm label="Description" editor={editor} section="hero" name="description" long={true}/>}>
+              <p>{data.description ? data.description : '\u00a0'}</p>
+            </Editable>
+          </div>
           {(this.props.data.buttons).map((b, i) => {
             return (
               <a target="blank" key={i} href={b.href}>{this.getButtonIcon(b.type)}&nbsp;&nbsp;{b.text}</a>

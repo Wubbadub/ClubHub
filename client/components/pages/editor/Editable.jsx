@@ -12,12 +12,12 @@ export default class Editable extends Component{
 
   static propTypes = {
     form: PropTypes.node.isRequired,
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    display: PropTypes.string
   }
 
   static defaultProps = {
-    active: false,
-    editor: null
+    display: 'block'
   }
 
   togglePopover = () => { this.setState({popover: !this.state.popover}) }
@@ -26,11 +26,11 @@ export default class Editable extends Component{
   hidePopover = () => { this.setState({popover: false}) }
 
   render(){
-    const {children, form} = this.props
+    const {children, display, form} = this.props
     const {popover} = this.state
     return (
       <Popover className="editable-popover" isOpen={popover} preferPlace="below" body={form} onOuterAction={this.hidePopover}>
-          <div className={classNames('editable', {'editing': popover})} onClick={this.togglePopover}>
+          <div className={classNames('editable', display, {'editing': popover})} onClick={this.togglePopover}>
             {children}
           </div>
       </Popover>
