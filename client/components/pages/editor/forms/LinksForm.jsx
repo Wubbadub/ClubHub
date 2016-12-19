@@ -14,7 +14,8 @@ export default class LinksForm extends Component{
     editor: PropTypes.object,
     section: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    label: PropTypes.string
+    label: PropTypes.string,
+    types: PropTypes.array
   }
 
   static defaultProps = {
@@ -39,7 +40,7 @@ export default class LinksForm extends Component{
 
 
   render(){
-    const {editor, name, label, section} = this.props
+    const {editor, name, label, section, types} = this.props
     const links = editor.data.sections[section][name]
     return (
       <div className="editable-form">
@@ -51,8 +52,9 @@ export default class LinksForm extends Component{
                 return (
                   <ButtonField label={`Button #${i+1}`}
                               onChange={this.handleChange}
+                              types={types}
                               removeElement={this.removeHeroButton}
-                              value={d} name="buttons" index={i}
+                              value={d} name={name} index={i}
                               key={i} />
                 )
               })

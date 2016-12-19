@@ -24,11 +24,11 @@ export default class Classic extends Component{
     const {site, editor} = this.props
     return (
     <div className="theme-classic outer-container">
-      <Header site={site}/>
+      <Header data={site.sections.header} editor={editor}/>
       <Hero data={site.sections.hero} editor={editor}/>
       <div className="main-container">
-        <Meeting data={site.sections.meeting} />
-        <Team data={site.sections.team} />
+        <Meeting data={site.sections.meeting} editor={editor}/>
+        <Team data={site.sections.team} editor={editor}/>
       </div>
       <Footer site={site}/>
     </div>
