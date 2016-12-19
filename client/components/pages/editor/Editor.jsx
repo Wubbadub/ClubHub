@@ -34,7 +34,7 @@ export default class Editor extends Component {
 
   addElement = (section, arrayName) => {
     // deep copy section data
-    const newData = Object.assign({}, this.state.site)
+    const newData = Object.assign({}, this.state.site.sections[section])
     // push new default data item onto list
     newData[arrayName].push(Object.assign({}, defaults[section]))
     // call setData with new data
@@ -43,7 +43,7 @@ export default class Editor extends Component {
 
   removeElement = (section, index, arrayName) => {
     // deep copy section data
-    const newData = Object.assign({}, this.state.site)
+    const newData = Object.assign({}, this.state.site.sections[section])
     // splice out element if it exists
     if (index > -1) newData[arrayName].splice(index, 1)
     // call setData with new data
