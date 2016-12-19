@@ -17,6 +17,7 @@ export default class Editor extends Component {
     this.state = {
       dirtyBit: false,
       site: this.props.site,
+      preview: false,
       showLoginModal: false
     }
   }
@@ -82,7 +83,6 @@ export default class Editor extends Component {
     }
   }
 
-
   // Check if a user is already logged in. Show the login modal if they aren't.
   handleSubmit = () => {
     const auth = cookie.load('authorization')
@@ -97,6 +97,10 @@ export default class Editor extends Component {
     this.setState({showLoginModal: false})
   }
 
+  onPreviewChange = (e) => {
+    this.setState({preview: e.target.checked})
+  }
+
   render() {
     const editor = {
       data: this.state.site,
@@ -105,7 +109,7 @@ export default class Editor extends Component {
       removeElement: this.removeElement
     }
     return (
-      <div className="editor">
+      <div className={classNames('editor', {'editor-preview': this.state.preview})}>
         <LoginModal active={this.state.showLoginModal} close={this.hideLogin} callback={this.sendSiteData}/>
         <div className="editor-toolbox" onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
           <div className="editor-header">
@@ -113,6 +117,14 @@ export default class Editor extends Component {
               <a href={`http://${Config.host}`} target="_blank"><Brand /></a>
               <small>Editor</small>
             </h1>
+          </div>
+          <div className="editor-body">
+            <div className="form-group">
+              <label className="form-switch">
+                <input type="checkbox" checked={this.state.preview} onChange={this.onPreviewChange}/>
+                <i className="form-icon"></i> Preview Mode
+              </label>
+            </div>
           </div>
           <div className="editor-footer">
             <a className={classNames('btn', 'btn-link')} href={`http://${this.props.siteId}.${Config.subhosts[0]}`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</a>

@@ -55,6 +55,12 @@
       }
     }
 
+    .editor-body {
+      border: solid @core-border-color;
+      border-width: 0 0.1em;
+      padding: 0.5*@layout-gutter;
+    }
+
     .editor-footer {
       border-radius: 0 0 @border-base @border-base;
       border: 0.1em solid @core-border-color;
@@ -114,6 +120,7 @@
           opacity: 1;
           content: "Edit";
           font-family: @body-font-family;
+          display: block;
         }
         &:after {
           display: block;
@@ -127,6 +134,21 @@
           opacity: 1;
           content: "Editing";
           font-family: @body-font-family;
+          display: block;
+        }
+      }
+    }
+  }
+  &.editor-preview {
+    .site {
+      .editable {
+        &:hover {
+          &:before, &:after {
+            display: block;
+          }
+        }
+        &:before, &:after {
+          display: none;
         }
       }
     }
