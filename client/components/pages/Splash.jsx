@@ -58,19 +58,31 @@ export default class Splash extends PureComponent {
                 </div>
               </div>
               <div className="col-8">
-                {/*<h1 className="header-heading">You take ten minutes to tell us about your university club. We give you a website.</h1>*/}
-                <h1 className="header-heading">Welcome back Brendon.</h1>
+                <h1 className="header-heading">
+                  {
+                    this.state.signedIn ?
+                      `Welcome back ${this.state.userData.givenName}.` :
+                      `You take ten minutes to tell us about your university club. We give you a website.`
+                  }
+                </h1>
                 <div className="ctas">
-                  {/*<div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>*/}
-                  <div className="onecta dropdown">
-                    <a className="ctas-button" href="#">Edit<Icon icon="chevron_down"/></a>
-                      <div className="dropdown-menu">
-                        <a href="#">The Art Hive</a>
-                        <a href="#">Formula One</a>
-                        <a href="#">The UVic Dogwood Initiative</a>
-                    </div>
-                  </div>
-                  <div className="onecta"><a className="ctas-button create-new-site" href="#">+ Create New Site</a></div>
+                  {
+                    !this.state.signedIn ? (
+                      <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>
+                    ) : (
+                      <div>
+                        <div className="onecta dropdown">
+                          <a className="ctas-button" href="#">Edit<Icon icon="chevron_down"/></a>
+                          <div className="dropdown-menu">
+                            <a href="#">The Art Hive</a>
+                            <a href="#">Formula One</a>
+                            <a href="#">The UVic Dogwood Initiative</a>
+                          </div>
+                        </div>
+                        <div className="onecta"><a className="ctas-button create-new-site" href="#" onClick={this.showSignUp}>+ Create New Site</a></div>
+                      </div>
+                    )
+                  }
                 </div>
               </div>
             </div>
