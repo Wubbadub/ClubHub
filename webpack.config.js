@@ -9,6 +9,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = {
   devtool: 'source-map',
   entry: [
+    'whatwg-fetch',   // Used to support safari as fetch isn't provided in core-js polyfills (https://github.com/zloirock/core-js)
     'babel-polyfill',
     `${__dirname}/client/main.jsx`
   ],
