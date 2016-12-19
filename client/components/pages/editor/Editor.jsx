@@ -7,19 +7,17 @@ import Icon from 'parts/Icon'
 import Brand from 'parts/Brand'
 
 import Site from 'pages/site/Site'
-import EditorSection from 'pages/editor/EditorSection'
 import LoginModal from 'parts/LoginModal'
+
+import * as defaults from './defaults'
 
 export default class Editor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      sectionStates: this.makeSiteSections(),
-      showEditorBar: false,
       dirtyBit: false,
       site: this.props.site,
-      bodyScroll: true,
-      editorToast: true,
+      preview: false,
       showLoginModal: false
     }
   }
@@ -29,38 +27,28 @@ export default class Editor extends Component {
     siteId: PropTypes.string
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({editorToast: false})
-    }, 100)
-  }
-
-  makeSiteSections = () => {
-    const sections = {}
-    for (const sectionTitle in this.props.site.sections) {
-      sections[sectionTitle] = false
-    }
-    return sections
-  }
-
-  toggleEditorBar = () => {
-    this.setState({showEditorBar: !this.state.showEditorBar})
-  }
-
-  toggleSection = (s) => {
-    const sections = this.state.sectionStates
-    if (sections[s] === true) sections[s] = !sections[s]
-    else {
-      Object.keys(sections).forEach((section) => { sections[section] = false })
-      sections[s] = true
-    }
-    this.setState({sectionStates: sections})
-  }
-
   setData = (section, data) => {
     const s = Object.assign({}, this.state.site)
     s.sections[section] = data
     this.setState({site: s, dirtyBit: true})
+  }
+
+  addElement = (section, arrayName) => {
+    // deep copy section data
+    const newData = Object.assign({}, this.state.site.sections[section])
+    // push new default data item onto list
+    newData[arrayName].push(Object.assign({}, defaults[section]))
+    // call setData with new data
+    this.setData(section, newData)
+  }
+
+  removeElement = (section, index, arrayName) => {
+    // deep copy section data
+    const newData = Object.assign({}, this.state.site.sections[section])
+    // splice out element if it exists
+    if (index > -1) newData[arrayName].splice(index, 1)
+    // call setData with new data
+    this.setData(section, newData)
   }
 
   sendSiteData = (response) => {
@@ -95,24 +83,6 @@ export default class Editor extends Component {
     }
   }
 
-  disableBodyScroll = () => {
-    // this.setState({bodyScroll: false})
-    // document.body.style.overflow = 'hidden'
-  }
-
-  enableBodyScroll = () => {
-    // this.setState({bodyScroll: true})
-    // document.body.style.overflow = ''
-  }
-
-  getHelp = () => {
-    this.setState({editorToast: false})
-    this.setState({editorToast: true})
-    setTimeout(() => {
-      this.setState({editorToast: false})
-    }, 100)
-  }
-
   // Check if a user is already logged in. Show the login modal if they aren't.
   handleSubmit = () => {
     const auth = cookie.load('authorization')
@@ -127,60 +97,47 @@ export default class Editor extends Component {
     this.setState({showLoginModal: false})
   }
 
+  onPreviewChange = (e) => {
+    this.setState({preview: e.target.checked})
+  }
+
   render() {
-    const sections = [
-      'hero',
-      'header',
-      'meeting',
-      'team'
-    ]
+    const editor = {
+      data: this.state.site,
+      setData: this.setData,
+      addElement: this.addElement,
+      removeElement: this.removeElement
+    }
     return (
-      <div className="editor container">
+      <div className={classNames('editor', {'editor-preview': this.state.preview})}>
         <LoginModal active={this.state.showLoginModal} close={this.hideLogin} callback={this.sendSiteData}/>
-        <div className="columns">
-          <div className={classNames('editor-bar', 'col-3', {'active': this.state.showEditorBar})} onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
-            <button type="button" className="toggle" onClick={this.toggleEditorBar}><Icon icon="chevron_right" />
-              <div className={classNames('toast', 'toast-primary', 'editor-point', {'hidden': this.state.showEditorBar})}>
-                <span><Icon icon="pen" />&nbsp; Click here to edit your site</span>
-              </div>
-            </button>
-            <div className="editor-header">
-              <h1>
-                <a href={`http://${Config.host}`} target="_blank"><Brand /></a>
-                <small>Editor</small>
-              </h1>
-            </div>
-            <div className="editor-viewbox">
-              <div className="accordion">
-                {sections.map((s) => {
-                  const section = this.state.site.sections[s]
-                  return (
-                    <EditorSection key={s}
-                      section={s}
-                      active={this.state.sectionStates[s]}
-                      toggleSection={this.toggleSection}
-                      data={section}
-                      setData={this.setData}
-                      />
-                  )
-                })}
-              </div>
-            </div>
-            <div className="editor-footer">
-              <a className={classNames('btn', 'btn-link')} href={`http://${this.props.siteId}.${Config.subhosts[0]}`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</a>
-              {(() => {
-                if (this.state.dirtyBit) {
-                  return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save')} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
-                } else {
-                  return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', 'disabled')} ><Icon icon="check"/>&nbsp;&nbsp;Saved</button>
-                }
-              })()}
+        <div className="editor-toolbox" onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
+          <div className="editor-header">
+            <h1>
+              <a href={`http://${Config.host}`} target="_blank"><Brand /></a>
+              <small>Editor</small>
+            </h1>
+          </div>
+          <div className="editor-body">
+            <div className="form-group">
+              <label className="form-switch">
+                <input type="checkbox" checked={this.state.preview} onChange={this.onPreviewChange}/>
+                <i className="form-icon"></i> Preview Mode
+              </label>
             </div>
           </div>
-          <div className="site-preview col-12">
-            <Site site={this.state.site} />
+          <div className="editor-footer">
+            <a className={classNames('btn', 'btn-link')} href={`http://${this.props.siteId}.${Config.subhosts[0]}`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</a>
+            {(() => {
+              if (this.state.dirtyBit) {
+                return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save')} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
+              } else {
+                return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', 'disabled')} ><Icon icon="check"/>&nbsp;&nbsp;Saved</button>
+              }
+            })()}
           </div>
         </div>
+        <Site site={this.state.site} editor={editor} />
       </div>
     )
   }

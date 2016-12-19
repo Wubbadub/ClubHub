@@ -1,6 +1,6 @@
 {
     "host": "tryclubhub.com.localhost:8000",
-    "server": "tryclubhub.com:8080",
+    "server": "tryclubhub.com",
     "subhosts": [
         "uvic.club.localhost:8000"
     ],
