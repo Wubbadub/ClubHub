@@ -28,12 +28,12 @@ export default class LinksForm extends Component{
     this.props.editor.setData(this.props.section, data)
   }
 
-  addHeroButton = () => {
+  addLink = () => {
     const {editor, section, name} = this.props
     editor.addElement(section, name)
   }
 
-  removeHeroButton = (index) => {
+  removeLink = (index) => {
     const {editor, section, name} = this.props
     editor.removeElement(section, index, name)
   }
@@ -53,7 +53,7 @@ export default class LinksForm extends Component{
                   <ButtonField label={`Button #${i+1}`}
                               onChange={this.handleChange}
                               types={types}
-                              removeElement={this.removeHeroButton}
+                              removeElement={this.removeLink}
                               value={d} name={name} index={i}
                               key={i} />
                 )
@@ -61,7 +61,7 @@ export default class LinksForm extends Component{
             }
             <button type="button"
               className={classNames('btn', 'btn-default', 'btn-block')}
-              onClick={this.addHeroButton}>
+              onClick={this.addLink}>
               <span>
                 <Icon icon="plus" size={1} /> Add a Button
               </span>
