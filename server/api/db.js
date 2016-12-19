@@ -6,6 +6,7 @@ const pool = new pg.Pool({
   database: 'clubhub',
   host: 'localhost',
 })
+const crypto = require('crypto')
 
 // #######################
 // #   SITE MANAGEMENT   #
@@ -28,11 +29,34 @@ exports.getSiteData = function (url, next) {
 // TODO: Potentially serve more information than just name, url
 exports.getDirectory = function (subhost, active, next) {
   pool.query('SELECT name, url from clubs WHERE subhost=$1::text AND active=$2::boolean ORDER BY name', [subhost, active], function (err, res) {
-    if (err || res.rowCount === 0)
-    {
+    if (err || res.rowCount === 0) {
       next({sites : []})
     } else {
       next({sites: res.rows})
+    }
+  })
+}
+
+// Return a list of users with permissions for the given url if the user_id provided is one of them or 0
+exports.getSitePermissions = function (subhost, url, user_id, next) {
+  pool.query('SELECT id FROM clubs WHERE subhost=$1::text AND url=$2::text',[subhost, url], function (err, res) {
+    if (err || res.rowCount === 0) {
+      next("Site Not Found")
+    } else {
+      let club_id = res.rows[0].id
+      pool.query('SELECT club_id FROM permissions WHERE permissions.club_id=$1::int AND permissions.user_id=$2::int',[club_id, user_id], function (err, res) {
+        if (user_id != 0 && (err || res.rowCount === 0)) {
+          next("Access Denied")
+        } else {
+          pool.query('SELECT users.id, users.name, permissions.permission FROM users, permissions WHERE permissions.club_id=$1::int AND permissions.user_id=users.id ORDER BY users.id', [club_id], function (err, res) {
+            if (err || res.rowCount === 0) {
+              next("Internal Server Error")
+            } else {
+              next({permissions: res.rows})
+            }
+          })
+        }
+      })
     }
   })
 }
@@ -44,8 +68,7 @@ exports.getDirectory = function (subhost, active, next) {
 // Passes on true on success, false if the user didn't have access,
 // the site doesn't exist, or there was a database error.
 exports.updateSite = function(url, userID, temporary_key, site_data, next){  pool.query('SELECT * FROM permissions WHERE user_id = $1::int AND club_id = (SELECT id FROM clubs WHERE url=$2::text)', [userID, url], function(err, res){
-   if(userID != 0 && (err || res.rowCount === 0))
-   {
+   if(userID != 0 && (err || res.rowCount === 0)) {
      next(false)
    } else {
      // TODO: Handle corrupted (possibly maliciously) data here and/or when loading it
@@ -182,7 +205,6 @@ exports.getUserSitePermissions = function (id, next) {
 // that site if they do. A user can modify their own permission downwards this way (Which would be foolish)
 // ATTENTION: Only owner_ids from fresh validated tokens should be passed into this function
 exports.updateUserPermission = function (owner_id, user_id, url, permission, next) {
-
   if (owner_id === 0) // For adding the admin in new site creation
   {
     pool.query('UPDATE permissions SET permission=$1::int WHERE user_id=$2::int AND club_id=(SELECT id FROM clubs WHERE url=$4::text)', [permission, user_id, url], function (err, res) {
@@ -206,10 +228,10 @@ exports.updateUserPermission = function (owner_id, user_id, url, permission, nex
 }
 
 // Remove a user's permission entry for a given club, with a given owner attempting removal.
-exports.removeUserPermission = function (owner_id, user_id, url, permission, next) {
+exports.removeUserPermission = function (owner_id, user_id, url, next) {
   if (owner_id === 0) // For adding the admin in new site creation
   {
-    pool.query('DELETE FROM permissions WHERE user_id=$2::int AND club_id=(SELECT id FROM clubs WHERE url=$2::text)', [permission, user_id, url], function (err, res) {
+    pool.query('DELETE FROM permissions WHERE user_id=$1::int AND club_id=(SELECT id FROM clubs WHERE url=$2::text)', [user_id, url], function (err, res) {
       if (err) {
         next(null)
       } else {
@@ -217,7 +239,7 @@ exports.removeUserPermission = function (owner_id, user_id, url, permission, nex
       }
     })
   }  else {
-    pool.query('DELETE FROM permissions WHERE user_id=$2::int AND club_id=(SELECT club_id FROM permissions WHERE user_id=$3::int AND permission=1 AND club_id=(SELECT id FROM clubs WHERE url=$4::text))', [permission, user_id, owner_id, url], function (err, res) {
+    pool.query('DELETE FROM permissions WHERE user_id=$1::int AND club_id=(SELECT club_id FROM permissions WHERE user_id=$2::int AND permission=1 AND club_id=(SELECT id FROM clubs WHERE url=$3::text))', [user_id, owner_id, url], function (err, res) {
       if (err) {
         next(null)
       } else if (res.rowCount === 0) {
@@ -270,6 +292,85 @@ exports.addUserPermission = function (owner_id, user_id, url, permission, next) 
       }
     })
   }
+}
+
+// #######################
+// #   PERMISSION KEYS   #
+// #######################
+
+// Create a new permission key for the desired site and permission level
+// Must provide an id that matches an existing owner of the site
+exports.addPermissionKey = function (owner_id, subhost, url, permission, next) {
+  pool.query('SELECT id FROM clubs WHERE subhost=$1::text AND url=$2::text', [subhost, url], function (err, res) {
+    if (err || res.rowCount === 0) {
+      next("Club not found")
+    } else {
+      const club_id = res.rows[0].id
+      pool.query('SELECT club_id FROM permissions WHERE permissions.club_id=$1::int AND permissions.user_id=$2::int', [club_id, owner_id], function (err, res) {
+        if (owner_id != 0 && (err || res.rowCount === 0)) {
+          next("Access Denied")
+        } else {
+          const temporary_key = crypto.randomBytes(16).toString('hex')
+          pool.query('INSERT INTO permission_keys VALUES ($1::text, $2::int, $3::int) RETURNING key', [temporary_key, club_id, permission], function (err, res) {
+            if (err) {
+              console.warn(err)
+              next(false)
+            } else {
+              next(res.rows[0])
+            }
+          })
+        }
+      })
+    }
+  })
+
+}
+
+// Delete a permission key
+exports.removePermissionKey = function(permission_key, next) {
+  pool.query('DELETE FROM permission_keys WHERE key=$1::text', [permission_key], function (err, res) {
+    if (err) {
+      next(false)
+    } else {
+      next(res)
+    }
+  })
+}
+
+// Get all of the unused permission keys for a given site
+exports.getSitePermissionKeys = function(owner_id, subhost, url, next) {
+  pool.query('SELECT id FROM clubs WHERE subhost=$1::text AND url=$2::text', [subhost, url], function (err, res) {
+    if (err || res.rowCount === 0) {
+      next("Club not found")
+    } else {
+      const club_id = res.rows[0].id
+      pool.query('SELECT 1 FROM permissions WHERE permissions.club_id=$1::int AND permissions.user_id=$3::int', [club_id, owner_id], function (err, res) {
+        if (owner_id != 0 && (err || res.rowCount === 0)) {
+          next("Access Denied")
+        } else {
+          pool.query('SELECT key FROM permission_keys WHERE club_id=$1::int', [club_id], function (err, res) {
+            if (err || res.rowCount === 0) {
+              next({keys: []})
+            } else {
+              next({keys: res.rows})
+            }
+          })
+        }
+      })
+    }
+  })
+}
+
+// Given a permission key, returning the matching club_id and permission it grants
+exports.checkPermissionKey = function(permission_key, next) {
+  pool.query('SELECT club_id, permission FROM permission_keys WHERE key=$1::text', [permission_key], function (err, res) {
+    if (err || res.rowCount === 0) {
+      next(false)
+    } else {
+      next(res.rows[0])
+    }
+
+  })
 }
 
 // Internal testing only

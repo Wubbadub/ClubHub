@@ -99,3 +99,25 @@ db.getSiteAgeAndTemporaryKey('josh', function(temporary_key, age) {
 db.getUserSitePermissions(15, function(result) {
   console.log("User 15's Permissions: " + JSON.stringify(result))
 })
+
+db.getSitePermissions('uvic.club', 'test123', 0, (result) => {
+  console.log("User permissions list for test123: " + JSON.stringify(result))
+})
+
+// Permission Key Tests
+
+db.addPermissionKey(0, 'uvic.club', 'test123', 1, (result) => {
+  console.log("Adding permission key for ownership of test123: " + JSON.stringify(result))
+  if (result) {
+    let permission_key = result.key
+    db.getSitePermissionKeys(0, 'uvic.club', 'test123', (result) => {
+      console.log("Getting permission keys for test123: " + JSON.stringify(result))
+      db.checkPermissionKey(permission_key, (result) => {
+        console.log("Checking permission key from test123: " + JSON.stringify(result))
+        db.removePermissionKey(permission_key, (result) => {
+          console.log("Removing permission key from test123: " + JSON.stringify(result))
+        })
+      })
+    })
+  }
+})

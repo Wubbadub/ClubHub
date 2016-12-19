@@ -100,21 +100,24 @@ app.use((req, res, next) => {
 // #######################
 
 // A function to check site's active state (whether public users can see the site)
-app.get('/api/active/*', function(req, res){
-  const url = req.path.substring(req.path.lastIndexOf('/') + 1)
-  db.checkSiteActive(url,function(result){
+app.get('/api/active/:url', function(req, res){
+  db.checkSiteActive(req.params.url ,function(result){
     res.json({'active' : result})
   })
 })
 
 // function to set site active flag
 // Expects a json object with boolean field "active"
-app.post('/api/active/*', function(req, res){
+app.post('/api/active/:url', function(req, res){
   if(req.payload){
-    const url = req.path.substring(req.path.lastIndexOf('/') + 1)
     db.getUserID(C.GOOGLE_SERVICE_ENUM, req.payload.sub, function (id){
-      db.updateSiteActive(req.body.active, url, id, function (result){
-        res.json({'active' : result})
+      db.updateSiteActive(req.body.active, req.params.url, id, function (result){
+        if (result === "Access Denied")
+          res.status(403).json({'error': 'Access Denied'})
+        else if (result === null)
+          res.status(500).end()
+        else
+          res.json({'active' : req.body.active})
       })
     })
   } else {
@@ -127,7 +130,7 @@ app.get('/api/permissions', function(req, res){
   if(req.payload){
     db.getUserID(C.GOOGLE_SERVICE_ENUM, req.payload.sub, function (id){
       if(id){
-        db.getUserSitePermissions(id,function(permissions){
+        db.getUserSitePermissions(id, function(permissions){
           res.json(permissions)
         })
       } else {
@@ -139,11 +142,62 @@ app.get('/api/permissions', function(req, res){
   }
 })
 
+// Returns a list of user permissions for a specific site, if the requester is one of them.
+app.get('/api/site_permissions/:url', function(req, res) {
+  const url = req.params.url
+  if(req.payload){
+    db.getUserID(C.GOOGLE_SERVICE_ENUM, req.payload.sub, function (id){
+      if(id){
+        db.getSitePermissions('uvic.club', url, id, function (sitePermissions) {
+          res.json(sitePermissions)
+        })
+      } else {
+        res.status(403).json({'error': 'User Not Found'})
+      }
+    })
+  } else {
+    res.status(403).json({'error': 'Access Denied'})
+  }
+})
+
+// Set or remove a user's permission for a site
+app.post('/api/permission/:url/:user/:permission', function(req, res) {
+  const sendDenied = () => res.status(403).json({'error': 'Access Denied'})
+
+  if(req.payload){
+    db.getUserID(C.GOOGLE_SERVICE_ENUM, req.payload.sub, function (id) {
+      if (req.params.permission === "0") {
+        db.removeUserPermission(id, req.params.user, req.params.url, function (result) {
+          if (result === null) {
+            res.status(500).end()
+          } else if (result === "Access Denied") {
+            sendDenied()
+          } else {
+            res.end()
+          }
+        })
+      } else {
+        db.updateUserPermission(id, req.params.user, req.params.url, req.params.permission, function(result) {
+          if (result === null) {
+            res.status(500).end()
+          } else if (result === "Access Denied") {
+            sendDenied()
+          } else {
+            res.end()
+          }
+        })
+      }
+    })
+  } else {
+    sendDenied()
+  }
+})
+
 // Returns site data if user has access.
 // Covers all the cases where the site is active,
 // the user is logged in,
 // and if they have a temporary key.
-app.get('/api/site/*', function (req, res) {
+app.get('/api/site/:url', function (req, res) {
   const sendSite = (url) =>
     db.getSiteData(url, function (data) {
       if (data)
@@ -154,7 +208,7 @@ app.get('/api/site/*', function (req, res) {
 
   const sendDenied = () => res.status(403).json({'error': 'Access Denied'})
 
-  const url = req.path.substring(req.path.lastIndexOf('/') + 1).split('.')[0]
+  const url = req.params.url.split('.')[0]
   const site_temp_key = req.cookies[C.COOKIE_TEMP_KEY]
 
   db.checkSiteExists(url, function (exists) {
@@ -200,8 +254,8 @@ app.get('/api/site/*', function (req, res) {
 
 // Check if a given site exists without transmitting the entire site data
 // Use to verify a url is available as the user types it
-app.get('/api/site_exists/*', function (req, res) {
-  let url = req.path.substring(req.path.lastIndexOf('/') + 1)
+app.get('/api/site_exists/:url', function (req, res) {
+  let url = req.params.url
   db.checkSiteExists(url, function (exists) {
     if(exists) {
       db.getSiteAgeAndTemporaryKey(url, function(k, age) {
@@ -217,8 +271,8 @@ app.get('/api/site_exists/*', function (req, res) {
 // A valid token is required to update an existing site with owners
 // A valid temp_key is required to save a site without owners. If a token is also sent,
 // that user will be assigned ownership.
-app.post('/api/site/*', function (req, res) {
-  const url = req.path.substring(req.path.lastIndexOf('/') + 1)
+app.post('/api/site/:url', function (req, res) {
+  const url = req.params.url
   const site_temp_key = req.cookies[C.COOKIE_TEMP_KEY]
   const sendDenied = () => res.status(403).json({'error': 'Access Denied'})
 
@@ -279,7 +333,7 @@ app.post('/api/site/*', function (req, res) {
 // Create a new site with the url indicated by the post address
 // and sitename sent in the json object { "siteName" : "Example Club" }
 // Returns the json object of the new site upon success; false otherwise
-app.post('/api/newsite/*', function (req, res) {
+app.post('/api/newsite/:url', function (req, res) {
   const newSite = () => {
     const creationError = () => res.status(500).json({'error' : 'Unable to create site'})
     const createSite = (id) => {
@@ -315,7 +369,7 @@ app.post('/api/newsite/*', function (req, res) {
         }
       })
     } else {
-      let temporary_key = crypto.randomBytes(16).toString('hex')
+      const temporary_key = crypto.randomBytes(16).toString('hex')
       db.createNewSite(url, siteName, temporary_key, function (json) {
         if (!json) {
           creationError()
@@ -327,7 +381,7 @@ app.post('/api/newsite/*', function (req, res) {
     }
   }
 
-  const url = req.path.substring(req.path.lastIndexOf('/') + 1)
+  const url = req.params.url
   const siteName = req.body.siteName
 
   db.checkSiteExists(url, function (exists) {
@@ -349,9 +403,8 @@ app.post('/api/newsite/*', function (req, res) {
 })
 
 // Responds with a list of club names and urls for active club sites in the specified subhost, eg. /uvic.club
-app.get('/api/directory/*', function (req, res) {
-  const subhost = req.path.substring(req.path.lastIndexOf('/') + 1)
-  db.getDirectory(subhost, true, function (directory) {
+app.get('/api/directory/:subhost', function (req, res) {
+  db.getDirectory(req.params.subhost, true, function (directory) {
     res.json(directory)
   })
 })
