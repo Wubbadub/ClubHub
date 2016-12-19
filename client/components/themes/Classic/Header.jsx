@@ -5,8 +5,6 @@ import Icon from 'parts/Icon'
 import Editable from 'pages/editor/Editable'
 import LinksForm from 'pages/editor/forms/LinksForm'
 
-
-
 export default class Header extends Component{
   constructor(props){
     super(props)
