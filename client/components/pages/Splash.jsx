@@ -15,15 +15,11 @@ export default class Splash extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      signup: false
+      signup: false,
+      signedIn: false,
+      userData: null
     }
   }
-
-  // static propTypes = {
-  // }
-
-  // static defaultProps = {
-  // }
 
   showSignUp = () => {
     this.setState({signup: true})
@@ -31,6 +27,19 @@ export default class Splash extends PureComponent {
 
   hideSignUp = () => {
     this.setState({signup: false})
+  }
+
+  signIn = (userData) => {
+    this.setState({signedIn: true, userData})
+  }
+
+  signOut = () => {
+    this.setState({signedIn: false, userData: null})
+  }
+
+  setUserData = (response) => {
+    if (response !== null) this.signIn(response.profileObj)
+    else this.signOut()
   }
 
   render() {
@@ -43,7 +52,7 @@ export default class Splash extends PureComponent {
               <div className="col-4">
                 <a><Brand/></a>
                 <div>
-                  <LoginButton className="nav-link">Log In</LoginButton>
+                  <LoginButton className="nav-link" callback={this.setUserData}>Log In</LoginButton>
                   {/*<a className="nav-link" href="#" onClick={this.showSignUp}>Sign up</a>*/}
                   <a className="nav-link" target="_blank" href={`mailto:contact@${Config.host}`}>Contact</a>
                 </div>

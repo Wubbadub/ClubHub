@@ -10,8 +10,6 @@ export default class LoginButton extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {loginData: JSON.parse(localStorage.getItem('LoginButton'))}
-    this.checkExpiry()
-    setInterval(this.checkExpiry, 10000)
   }
 
   static propTypes = {
@@ -23,6 +21,11 @@ export default class LoginButton extends PureComponent {
     callback: () => {}
   }
 
+  componentWillMount = () => {
+    this.checkExpiry()
+    setInterval(this.checkExpiry, 10000)
+  }
+
   // Check if the current auth data is expired and erase it if it is
   checkExpiry = () => {
     if (this.state.loginData && this.state.loginData.tokenObj.expires_at < new Date().getTime()) {
@@ -30,6 +33,8 @@ export default class LoginButton extends PureComponent {
       localStorage.removeItem('LoginButton')
       cookie.remove('authorization')
     }
+    console.log(this.state.loginData)
+    this.props.callback(this.state.loginData)
   }
 
   onLoginSuccess = (response) => {
@@ -45,7 +50,7 @@ export default class LoginButton extends PureComponent {
     this.setState({loginData: null})
     localStorage.removeItem('LoginButton')
     cookie.remove('authorization')
-    this.props.callback(false)
+    this.props.callback(null)
   }
 
   render() {
