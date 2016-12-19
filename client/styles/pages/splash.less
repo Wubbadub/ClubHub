@@ -177,6 +177,10 @@
   .ctas {
     margin: 40px 0 0 0;
   }
+  .onecta {
+    display: inline-block;
+    margin: 0 5px 5px 0;
+  }
   .ctas-button,
   .ctas-button-2 {
     text-align: center;
@@ -199,6 +203,61 @@
       cursor: pointer;
       background: lighten(#d4ffff, 10%);
       border-color: lighten(#d4ffff, 10%);
+    }
+  }
+  .create-new-site {
+    color: #ccc;
+    background-color: rgba(255,255,255,0.8);
+  }
+  .create-new-site:hover {
+    background-color: rgba(255,255,255,1);
+  }
+
+  // Dropdown Menu
+  .dropdown {
+    position: relative;
+    a {
+      text-align: left;
+      padding: 0 20px;
+      .icon {
+        float: right;
+      }
+    }
+    &:hover .dropdown-menu {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .dropdown-menu {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      bottom:0;
+      transform: translate3d(0,calc(100% + 10px),0);
+      pointer-events: none;
+      opacity: 0;
+      width: 100%;
+      box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+      background: white;
+      border-radius: 3px;
+    }
+    .dropdown-menu:after {
+      content:"";
+      position: absolute;
+      left:0;
+      top: -20px;
+      height: 20px;
+      width: 100%;
+    }
+    .dropdown-menu a {
+      display: block;
+      text-align: left;
+      padding: 9px 0 9px 14px;
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .dropdown-menu a:hover {
+      color: #999;
     }
   }
 

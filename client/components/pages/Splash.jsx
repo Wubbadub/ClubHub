@@ -5,6 +5,7 @@ import Config from 'Config'
 
 import SignUp from 'parts/SignUp'
 import Brand from 'parts/Brand'
+import Icon from 'parts/Icon'
 
 const browserview = require('../../img/browser-view-2.png')
 const computerview = require('../../img/browser-view-3.png')
@@ -43,14 +44,24 @@ export default class Splash extends PureComponent {
                 <a><Brand/></a>
                 <div>
                   <LoginButton className="nav-link">Log In</LoginButton>
-                  <a className="nav-link" href="#" onClick={this.showSignUp}>Sign up</a>
+                  {/*<a className="nav-link" href="#" onClick={this.showSignUp}>Sign up</a>*/}
                   <a className="nav-link" target="_blank" href={`mailto:contact@${Config.host}`}>Contact</a>
                 </div>
               </div>
               <div className="col-8">
-                <h1 className="header-heading">You take ten minutes to tell us about your university club. We give you a website.</h1>
+                {/*<h1 className="header-heading">You take ten minutes to tell us about your university club. We give you a website.</h1>*/}
+                <h1 className="header-heading">Welcome back Brendon.</h1>
                 <div className="ctas">
-                  <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>
+                  {/*<div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>*/}
+                  <div className="onecta dropdown">
+                    <a className="ctas-button" href="#">Edit<Icon icon="chevron_down"/></a>
+                      <div className="dropdown-menu">
+                        <a href="#">The Art Hive</a>
+                        <a href="#">Formula One</a>
+                        <a href="#">The UVic Dogwood Initiative</a>
+                    </div>
+                  </div>
+                  <div className="onecta"><a className="ctas-button create-new-site" href="#">+ Create New Site</a></div>
                 </div>
               </div>
             </div>
@@ -148,7 +159,7 @@ export default class Splash extends PureComponent {
                           </div>
                         </div>
                         <div className="sp-tweets-content">
-                          <p>"We didn't even have to buy a domain name. It was is revolutionary"</p>
+                          <p>"We didn't even have to buy a domain name. It was revolutionary"</p>
                         </div>
                       </div>
                     </div>
