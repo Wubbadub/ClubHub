@@ -64,7 +64,7 @@ export default class LoginButton extends PureComponent {
                    onSuccess={this.onLoginSuccess}
                    onFailure={this.onLoginFailure}
       >
-        <div>Log in</div>
+        <div>Log in with Google</div>
       </GoogleLogin>
     )
   }
