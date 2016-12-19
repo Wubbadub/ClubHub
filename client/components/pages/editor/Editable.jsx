@@ -43,7 +43,7 @@ export default class Editable extends Component{
       )
     } else {
       return (
-        <div>{children}</div>
+        inline ? <span>{children}</span> : <div>{children}</div>
       )
     }
   }
