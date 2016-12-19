@@ -3,18 +3,6 @@
     display: none;
   }
 
-  .thumbnails {
-    overflow-y: auto;
-      .thumbnail {
-        padding: 0;
-      }
-      .btn-thumbnail {
-        height: auto;
-        padding: .7rem;
-        margin: 0 auto;
-      }
-  }
-
   .editor-toolbox {
     .shadow;
 
@@ -171,6 +159,20 @@
       overflow-y: auto;
 
       padding: @layout-gutter/2;
+    }
+
+    &.editable-image-form {
+      max-width: 32rem;
+      .thumbnails {
+        .thumbnail {
+          padding: 0;
+        }
+        .btn-thumbnail {
+          height: auto;
+          padding: .7rem;
+          margin: 0 auto;
+        }
+      }
     }
   }
 

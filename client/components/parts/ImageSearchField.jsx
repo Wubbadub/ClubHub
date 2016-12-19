@@ -1,11 +1,11 @@
-import React, {Component, PropTypes} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
 import Async from 'react-promise'
 
 import Config from 'Config'
 
 import Icon from 'parts/Icon'
 
-export default class ImageSearchField extends Component {
+export default class ImageSearchField extends PureComponent {
   constructor(props){
     super(props)
     this.state = {

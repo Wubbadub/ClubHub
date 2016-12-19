@@ -6,7 +6,7 @@ import Icon from 'parts/Icon'
 import ImageSearchField from 'parts/ImageSearchField'
 import ImageUploadField from 'parts/ImageUploadField'
 
-export default class HeroImageField extends PureComponent{
+export default class ImageField extends PureComponent{
   constructor(props){
     super(props)
     this.state = {

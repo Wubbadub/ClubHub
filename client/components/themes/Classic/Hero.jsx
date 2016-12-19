@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react'
 import Editable from 'pages/editor/Editable'
 import TextForm from 'pages/editor/forms/TextForm'
 import LinksForm from 'pages/editor/forms/LinksForm'
+import ImageForm from 'pages/editor/forms/ImageForm'
 
 import Icon from 'parts/Icon'
 
@@ -45,7 +46,11 @@ export default class Hero extends Component {
     const edit = editor !== null
     return (
       <div className="hero-container">
-        <div className="hero-image" style={{backgroundImage: `url(${heroImage})`}}>
+
+        <div className="hero-image">
+        <Editable edit={edit} form={<ImageForm label="Image" editor={editor} section="hero" name="heroImage"/>} place="right">
+          <div className="image" style={{backgroundImage: `url(${heroImage})`}} />
+        </Editable>
         </div>
         <div className="hero-content center">
           <h1>
