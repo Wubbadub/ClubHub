@@ -104,7 +104,10 @@ db.getSitePermissions('uvic.club', 'test123', 0, (result) => {
   console.log("User permissions list for test123: " + JSON.stringify(result))
 })
 
-// Permission Key Tests
+db.updateSiteName(49, 'Testing Site 123', (result) => {
+  if (!result)
+    console.log("TEST FAILURE: Error updating test123 site name to Testing Site 123")
+})
 
 db.addPermissionKey(0, 'uvic.club', 'test123', 1, (result) => {
   console.log("Adding permission key for ownership of test123: " + JSON.stringify(result))

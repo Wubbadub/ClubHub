@@ -45,8 +45,6 @@ if (production) {
 // #      MIDDLEWARE     #
 // #######################
 
-// MIDDLEWARE FUNCTIONS -- app.use()
-
 app.use(cookieParser())
 
 // Server console log
@@ -193,6 +191,29 @@ app.post('/api/permission/:url/:user/:permission', function(req, res) {
   }
 })
 
+// Get a permission key of the specified level for the given site
+app.get('/api/permission_key/:url/:permission', function (req, res) {
+  const sendDenied = () => res.status(403).json({'error': 'Access Denied'})
+
+  if (req.payload) {
+    db.getUserID(C.GOOGLE_SERVICE_ENUM, req.payload.sub, function (id) {
+      db.addPermissionKey(id, 'uvic.club', req.params.url, req.params.permission, function (result) {
+        if (result === "Club not found") {
+          res.status(404).json({'error': 'Site not found'})
+        } else if (result === "Access Denied") {
+          sendDenied()
+        } else if (!result) {
+          res.status(500).end()
+        } else {
+          res.json(result)
+        }
+      })
+    })
+  } else {
+    sendDenied()
+  }
+})
+
 // Returns site data if user has access.
 // Covers all the cases where the site is active,
 // the user is logged in,
@@ -324,6 +345,31 @@ app.post('/api/site/:url', function (req, res) {
       } else {
         sendDenied()
       }
+    })
+  } else {
+    sendDenied()
+  }
+})
+
+// Update a site's name (requires ownership)
+app.post('/api/site_name/:url/:name', function (req, res) {
+  const sendDenied = () => res.status(403).json({'error': 'Access Denied'})
+
+  if (req.payload) {
+    db.getUserID(C.GOOGLE_SERVICE_ENUM, req.payload.sub, function (id) {
+      db.getUserPermission(id, req.params.url, (permission, club_id) => {
+        if (permission === 1) {
+          db.updateSiteName(club_id, req.params.name, (result) => {
+            if(result) {
+              res.end()
+            } else {
+              res.status(500).end()
+            }
+          })
+        } else {
+          sendDenied()
+        }
+      })
     })
   } else {
     sendDenied()
