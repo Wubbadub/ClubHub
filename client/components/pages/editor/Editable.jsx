@@ -35,7 +35,7 @@ export default class Editable extends Component{
       return (
         <Popover className="editable-popover" isOpen={popover} preferPlace={place} body={form} onOuterAction={this.hidePopover}>
           {inline ?
-            <span className={classNames('editable', {'editing': popover})} onClick={this.togglePopover}>{children}</span>
+            <span className={classNames('editable', 'editable-inline', {'editing': popover})} onClick={this.togglePopover}>{children}</span>
             :
             <div className={classNames('editable', {'editing': popover})} onClick={this.togglePopover}>{children}</div>
           }

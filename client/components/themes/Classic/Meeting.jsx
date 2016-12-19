@@ -31,8 +31,14 @@ export default class Meeting extends Component{
                 </p>
               </Editable>
               <p className="stats">
-                  <Icon icon="clock"/>&nbsp;
-                  {data.day} at {data.time}
+                  <span><Icon icon="clock"/> </span>
+                  <Editable edit={edit} inline={true} form={<TextForm label="Meeting Day" editor={editor} section="meeting" name="day"/>}>
+                    {data.day}
+                  </Editable>
+                  <span> at </span>
+                  <Editable edit={edit} inline={true} form={<TextForm label="Meeting Time" editor={editor} section="meeting" name="time"/>}>
+                    {data.time}
+                  </Editable>
               </p>
               <Editable edit={edit} form={<TextForm label="Meeting Location" editor={editor} section="meeting" name="place"/>}>
                 <p className="stats">

@@ -75,13 +75,16 @@
   }
 
   .site {
-    span.editable {
-      display: inline-block
-    }
     .editable {
       width: 100%;
       cursor: pointer;
       position: relative;
+
+      &.editable-inline {
+        display: inline-block;
+        width: auto;
+      }
+
       &:before, &:after {
         content: "";
         position: absolute;
