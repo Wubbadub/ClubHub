@@ -35,7 +35,7 @@ export default class Meeting extends Component{
                   <Editable edit={edit} inline={true} form={<TextForm label="Meeting Day" editor={editor} section="meeting" name="day"/>}>
                     {data.day}
                   </Editable>
-                  <span> at </span>
+                  {data.time && data.day ? <span> at </span> : null}
                   <Editable edit={edit} inline={true} form={<TextForm label="Meeting Time" editor={editor} section="meeting" name="time"/>}>
                     {data.time}
                   </Editable>

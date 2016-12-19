@@ -20,7 +20,7 @@ export default class Team extends Component{
     return (
       <section>
         <div className="team">
-          <h1>Who</h1>
+          {data.members.length > 0 ? <h1>Who</h1> : null}
           <Editable edit={edit} place="above" form={<MembersForm label="Club Administrators" editor={editor} section="team" name="members"/>}>
             <div className="people">
               {
