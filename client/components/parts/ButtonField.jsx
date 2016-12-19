@@ -10,8 +10,6 @@ export default class ButtonField extends Component{
 
   static propTypes = () => {
     return {
-      label: PropTypes.string.isRequired,
-      placeholder: PropTypes.string,
       name: PropTypes.string.isRequired,
       index: PropTypes.string.isRequired,
       types: PropTypes.array,
@@ -22,7 +20,9 @@ export default class ButtonField extends Component{
         href: PropTypes.string
       }).isRequired,
       onChange: PropTypes.func.isRequired,
-      removeElement: PropTypes.func.isRequired
+      removeElement: PropTypes.func.isRequired,
+      label: PropTypes.string,
+      placeholder: PropTypes.string
     }
   }
 
