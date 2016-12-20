@@ -18,7 +18,7 @@ export default class Splash extends PureComponent {
       signup: false,
       signedIn: false,
       userData: null,
-      sites: []
+      sites: null
     }
   }
 
@@ -46,7 +46,7 @@ export default class Splash extends PureComponent {
   }
 
   signOut = () => {
-    this.setState({signedIn: false, userData: null, sites: [] })
+    this.setState({signedIn: false, userData: null, sites: null})
   }
 
   setUserData = (response) => {
@@ -72,13 +72,13 @@ export default class Splash extends PureComponent {
                 <h1 className="header-heading">
                   {
                     this.state.signedIn ?
-                      `Welcome back ${this.state.userData.givenName}.` :
+                      `Welcome ${this.state.sites ? 'back' : ''} ${this.state.userData.givenName}.` :
                       `You take ten minutes to tell us about your university club. We give you a website.`
                   }
                 </h1>
                 <div className="ctas">
                   {
-                    !this.state.signedIn ? (
+                    !this.state.sites ? (
                       <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>
                     ) : (
                       <div>
