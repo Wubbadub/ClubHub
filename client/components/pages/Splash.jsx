@@ -20,19 +20,10 @@ export default class Splash extends PureComponent {
       userData: null,
       sites: null
     }
+    this.checkUserPermissions()
   }
 
-  showSignUp = () => {
-    this.setState({signup: true})
-  }
-
-  hideSignUp = () => {
-    this.setState({signup: false})
-  }
-
-  signIn = (userData) => {
-    this.setState({signedIn: true, userData})
-
+  checkUserPermissions = () => {
     const request = new Request(
       `http://${Config.server}/api/permissions`,
       {
@@ -45,13 +36,31 @@ export default class Splash extends PureComponent {
       .then((content) => { this.setState({sites: content.sites}) })
   }
 
+  clearUserPermissions = () => {
+    this.setState({sites: null})
+  }
+
+  showSignUp = () => {
+    this.setState({signup: true})
+  }
+
+  hideSignUp = () => {
+    this.setState({signup: false})
+  }
+
+  signIn = (userData) => {
+    this.setState({signedIn: true, userData})
+    this.checkUserPermissions()
+  }
+
   signOut = () => {
-    this.setState({signedIn: false, userData: null, sites: null})
+    this.setState({signedIn: false, userData: null})
+    this.clearUserPermissions()
   }
 
   setUserData = (response) => {
-    if (response !== null) this.signIn(response.profileObj)
-    else this.signOut()
+    if (!response && this.state.signedIn) this.signOut()
+    else this.signIn(response.profileObj)
   }
 
   render() {
