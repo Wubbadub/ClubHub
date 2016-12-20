@@ -1,6 +1,7 @@
-import React, {PureComponent} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
+import classNames from 'classnames'
 
-import LoginForm from './LoginForm'
+import LoginButton from 'parts/LoginButton'
 
 export default class LoginModal extends PureComponent {
   constructor(props) {
@@ -9,9 +10,10 @@ export default class LoginModal extends PureComponent {
   }
 
   static propTypes = {
-    active: React.PropTypes.bool,
-    close: React.PropTypes.func,
-    callback: React.PropTypes.func
+    children: PropTypes.node,
+    active: PropTypes.bool,
+    close: PropTypes.func,
+    callback: PropTypes.func
   }
 
   static defaultProps = {
@@ -19,15 +21,23 @@ export default class LoginModal extends PureComponent {
   }
 
   render() {
-
+    const {close, children, callback} = this.props
     return (
       <section className="login">
         <div className={`modal modal-sm ${this.props.active ? ' active' : ''}`}>
           <div className="modal-overlay"></div>
           <div className="modal-container">
             <div className="modal-body">
-              <button className="btn btn-clear float-right" onClick={this.props.close}></button>
-              <LoginForm callback={this.props.callback}/>
+              <button className="btn btn-clear float-right" onClick={close}></button>
+              <div>
+                <div className="form-group">
+                  <b>Log in to ClubHub</b>
+                </div>
+                <div className="form-group">
+                  {children}
+                </div>
+                <LoginButton className={classNames('btn', 'btn-primary', 'btn-block')} callback={callback} />
+              </div>
             </div>
           </div>
         </div>

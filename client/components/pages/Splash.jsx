@@ -5,6 +5,7 @@ import Config from 'Config'
 
 import SignUp from 'parts/SignUp'
 import Brand from 'parts/Brand'
+import Icon from 'parts/Icon'
 
 const browserview = require('../../img/browser-view-2.png')
 const computerview = require('../../img/browser-view-3.png')
@@ -14,15 +15,30 @@ export default class Splash extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      signup: false
+      signup: false,
+      signedIn: false,
+      userData: null,
+      sites: null
     }
+    this.checkUserPermissions()
   }
 
-  // static propTypes = {
-  // }
+  checkUserPermissions = () => {
+    const request = new Request(
+      `http://${Config.server}/api/permissions`,
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    )
+    fetch(request)
+      .then((response) => response.json())
+      .then((content) => { this.setState({sites: content.sites}) })
+  }
 
-  // static defaultProps = {
-  // }
+  clearUserPermissions = () => {
+    this.setState({sites: null})
+  }
 
   showSignUp = () => {
     this.setState({signup: true})
@@ -32,44 +48,82 @@ export default class Splash extends PureComponent {
     this.setState({signup: false})
   }
 
+  signIn = (userData) => {
+    this.setState({signedIn: true, userData})
+    this.checkUserPermissions()
+  }
+
+  signOut = () => {
+    this.setState({signedIn: false, userData: null})
+    this.clearUserPermissions()
+  }
+
+  setUserData = (response) => {
+    if (!response && this.state.signedIn) this.signOut()
+    else this.signIn(response.profileObj)
+  }
+
   render() {
     return (
       <div className="splash">
         <SignUp active={this.state.signup} close={this.hideSignUp}/>
         <div className="template">
           <div className="header">
-              <div className="container-lrg flex">
-                <div className="col-4">
-                  <a><Brand/></a>
-                  <div>
-                    <LoginButton className="nav-link">Log In</LoginButton>
-                    <a className="nav-link" href="#" onClick={this.showSignUp}>Sign up</a>
-                    <a className="nav-link" target="_blank" href={`mailto:contact@${Config.host}`}>Contact</a>
-                  </div>
+            <div className="container-lrg flex">
+              <div className="col-4">
+                <a><Brand/></a>
+                <div>
+                  <LoginButton className="nav-link" callback={this.setUserData}>Log In</LoginButton>
+                  <a className="nav-link" target="_blank" href={`mailto:contact@${Config.host}`}>Contact</a>
                 </div>
-                <div className="col-8">
-                  <h1 className="header-heading">You take ten minutes to tell us about your university club. We give you a website.</h1>
-                  <div className="ctas">
-                    <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>
+              </div>
+              <div className="col-8">
+                <h1 className="header-heading">
+                  {
+                    this.state.signedIn ?
+                      `Welcome ${this.state.sites ? 'back' : ''} ${this.state.userData.givenName}.` :
+                      `You take ten minutes to tell us about your university club. We give you a website.`
+                  }
+                </h1>
+                <div className="ctas">
+                  {
+                    !this.state.sites ? (
+                      <div className="onecta"><a className="ctas-button" href="#" onClick={this.showSignUp}>Get started</a></div>
+                    ) : (
+                      <div>
+                        <div className="onecta dropdown">
+                          <a className="ctas-button">Edit<Icon icon="chevron_down"/></a>
+                          <div className="dropdown-menu">
+                            {
+                              this.state.sites.map((s, i) => {
+                                return <a href={`/edit/${s.url}`} key={i}>{s.name}</a>
+                              })
+                            }
+                          </div>
+                        </div>
+                        <div className="onecta"><a className="ctas-button create-new-site" href="#" onClick={this.showSignUp}>+ Create New Site</a></div>
+                      </div>
+                    )
+                  }
+                </div>
+              </div>
+            </div>
+            <div className="container-lrg">
+              <div className="col-12">
+                <div className="header-images">
+                  <div className="iphone">
+                    <div className="mask">
+                      <img className="mask-img" src={mobileview}/>
+                    </div>
+                  </div>
+                  <div className="browser">
+                    <div className="mask">
+                      <img className="mask-img" src={browserview}/>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="container-lrg">
-                <div className="col-12">
-                  <div className="header-images">
-                          <div className="iphone">
-                            <div className="mask">
-                              <img className="mask-img" src={mobileview}/>
-                            </div>
-                          </div>
-                          <div className="browser">
-                            <div className="mask">
-                              <img className="mask-img" src={browserview}/>
-                            </div>
-                          </div>
-                  </div>
-                </div>
-              </div>
+            </div>
           </div>
           <section>
             <ul>
@@ -148,7 +202,7 @@ export default class Splash extends PureComponent {
                           </div>
                         </div>
                         <div className="sp-tweets-content">
-                          <p>"We didn't even have to buy a domain name. It was is revolutionary"</p>
+                          <p>"We didn't even have to buy a domain name. It was revolutionary"</p>
                         </div>
                       </div>
                     </div>

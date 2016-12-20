@@ -1,4 +1,5 @@
 // This component stores and retrieves all login information
+// We store the timeout timer so that we can clear it if they log out and sign in again later without leaving the page
 // TODO: Replace localStorage usage with a more appropriate technique
 import React, {PureComponent, PropTypes} from 'react'
 import GoogleLogin from 'react-google-login'
@@ -9,9 +10,7 @@ import classNames from 'classnames'
 export default class LoginButton extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {loginData: JSON.parse(localStorage.getItem('LoginButton'))}
-    this.checkExpiry()
-    setInterval(this.checkExpiry, 10000)
+    this.state = {loginData: JSON.parse(localStorage.getItem('LoginButton')), timeOut: null}
   }
 
   static propTypes = {
@@ -23,12 +22,15 @@ export default class LoginButton extends PureComponent {
     callback: () => {}
   }
 
-  // Check if the current auth data is expired and erase it if it is
-  checkExpiry = () => {
-    if (this.state.loginData && this.state.loginData.tokenObj.expires_at < new Date().getTime()) {
-      this.setState({loginData: null})
-      localStorage.removeItem('LoginButton')
-      cookie.remove('authorization')
+  componentWillMount = () => {
+    if (this.state.loginData) {
+      if (this.state.loginData.tokenObj.expires_at < new Date().getTime()) {
+        this.setState({loginData: null})
+        localStorage.removeItem('LoginButton')
+        cookie.remove('authorization')
+      } else {
+        this.setState({timeOut: setTimeout(this.onLoginFailure, Math.max(1, this.state.loginData.tokenObj.expires_at - new Date().getTime()))})
+      }
     }
   }
 
@@ -38,14 +40,16 @@ export default class LoginButton extends PureComponent {
       loginData: response
     })
     localStorage.setItem('LoginButton', JSON.stringify(response))
+    this.setState({timeOut: setTimeout(this.onLoginFailure, Math.max(1, this.state.loginData.tokenObj.expires_at - new Date().getTime()))})
     this.props.callback(response)
   }
 
   onLoginFailure = () => {
-    this.setState({loginData: null})
+    clearTimeout(this.state.timeOut)
+    this.setState({loginData: null, timeOut: null})
     localStorage.removeItem('LoginButton')
     cookie.remove('authorization')
-    this.props.callback(false)
+    this.props.callback(null)
   }
 
   render() {
@@ -64,7 +68,7 @@ export default class LoginButton extends PureComponent {
                    onSuccess={this.onLoginSuccess}
                    onFailure={this.onLoginFailure}
       >
-        <div>Log in</div>
+        <div>Log in with Google</div>
       </GoogleLogin>
     )
   }

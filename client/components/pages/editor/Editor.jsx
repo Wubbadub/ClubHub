@@ -18,7 +18,7 @@ export default class Editor extends Component {
       dirtyBit: false,
       site: this.props.site,
       preview: false,
-      showLoginModal: false
+      showLogin: false
     }
   }
 
@@ -51,50 +51,53 @@ export default class Editor extends Component {
     this.setData(section, newData)
   }
 
-  sendSiteData = (response) => {
-    if (response) {
-      fetch(`http://${Config.server}/api/site/${this.props.siteId}`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify(this.state.site)
-      }).then((res) => {
-        if (res.ok) {
-          this.setState({
-            dirtyBit: false,
-            showLoginModal: false
-          })
+  sendSiteData = () => {
+    fetch(`http://${Config.server}/api/site/${this.props.siteId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify(this.state.site)
+    }).then((res) => {
+      if (res.ok) {
+        this.setState({
+          dirtyBit: false,
+          showLogin: false
+        })
 
-          // TODO: Replace this with a button or checkbox or some other intuitive method instead of forcing the site active on every save
-          fetch(`http://${Config.server}/api/active/${this.props.siteId}`, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify({active: true})
-          })
-        }
-      })
-    }
+        // TODO: Replace this with a button or checkbox or some other intuitive method instead of forcing the site active on every save
+        fetch(`http://${Config.server}/api/active/${this.props.siteId}`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({active: true})
+        })
+      }
+    })
   }
 
   // Check if a user is already logged in. Show the login modal if they aren't.
-  handleSubmit = () => {
+  isAuthenticated = () => {
     const auth = cookie.load('authorization')
-    if (auth && auth !== '') {
-      this.sendSiteData(true)
+    return auth && auth !== ''
+  }
+
+  save = () => {
+    this.setState({showLogin: false})
+    if (this.isAuthenticated()){
+      this.sendSiteData()
     } else {
-      this.setState({showLoginModal: true})
+      this.setState({showLogin: true})
     }
   }
 
   hideLogin = () => {
-    this.setState({showLoginModal: false})
+    this.setState({showLogin: false})
   }
 
   onPreviewChange = (e) => {
@@ -110,7 +113,7 @@ export default class Editor extends Component {
     }
     return (
       <div className={classNames('editor', {'editor-preview': this.state.preview})}>
-        <LoginModal active={this.state.showLoginModal} close={this.hideLogin} callback={this.sendSiteData}/>
+        <LoginModal active={this.state.showLogin} close={this.hideLogin} callback={this.save}/>
         <div className="editor-toolbox" onMouseEnter={this.disableBodyScroll} onMouseLeave={this.enableBodyScroll}>
           <div className="editor-header">
             <h1>
@@ -130,7 +133,7 @@ export default class Editor extends Component {
             <a className={classNames('btn', 'btn-link')} href={`http://${this.props.siteId}.${Config.subhosts[0]}`} target="_blank"><Icon icon="eye"/>&nbsp;&nbsp;View Site</a>
             {(() => {
               if (this.state.dirtyBit) {
-                return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save')} onClick={this.handleSubmit}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
+                return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save')} onClick={this.save}><Icon icon="cloud_upload"/>&nbsp;&nbsp;Save</button>
               } else {
                 return <button type="button" className={classNames('btn', 'btn-primary', 'btn-save', 'disabled')} ><Icon icon="check"/>&nbsp;&nbsp;Saved</button>
               }
