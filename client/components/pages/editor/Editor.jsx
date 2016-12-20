@@ -9,6 +9,8 @@ import Brand from 'parts/Brand'
 import Site from 'pages/site/Site'
 import LoginModal from 'parts/LoginModal'
 
+import ShortTextField from 'parts/ShortTextField'
+
 import * as defaults from './defaults'
 
 export default class Editor extends Component {
@@ -104,6 +106,12 @@ export default class Editor extends Component {
     this.setState({preview: e.target.checked})
   }
 
+  handleTitleChange = (name, data) => {
+    const s = Object.assign({}, this.state.site)
+    s[name] = data
+    this.setState({site: s, dirtyBit: true})
+  }
+
   render() {
     const editor = {
       data: this.state.site,
@@ -122,6 +130,7 @@ export default class Editor extends Component {
             </h1>
           </div>
           <div className="editor-body">
+            <ShortTextField label="Club Name" placeholder="Super cool club name" name="title" value={this.state.site.title} onChange={this.handleTitleChange}/>
             <div className="form-group">
               <label className="form-switch">
                 <input type="checkbox" checked={this.state.preview} onChange={this.onPreviewChange}/>
