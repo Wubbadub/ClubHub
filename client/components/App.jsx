@@ -9,6 +9,13 @@ import Splash from 'pages/Splash'
 import Editor from 'pages/editor/Editor'
 import Site from 'pages/site/Site'
 
+// Legacy support for old bookmarks using "siteId.subhost/edit"
+class EditorRedirect extends PureComponent {
+  render() {
+    window.location.assign(`http://${Config.host}/edit/${window.location.host}`)
+    return (<div>Redirecting..</div>)
+  }
+}
 
 class EditorContainer extends PureComponent {
   constructor(props) {
@@ -16,13 +23,12 @@ class EditorContainer extends PureComponent {
   }
 
   static propTypes = {
-    route: PropTypes.shape ({
-      siteId: PropTypes.string
-    })
+    params: React.PropTypes.object.isRequired
   }
 
   render() {
-    const {siteId} = this.props.route
+    let {siteId} = this.props.params
+    siteId = siteId.split('.')[0]
     return (
       <Async
         promise={App.getSite(siteId)}
@@ -40,13 +46,16 @@ class SiteContainer extends PureComponent {
   }
 
   static propTypes = {
+    params: React.PropTypes.object.isRequired,
     route: PropTypes.shape ({
       siteId: PropTypes.string
     })
   }
 
   render() {
-    const {siteId} = this.props.route
+    let {siteId} = this.props.route
+    if (!siteId)
+      siteId = this.props.params.siteId // For previewing inactive sites with auth
     return (
       <Async
         promise={App.getSite(siteId)}
@@ -72,7 +81,7 @@ export default class App extends PureComponent{
       return (
         <Router history={browserHistory}>
           <Route siteId={names[0]} component={SiteContainer} path="/" />
-          <Route siteId={names[0]} component={EditorContainer} path="/edit"/>
+          <Route component={EditorRedirect} path="/edit"/>
         </Router>
       )
     else
@@ -80,6 +89,8 @@ export default class App extends PureComponent{
       return (
         <Router history={browserHistory}>
           <Route component={Splash} path="/"/>
+          <Route component={EditorContainer} path="/edit/:siteId"/>
+          <Route component={SiteContainer} path="/preview/:siteId"/>
         </Router>
       )
   }
@@ -87,7 +98,10 @@ export default class App extends PureComponent{
   static getSite = (siteId) => {
     const request = new Request(
       `http://${Config.server}/api/site/${siteId}`,
-      {method: 'GET'}
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
     )
     return Promise.resolve(fetch(request).then((response) => {
       return response.json().then((content) => {

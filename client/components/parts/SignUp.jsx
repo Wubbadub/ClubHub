@@ -25,11 +25,8 @@ export default class SignUp extends PureComponent {
         <div className={`modal modal-sm ${this.props.active ? ' active' : ''}`}>
           <div className="modal-overlay"></div>
           <div className="modal-container">
-            <div className="modal-header">
-              <button className="btn btn-clear float-right" onClick={this.props.close}></button>
-              <h3 className="modal-title">Sign Up for ClubHub</h3>
-            </div>
             <div className="modal-body">
+              <button className="btn btn-clear float-right" onClick={this.props.close}></button>
               <SignUpForm />
             </div>
           </div>

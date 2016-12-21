@@ -4,9 +4,12 @@ var path = require('path')
 var webpack = require('webpack')
 var failPlugin = require('webpack-fail-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
+  devtool: 'source-map',
   entry: [
+    'whatwg-fetch',   // Used to support safari as fetch isn't provided in core-js polyfills (https://github.com/zloirock/core-js)
     'babel-polyfill',
     `${__dirname}/client/main.jsx`
   ],
@@ -21,6 +24,7 @@ module.exports = {
       inject: 'body',
       filename: 'index.html'
     }),
+    new ExtractTextPlugin("assets/styles.css"),
     failPlugin,
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
@@ -45,7 +49,10 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loaders: ['style', 'css', 'less']
+        loader: ExtractTextPlugin.extract(
+          'css?sourceMap!' +
+          'less?sourceMap'
+        )
       },
       {
         test: /font[\\|\/][^\.]+\.(eot|svg|ttf|woff|woff2)$/,

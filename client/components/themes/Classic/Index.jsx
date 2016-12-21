@@ -12,19 +12,25 @@ export default class Classic extends Component{
   }
 
   static propTypes = {
-    site: PropTypes.object
+    site: PropTypes.object.isRequired,
+    editor: PropTypes.object
+  }
+
+  static defaultProps = {
+    editor: null
   }
 
   render() {
+    const {site, editor} = this.props
     return (
     <div className="theme-classic outer-container">
-      <Header site={this.props.site}/>
-      <Hero site={this.props.site}/>
+      <Header data={site.sections.header} editor={editor}/>
+      <Hero data={site.sections.hero} editor={editor}/>
       <div className="main-container">
-        <Meeting data={this.props.site.sections.meeting} />
-        <Team data={this.props.site.sections.team} />
+        <Meeting data={site.sections.meeting} editor={editor}/>
+        <Team data={site.sections.team} editor={editor}/>
       </div>
-      <Footer site={this.props.site}/>
+      <Footer site={site}/>
     </div>
     )
   }

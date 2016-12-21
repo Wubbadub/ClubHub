@@ -2,11 +2,19 @@
 .toast {
   background: @core-border-color;
   border: .1rem solid darken(@core-border-color, 2%);
-  border-radius: .3rem;
+  border-radius: @border-base;
   color: #666;
   display: block;
   padding: 1.4rem;
-  width: 100%;
+  margin: 1.4rem;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.2s;
+
+  &.hidden {
+    pointer-events: none;
+    opacity: 0;
+  }
 
   &.toast-primary {
     .toast-variant(@core-color);

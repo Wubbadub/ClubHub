@@ -1,72 +1,75 @@
 .editor {
-  .editor-bar {
-    height: 100vh;
+  .hidden {
+    display: none;
+  }
 
-    border: solid @core-border-color;
-    border-width: 0 .1rem 0 0;
-    background-color: fade(@core-light-color, 98%);
+  .editor-toolbox {
+    .shadow;
 
+    border-radius: @border-base;
+    overflow: hidden;
+    background-color: @core-light-color;
+
+    bottom: @layout-gutter;
+    left: @layout-gutter;
     position: fixed;
-    z-index: 100;
-    transform: translateX(-100%);
-    transition: transform 0.5s;
+    z-index: 200;
 
-    &.active {
-    transform: translateX(0);
-      .toggle .icon {
-        transform: rotate(180deg);
-      }
-    }
+    width: 24rem;
 
-    .editor-viewbox {
-      overflow-y: scroll;
-      max-height: 100%;
-      padding-bottom: 5.2rem; //Todo: fix hack
-    }
-
-    .toggle {
-      .btn;
-      border-color: @core-border-color;
-      border-radius: 0 @border-base @border-base 0;
-      color: darken(@core-border-color, 25%);
-      position: absolute;
-      padding: 1rem 0.7rem;
-      height: 3.8rem;
-      width: 3rem;
-      right: -3rem;
-      top: 2rem;
-
-      &:hover {
-        background-color: darken(@core-light-color, 5%);
-      }
-
-      .icon {
-        display: inline-block;
-        transition: transform 0.5s;
-        transform: rotate(0deg);
-      }
-    }
     .editor-header {
       width: 100%;
-      border-bottom: 0.1em solid @core-border-color;
-      background-color: @core-light-color;
-      padding: @layout-gutter;
+
+      border: 0.1em solid darken(@core-color, 5%);
+      border-radius: @border-base @border-base 0 0;
+      background-color: @core-color;
+
+      padding: @layout-gutter 0.5*@layout-gutter;
+      overflow: hidden;
+
+      h1 {
+        text-align: center;
+        margin: 0;
+        line-height: 0;
+        small {
+          display: inline-block;
+          font-size: 1.2*@body-font-size;
+          position: relative;
+          top: -.3rem;
+          color: @core-light-color;
+        }
+      }
       .brand {
-        height: 2em;
+        display: inline;
+        margin-right: .8rem;
         svg {
-          max-height: 100%;
-          fill: @core-meta-color;
+          height: 1.5*@body-font-size;
+          width: auto;
+          fill: @core-light-color;
+        }
+        &:hover {
+          svg {
+            fill: darken(@core-light-color, 3%);
+          }
         }
       }
     }
 
-    .editor-footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      border-top: 0.1em solid @core-border-color;
-      background-color: @core-light-color;
+    .editor-body {
+      border: solid @core-border-color;
+      border-width: 0 0.1em;
       padding: 0.5*@layout-gutter;
+    }
+
+    .editor-footer {
+      border-radius: 0 0 @border-base @border-base;
+      border: 0.1em solid @core-border-color;
+      border-top: none;
+      background-color: @core-light-color;
+      overflow: hidden;
+
+      padding: 0.5*@layout-gutter;
+
       .btn-save {
         float: right;
         &.disabled {
@@ -75,5 +78,133 @@
         }
       }
     }
+  }
+
+  .site {
+    .editable {
+      width: 100%;
+      cursor: pointer;
+      position: relative;
+
+      &.editable-inline {
+        display: inline-block;
+        width: auto;
+      }
+
+      &:before, &:after {
+        content: "";
+        position: absolute;
+        top: -2%;
+        left: -2%;
+      }
+      &:before {
+        content: "\270F";
+        font-family: 'mfg_labs_iconsetregular';
+        font-size: 1.2rem;
+        line-height: @html-line-height;
+        padding: .2rem .4rem;
+        background: @core-color;
+        color: @core-light-color;
+        border-radius: @border-base;
+        opacity: 0.8;
+      }
+      &:after {
+        width: 104%;
+        height: 104%;
+        border: .3rem solid @core-color;
+        border-radius: 2*@border-base;
+        display: none;
+      }
+      &:hover {
+        &:before {
+          opacity: 1;
+          content: "Edit";
+          font-family: @body-font-family;
+          display: block;
+        }
+        &:after {
+          display: block;
+        }
+      }
+      &.editing {
+        &:after {
+          display: block;
+        }
+        &:before {
+          opacity: 1;
+          content: "Editing";
+          font-family: @body-font-family;
+          display: block;
+        }
+      }
+    }
+  }
+  &.editor-preview {
+    .site {
+      .editable {
+        &:hover {
+          &:before, &:after {
+            display: block;
+          }
+        }
+        &:before, &:after {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.editable-popover {
+  .shadow;
+
+  overflow: hidden;
+  border-radius: @border-base;
+  background: @core-light-color;
+
+  z-index: 100;
+
+  min-width: 24rem;
+
+  .editable-form {
+    min-width: 32rem;
+
+    .editable-form-header {
+      border: 0.1em solid darken(@core-color, 5%);
+      border-radius: @border-base @border-base 0 0;
+      background-color: @core-color;
+
+      color: @core-light-color;
+      font-weight: bold;
+
+      padding: @layout-gutter/4 @layout-gutter/2;
+    }
+    .editable-form-content {
+      border: .1rem solid @core-border-color;
+      border-top: none;
+      border-radius: 0 0 @border-base @border-base;
+      max-height: 80vh;
+      overflow-y: auto;
+
+      padding: @layout-gutter/2;
+    }
+
+    &.editable-image-form {
+      max-width: 32rem;
+      .thumbnails {
+        .thumbnail {
+          padding: 0;
+        }
+        .btn-thumbnail {
+          height: auto;
+          padding: .7rem;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+
+  .Popover-tip {
+    display: none;
   }
 }

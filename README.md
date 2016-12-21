@@ -5,8 +5,9 @@
     <a href="https://travis-ci.org/Wubbadub/ClubHub"><img src ="https://img.shields.io/travis/Wubbadub/ClubHub.svg?branch=develop" alt="Build Status"/></a>
     <a href="http://www.isup.me/tryclubhub.com"><img src ="https://img.shields.io/website-up-down-green-red/http/tryclubhub.com.svg" alt="Website Status"/></a>
     <br><br>
-    <p>ClubHub provides your university club with the resources it needs.</p>
-    <img src ="assets/splash-page-2.png" alt="Build Status"/>
+    <p>You take ten minutes to tell us about your university club. We give you a website.</p>
+    <img src ="assets/landing-readme2.png" alt="Landing"/>
+    <img src ="assets/editor-readme.png" alt="Editor"/>
 </div>
 
 ### Repository Directory
